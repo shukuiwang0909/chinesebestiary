@@ -1,0 +1,104 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+const creatures = await getCollection('creatures');
+const order = ['hundun', 'qiongqi', 'taowu', 'taotie'];
+const perils = creatures
+  .filter(c => c.data.taxonomy.four_perils)
+  .sort((a, b) => order.indexOf(a.data.id) - order.indexOf(b.data.id));
+
+const lore: Record<string, { clan_zh: string; clan_en: string; vice: string; form: string }> = {
+  hundun: {
+    clan_zh: '帝鸿氏',
+    clan_en: 'clan of Dihong, often identified with the Yellow Emperor',
+    vice: 'Hides virtue and befriends the wicked — chaos and wilful ignorance',
+    form: 'The faceless Dijiang of Mount Tian: a six-legged, four-winged sack of flesh that knows song and dance',
+  },
+  qiongqi: {
+    clan_zh: '少皞氏',
+    clan_en: 'clan of Shaohao',
+    vice: 'Destroys trust and hates the loyal, spreading slander — justice inverted',
+    form: 'A winged tiger of the northern wastes that eats people beginning with the head',
+  },
+  taowu: {
+    clan_zh: '颛顼氏',
+    clan_en: 'clan of Zhuanxu',
+    vice: 'Cannot be taught — obstinate, fierce, and incorrigible',
+    form: 'A tiger-bodied, human-faced beast of the Western Wilderness, with boar tusks and a tail one zhang eight chi long',
+  },
+  taotie: {
+    clan_zh: '缙云氏',
+    clan_en: 'clan of Jinyun, often identified with the Flame Emperor',
+    vice: 'Insatiable gluttony — greedy for food and hoarded wealth alike',
+    form: 'The Paoxiao of Mount Gouwu: sheep-bodied, human-faced, eyes beneath the armpits, tiger teeth and human claws',
+  },
+};
+
+const metaTitle = 'The Four Perils (四凶): Taotie, Hundun, Qiongqi & Taowu';
+const metaDescription = 'The Four Perils (四凶) — Taotie, Hundun, Qiongqi, Taowu. Exiled villains in the Zuo Zhuan, reborn as the man-eating beasts of the Shanhaijing. Sources and translations.';
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "The Four Perils (四凶)",
+  "description": metaDescription,
+  "hasPart": perils.map(c => ({
+    "@type": "ListItem",
+    "name": c.data.name.en,
+    "url": `https://chinesebestiary.com/creatures/${c.data.id}/`,
+  })),
+};
+---
+<Base title={metaTitle} description={metaDescription}>
+  <article>
+    <h2>The Four Perils <span class="zh">四凶</span></h2>
+    <p><em>sì xiōng · Wade-Giles: ssŭ-hsiung</em></p>
+
+    <p>The Four Perils (四凶) are the villains of the Chinese bestiary: four monsters so steeped in vice that their names became Chinese words for human failings. Taotie is greed, Taowu is stubbornness, Qiongqi is slander rewarded, Hundun is chaos itself. Every rogues'-gallery monster team in a Chinese fantasy game — and many beyond — descends from this quartet.</p>
+
+    <h3>They Began as Men</h3>
+    <p>The twist: the Four Perils started not as beasts but as four incorrigible sons of four great clans. The <em>Zuo Zhuan</em> (左传, 7th century BCE) gives each one a defining vice, and the people named him after it. When Shun rose to power as Yao's minister, he exiled all four clans to the distant frontiers:</p>
+    <blockquote>
+      <p class="zh">流四凶族浑敦、穷奇、梼杌、饕餮，投诸四裔，以御魑魅。</p>
+      <p><em>"Shun exiled the four evil clans — Hundun, Qiongqi, Taowu, and Taotie — casting them to the four distant frontiers, to stand ward against the chimei demons."</em></p>
+      <p><small>Zuo Zhuan, Duke Wen, Year 18 (左传 · 文公十八年)</small></p>
+    </blockquote>
+
+    <h3>From Exiles to Beasts</h3>
+    <p>Over the following centuries, the four clan-names fused with the man-eating beasts of the <em>Classic of Mountains and Seas</em>. Hundun merged with Dijiang, the faceless dancer of Mount Tian; Qiongqi with the winged tiger of the northern wastes; Taowu with the human-faced beast of the Western Wilderness; Taotie with the Paoxiao of Mount Gouwu, whose eyes sit beneath its armpits. By the Han dynasty the pairing was complete: four exiled villains, four monstrous bodies, one canonical roster.</p>
+
+    <h3>The Quartet</h3>
+    <ul>
+      {perils.map(c => (
+        <li>
+          <a href={`/creatures/${c.data.id}/`}><strong>{c.data.name.en}</strong></a>
+          <span class="zh"> {c.data.name.zh_cn}</span> <em>({c.data.name.pinyin})</em><br />
+          {c.data.content_summary}
+        </li>
+      ))}
+    </ul>
+
+    <h3>Four Clans, Four Vices</h3>
+    <table>
+      <thead><tr><th>Peril</th><th>Parent clan</th><th>Vice</th><th>Beast form (Shanhaijing)</th></tr></thead>
+      <tbody>
+        {perils.map(c => (
+          <tr>
+            <td><a href={`/creatures/${c.data.id}/`}>{c.data.name.en} <span class="zh">{c.data.name.zh_cn}</span></a></td>
+            <td><span class="zh">{lore[c.data.id].clan_zh}</span><br /><small>{lore[c.data.id].clan_en}</small></td>
+            <td>{lore[c.data.id].vice}</td>
+            <td>{lore[c.data.id].form}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+
+    <h3>Exiles at the Gates</h3>
+    <p>The sentence that created them is stranger than a simple banishment: the four villains were not destroyed but <em>repurposed</em> — 投诸四裔，以御魑魅, set to guard the borders against worse demons beyond. Their afterlives then split. Taotie lent its face to the masks of Shang dynasty bronzes and its name to the modern gourmet (<span class="zh">老饕</span>, a "devourer"; <span class="zh">饕餮盛宴</span>, a "taotie feast"). Hundun became the ordinary word for primordial chaos — and, by folk etymology, for wontons (<span class="zh">馄饨</span>). Taowu survives as an insult for the hopelessly stubborn. Qiongqi, the slanderer, lives on mostly in games and fantasy, where the quartet reunites as a boss team — punishing the righteous, as ever.</p>
+
+    <p><small>Note: the Canon of Shun (尚书 · 舜典) records a different set of exiles — Gun, Gonggong, Huandou, and the Sanmiao — and some early texts call the perils the "Four Criminals" (<span class="zh">四罪</span>). The beastly roster above became standard by Han times.</small></p>
+  </article>
+
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+</Base>
