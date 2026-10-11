@@ -1,0 +1,24 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+const creatures = await getCollection('creatures');
+const sorted = creatures.sort((a, b) => a.data.id.localeCompare(b.data.id));
+---
+<Base title="The Chinese Bestiary — Every Creature from the Shanhaijing" description="A searchable bestiary of every mythical creature in the Classic of Mountains and Seas (山海经): original texts, new translations, and D&D 5E stat blocks.">
+  <h2>Every creature from the <em>Classic of Mountains and Seas</em></h2>
+  <p>The <em>Shanhaijing</em> (山海经, c. 4th century BCE) describes over 200 mythical beings — beasts that forecast empires, mountains that walk, and rivers that burn. This bestiary catalogs them with original-source texts, new English translations, and tabletop-ready stat blocks.</p>
+
+  <h3>Creatures <span class="zh">神兽</span> ({sorted.length})</h3>
+  <ul>
+    {sorted.map(c => (
+      <li>
+        <a href={`/creatures/${c.data.id}/`}><strong>{c.data.name.en}</strong></a>
+        <span class="zh"> {c.data.name.zh_cn}</span>
+        <em> ({c.data.name.pinyin})</em> — {c.data.taxonomy.category.replace('_', ' ')}
+      </li>
+    ))}
+  </ul>
+
+  <p><em>More entries added weekly.</em></p>
+</Base>

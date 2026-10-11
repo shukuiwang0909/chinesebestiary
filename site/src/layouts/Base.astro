@@ -1,0 +1,55 @@
+---
+interface Props {
+  title: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #1a1a2e;
+      --paper: #faf8f3;
+      --gold: #b8933d;
+      --vermillion: #c0392b;
+    }
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      background: var(--paper);
+      color: var(--ink);
+      max-width: 46rem;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      line-height: 1.7;
+    }
+    header { border-bottom: 2px solid var(--gold); padding-bottom: 1rem; margin-bottom: 2rem; }
+    header h1 { margin: 0; font-size: 1.4rem; }
+    header h1 a { color: var(--ink); text-decoration: none; }
+    .zh { font-family: "Noto Serif SC", "Songti SC", serif; }
+    footer { margin-top: 4rem; padding-top: 1rem; border-top: 1px solid #ddd; font-size: 0.85rem; color: #666; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><a href="/">The Chinese Bestiary <span class="zh">· 中国图鉴</span></a></h1>
+    <div id="search"></div>
+  </header>
+  <slot />
+  <footer>
+    <p>Original texts from the Classic of Mountains and Seas (山海经). Translations are original works of this site.</p>
+  </footer>
+  <script src="/pagefind/pagefind-ui.js" is:inline></script>
+  <script is:inline>
+    window.addEventListener('DOMContentLoaded', () => {
+      new PagefindUI({ element: '#search', showSubResults: true });
+    });
+  </script>
+</body>
+</html>

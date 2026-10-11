@@ -1,0 +1,105 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+export async function getStaticPaths() {
+  const creatures = await getCollection('creatures');
+  return creatures.map(entry => ({
+    params: { slug: entry.data.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+
+const categoryLabels: Record<string, string> = {
+  divine_beast: 'Divine Beast 神兽',
+  fierce_beast: 'Fierce Beast 凶兽',
+  auspicious_beast: 'Auspicious Beast 祥兽',
+  deity: 'Deity 神',
+  strange_being: 'Strange Being 异人',
+  hybrid: 'Hybrid 异兽',
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": d.seo.meta_title,
+  "description": d.seo.meta_description,
+  "about": {
+    "@type": "Thing",
+    "name": d.name.en,
+    "alternateName": [d.name.zh_cn, d.name.pinyin, ...d.name.alt_names],
+  },
+  "inLanguage": "en",
+};
+---
+<Base title={d.seo.meta_title} description={d.seo.meta_description}>
+  <article>
+    <h2>{d.name.en} <span class="zh">{d.name.zh_cn}</span></h2>
+    <p><em>{d.name.pinyin} · Wade-Giles: {d.name.wade_giles}</em></p>
+    <p><strong>{categoryLabels[d.taxonomy.category]}</strong>
+      {d.taxonomy.four_perils && ' · Four Perils 四凶'}
+      {d.taxonomy.four_divine && ' · Four Divine 四灵'}
+    </p>
+
+    <h3>📜 Source Text 原文出处</h3>
+    <p><strong>{d.source.chapter_zh}</strong> · {d.source.chapter_en}</p>
+    {d.source.passages.map(p => (
+      <blockquote>
+        <p class="zh">{p.text_zh}</p>
+        <p><em>{p.text_en}</em></p>
+        {p.note && <p><small>{p.note}</small></p>}
+      </blockquote>
+    ))}
+    {d.source.modern_location && <p><small>Modern location: {d.source.modern_location}</small></p>}
+
+    <h3>📝 Summary</h3>
+    <p>{d.content_summary}</p>
+
+    {d.appearance && (<><h3>🎨 Appearance</h3><p>{d.appearance}</p></>)}
+
+    {d.abilities.length > 0 && (
+      <>
+        <h3>✨ Abilities</h3>
+        <ul>{d.abilities.map(a => <li>{a}</li>)}</ul>
+      </>
+    )}
+
+    {d.symbolism && (<><h3>🏮 Symbolism</h3><p>{d.symbolism}</p></>)}
+
+    <h3>🎬 Cultural References</h3>
+    <table>
+      <thead><tr><th>Work</th><th>Year</th><th>Note</th></tr></thead>
+      <tbody>
+        {d.cultural_references.map(r => (
+          <tr><td>{r.work}</td><td>{r.year}</td><td>{r.note ?? ''}</td></tr>
+        ))}
+      </tbody>
+    </table>
+
+    <Content />
+
+    {d.dnd5e?.stat_block && (
+      <>
+        <h3>🎲 D&D 5E Stat Block</h3>
+        <pre>{d.dnd5e.stat_block}</pre>
+      </>
+    )}
+
+    {d.seo.related_entries.length > 0 && (
+      <>
+        <h3>Related Creatures</h3>
+        <ul>
+          {d.seo.related_entries.map(id => (
+            <li><a href={`/creatures/${id}/`}>{id.replace(/-/g, ' ')}</a></li>
+          ))}
+        </ul>
+      </>
+    )}
+  </article>
+
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+</Base>
