@@ -1,0 +1,62 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('stories');
+  return entries.map(entry => ({
+    params: { slug: entry.data.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+
+const creatures = await getCollection('creatures');
+const related = d.related_creatures
+  .map(id => creatures.find(c => c.data.id === id))
+  .filter(c => c !== undefined);
+---
+
+<Base title={d.seo.meta_title} description={d.seo.meta_description}>
+  <article>
+    <p><a href="/stories/">← All stories</a></p>
+    <h2>{d.title}</h2>
+    <p>
+      <em>{d.source_work}</em><br />
+      <small>{d.era}</small>
+    </p>
+
+    <section class="summary">
+      <p>{d.summary}</p>
+    </section>
+
+    <Content />
+
+    {related.length > 0 && (
+      <>
+        <h3>🦊 Creatures in This Story</h3>
+        <ul>
+          {related.map(c => (
+            <li><a href={`/creatures/${c.data.id}/`}>{c.data.name.en} <span class="zh">{c.data.name.zh_cn}</span></a></li>
+          ))}
+        </ul>
+      </>
+    )}
+  </article>
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": d.seo.meta_title,
+    "description": d.seo.meta_description,
+    "inLanguage": "en",
+    "about": related.map(c => c.data.name.en),
+  })} />
+</Base>
+
+<style>
+  section.summary { border-left: 4px solid var(--gold); background: #fff; border-top: 1px solid #e0d9c8; border-right: 1px solid #e0d9c8; border-bottom: 1px solid #e0d9c8; padding: 0.6rem 1.2rem; margin: 1rem 0; }
+</style>

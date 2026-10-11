@@ -1,0 +1,31 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+const entries = (await getCollection('stories'))
+  .sort((a, b) => a.data.id.localeCompare(b.data.id));
+
+const creatures = await getCollection('creatures');
+const nameOf = (id: string) => creatures.find(c => c.data.id === id)?.data.name.en ?? id;
+---
+
+<Base title="Stories — The Chinese Bestiary" description="Chinese folk tales retold in English, with the original texts: fox spirits, dynasty-killers, and the stories behind the beasts of the Shanhaijing.">
+  <h2>Stories <span class="zh">民间故事</span></h2>
+  <p>The bestiary tells you what each creature is; these pages tell you what it did. Folk tales and legend cycles from the <em>Soushen ji</em>, <em>Fengshen yanyi</em>, <em>Liaozhai</em> and beyond — retold in English with the key original passages quoted, everything sourced from public-domain texts.</p>
+  <ul>
+    {entries.map(e => (
+      <li>
+        <a href={`/stories/${e.data.id}/`}><strong>{e.data.title}</strong></a><br />
+        <small>{e.data.summary.slice(0, 160)}…</small>
+        {e.data.related_creatures.length > 0 && (
+          <><br /><small>Creatures: {e.data.related_creatures.map((id, i) => (<>{i > 0 && ' · '}<a href={`/creatures/${id}/`}>{nameOf(id)}</a></>))}</small></>
+        )}
+      </li>
+    ))}
+  </ul>
+</Base>
+
+<style>
+  ul { line-height: 1.7; }
+  li { margin-bottom: 1rem; }
+</style>

@@ -87,4 +87,22 @@ const realworld = defineCollection({
   }),
 });
 
-export const collections = { creatures, realworld };
+const stories = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/stories' }),
+  schema: z.object({
+    id: z.string(),
+    title: z.string(),
+    source_work: z.string(),
+    era: z.string(),
+    summary: z.string(),
+    related_creatures: z.array(z.string()).default([]),
+    seo: z.object({
+      primary_keyword: z.string(),
+      secondary_keywords: z.array(z.string()).default([]),
+      meta_title: z.string(),
+      meta_description: z.string(),
+    }),
+  }),
+});
+
+export const collections = { creatures, realworld, stories };

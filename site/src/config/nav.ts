@@ -15,7 +15,7 @@ export const NAV_ITEMS: NavItem[] = [
       { label: 'Four Divine 四灵', href: '/four-divine/' },
     ],
   },
-  { label: 'Stories', href: '/stories/', enabled: false },
+  { label: 'Stories', href: '/stories/' },
   { label: 'Real-World', href: '/real-world/' },
   { label: 'Name Generator', href: '/name-generator/', enabled: false },
   { label: 'About', href: '/about/' },

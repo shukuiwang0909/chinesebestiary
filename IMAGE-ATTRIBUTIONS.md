@@ -15,6 +15,7 @@
 | nuwa | nuwa.jpg | 山海经女娲插图 |
 | fenghuang | fenghuang.png | 南山经·凤凰 |
 | queen-mother-of-the-west | queen-mother-of-the-west.jpg | 清版《山海经》西王母图（已核验：Commons Shan Hai Jing - Xi Wangmu.jpg，353×622 精确匹配） |
+| jingwei | jingwei.jpg | 清·陈梦雷等《古今图书集成·禽虫典》精卫图（已核验：Commons Imperial Encyclopaedia - Animal Kingdom - pic130 - 精衛圖.png，1488×1682 精确匹配） |
 | kua-fu | kua-fu.gif | 夸父古图 |
 | xiangliu | xiangliu.png | 海外北经·相柳 |
 | zhulong | zhulong.jpg | 日本图卷·烛阴（烛龙） |
@@ -22,14 +23,6 @@
 | tiangou | tiangou.jpg | 日本《怪奇鳥獣図巻》 |
 | bifang | bifang.png | 《古今图书集成·禽虫典》 |
 | dijiang | dijiang.png | 西山经·帝江 |
-
-## 需要署名（CC BY-SA 4.0）⚠️
-
-| 词条 slug | 文件 | 要求 |
-|---|---|---|
-| jingwei | jingwei.jpg | 页面必须署名作者 + 链接原文件页 + 注明 CC BY-SA 4.0 |
-
-> **替代方案**：若不想处理署名，精卫可改用 `File:三才圖會 13鸟兽 精卫.svg`（公有领域），SVG 转 PNG 后同目录使用。
 
 ## Commons 总分类（备用图库）
 

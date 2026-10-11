@@ -18,6 +18,7 @@ const d = entry.data;
 
 const imageSrc = getCreatureImage(d.id);
 const rwIds = new Set((await getCollection('realworld')).map(e => e.data.id));
+const storyLinks = (await getCollection('stories')).filter(s => s.data.related_creatures.includes(d.id));
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -107,6 +108,16 @@ const jsonLd = {
       <>
         <h3>🌍 Real-World Theories</h3>
         <p>Was the {d.name.en} based on a real animal? <a href={`/real-world/${d.id}/`}>Examine the claim, the evidence, and the verdict →</a></p>
+      </>
+    )}
+    {storyLinks.length > 0 && (
+      <>
+        <h3>📖 Appears in Stories</h3>
+        <ul>
+          {storyLinks.map(s => (
+            <li><a href={`/stories/${s.data.id}/`}>{s.data.title}</a></li>
+          ))}
+        </ul>
       </>
     )}
   </article>
