@@ -1,0 +1,108 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+const creatures = await getCollection('creatures');
+const divine = creatures
+  .filter(c => c.data.taxonomy.four_divine)
+  .sort((a, b) => a.data.id.localeCompare(b.data.id));
+const existing = new Set(creatures.map(c => c.data.id));
+
+const roster = [
+  {
+    id: 'qilin',
+    name_en: 'Qilin', name_zh: '麒麟', pinyin: 'qí lín',
+    domain: 'Benevolence — appears only under a sage ruler; announces the birth or death of great men',
+    source: 'Book of Rites for the grouping; the "captured qilin" of 481 BCE in the Spring and Autumn Annals',
+  },
+  {
+    id: 'fenghuang',
+    name_en: 'Fenghuang', name_zh: '凤凰', pinyin: 'fèng huáng',
+    domain: 'Virtue — its plumage bears the five Confucian virtues; its appearance means the realm is at peace',
+    source: 'Classic of Mountains and Seas, Mount Danxue (南山经 · 丹穴之山)',
+  },
+  {
+    id: 'divine-tortoise',
+    name_en: 'Tortoise', name_zh: '龟', pinyin: 'guī',
+    domain: 'Longevity and divination — its shell reads the will of heaven; Shang oracle bones were its gift',
+    source: 'Book of Rites for the grouping; Shang dynasty oracle-bone inscriptions, c. 13th century BCE',
+  },
+  {
+    id: 'dragon',
+    name_en: 'Dragon', name_zh: '龙', pinyin: 'lóng',
+    domain: 'Water and sovereignty — commands rain and rivers; later the exclusive emblem of the emperor',
+    source: 'Book of Rites for the grouping; the Yinglong rain-dragon of the Classic of Mountains and Seas',
+  },
+];
+
+const metaTitle = 'The Four Divine (四灵): Qilin, Fenghuang, Tortoise & Dragon';
+const metaDescription = 'The Four Divine (四灵) — qilin, fenghuang, tortoise, and dragon: the benevolent quartet of the Book of Rites, counterpart to the Four Perils. Sources and meaning.';
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "The Four Divine (四灵)",
+  "description": metaDescription,
+  "hasPart": divine.map(c => ({
+    "@type": "ListItem",
+    "name": c.data.name.en,
+    "url": `https://chinesebestiary.com/creatures/${c.data.id}/`,
+  })),
+};
+---
+<Base title={metaTitle} description={metaDescription}>
+  <article>
+    <h2>The Four Divine <span class="zh">四灵</span></h2>
+    <p><em>sì líng · Wade-Giles: ssŭ-ling</em></p>
+
+    <p>The Four Divine (四灵) are the good omens of the Chinese bestiary: the qilin, the fenghuang, the tortoise, and the dragon. Where the <a href="/four-perils/">Four Perils</a> embody human vices exiled to the frontiers, the Four Divine gather at the center of a well-ruled world — four kinds of creature whose presence signals that heaven approves of the reign.</p>
+
+    <h3>A Quartet from the Book of Rites</h3>
+    <p>The grouping is canonical early. The <em>Book of Rites</em> (礼记, compiled c. 1st century BCE) defines it in a single sentence:</p>
+    <blockquote>
+      <p class="zh">何谓四灵？麟、凤、龟、龙，谓之四灵。</p>
+      <p><em>"What are the Four Divine? The qilin, the phoenix, the tortoise, and the dragon — these are called the Four Divine."</em></p>
+      <p><small>Book of Rites, "Qu Li" (礼记 · 礼运)</small></p>
+    </blockquote>
+    <p>The passage goes on to promise that under a sage ruler who "keeps" all four, fish do not flee the nets, birds do not scatter, beasts do not bolt — and human affairs stay true. The Four Divine are not guardians to be placated but a complete, harmonious court of nature.</p>
+
+    <h3>Not to Be Confused With</h3>
+    <p>Han cosmology produced a rival quartet: the Four Symbols (四象) — the Azure Dragon, White Tiger, Vermilion Bird, and Black Tortoise — who guard the four cardinal directions. The two rosters overlap in vocabulary but differ in kind. The Vermilion Bird (朱雀) is a fiery southern star-god, not the fenghuang; the Black Tortoise is a chained serpent-tortoise hybrid of the north, not the divinatory tortoise of the rites. And the dragon of the Four Divine is the whole dragon kind — rain-makers of river and cloud — not one directional constellation.</p>
+
+    <h3>The Quartet</h3>
+    <ul>
+      {divine.map(c => (
+        <li>
+          <a href={`/creatures/${c.data.id}/`}><strong>{c.data.name.en}</strong></a>
+          <span class="zh"> {c.data.name.zh_cn}</span> <em>({c.data.name.pinyin})</em><br />
+          {c.data.content_summary}
+        </li>
+      ))}
+    </ul>
+    <p><small>Entries are added as they are catalogued — the roster below shows each member's domain and key source.</small></p>
+
+    <h3>Four Kinds, One Harmonious Court</h3>
+    <table>
+      <thead><tr><th>Divine</th><th>Domain</th><th>Key source</th></tr></thead>
+      <tbody>
+        {roster.map(r => (
+          <tr>
+            <td>
+              {existing.has(r.id)
+                ? <a href={`/creatures/${r.id}/`}>{r.name_en} <span class="zh">{r.name_zh}</span></a>
+                : <>{r.name_en} <span class="zh">{r.name_zh}</span></>}
+              <br /><small><em>{r.pinyin}</em></small>
+            </td>
+            <td>{r.domain}</td>
+            <td>{r.source}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+
+    <h3>Living Names</h3>
+    <p>All four survive in modern Chinese life, more vividly than the Perils. The qilin's name crowns banks and liquor (麒麟); a "qilin child" (麒麟儿) is still a parent's boast for a brilliant son. The fenghuang adorns weddings — paired with a dragon, it stands for the bride. Tortoise longevity blesses birthdays, though calling someone a tortoise is, famously, an insult — language keeps its own ledger. And the dragon (龙) became nothing less than the emblem of China itself, winding from Neolithic clam-shell mosaics to the national parade.</p>
+  </article>
+
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+</Base>
