@@ -1,0 +1,55 @@
+---
+import { NAV_ITEMS } from '../config/nav';
+
+const items = NAV_ITEMS.filter(i => i.enabled !== false);
+const path = Astro.url.pathname;
+
+const isActive = (href: string) =>
+  href === '/' ? path === '/' : path.startsWith(href);
+---
+
+<nav class="site-nav" aria-label="Main">
+  <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+  <label for="nav-toggle" class="nav-toggle-label" aria-label="Menu">☰</label>
+  <ul class="nav-list">
+    <li><a href="/" class:list={[{ active: isActive('/') }]}>Home</a></li>
+    {items.map(item => (
+      <li class:list={[{ 'has-children': item.children }]}>
+        <a href={item.href} class:list={[{ active: isActive(item.href) }]}>{item.label}</a>
+        {item.children && (
+          <ul class="subnav">
+            {item.children.map(child => (
+              <li><a href={child.href} class:list={[{ active: isActive(child.href) }]}>{child.label}</a></li>
+            ))}
+          </ul>
+        )}
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+  .site-nav { margin-top: 0.6rem; }
+  .nav-toggle, .nav-toggle-label { display: none; }
+  .nav-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; }
+  .nav-list > li { position: relative; }
+  .nav-list a { text-decoration: none; color: #555; font-size: 0.95rem; }
+  .nav-list a:hover { color: var(--vermillion); }
+  .nav-list a.active { color: var(--vermillion); border-bottom: 2px solid var(--gold); padding-bottom: 2px; }
+  .subnav {
+    display: none; position: absolute; top: 100%; left: 0; z-index: 10;
+    list-style: none; margin: 0.3rem 0 0; padding: 0.4rem 0.8rem;
+    background: #fff; border: 1px solid #e0d9c8; min-width: 11rem;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.08);
+  }
+  .subnav li { margin: 0.25rem 0; }
+  .has-children:hover .subnav, .has-children:focus-within .subnav { display: block; }
+
+  @media (max-width: 46rem) {
+    .nav-toggle-label { display: block; cursor: pointer; font-size: 1.3rem; color: var(--ink); user-select: none; }
+    .nav-list { display: none; flex-direction: column; gap: 0.6rem; padding: 0.6rem 0; }
+    .nav-toggle:checked ~ .nav-list { display: flex; }
+    .subnav { display: block; position: static; border: none; box-shadow: none; padding-left: 1rem; margin: 0.2rem 0; }
+    .nav-list a { font-size: 1.05rem; }
+  }
+</style>

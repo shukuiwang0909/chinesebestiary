@@ -1,7 +1,8 @@
 ---
-import { existsSync } from 'node:fs';
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import { getCreatureImage } from '../../utils/creatureImage';
+import { CATEGORY_LABELS } from '../../utils/taxonomy';
 
 export async function getStaticPaths() {
   const creatures = await getCollection('creatures');
@@ -15,20 +16,7 @@ const { entry } = Astro.props;
 const { Content } = await render(entry);
 const d = entry.data;
 
-const imageExts = ['jpg', 'png', 'gif', 'webp'];
-const imageExt = imageExts.find(ext =>
-  existsSync(new URL(`../../../public/images/creatures/${d.id}.${ext}`, import.meta.url))
-);
-const imageSrc = imageExt ? `/images/creatures/${d.id}.${imageExt}` : null;
-
-const categoryLabels: Record<string, string> = {
-  divine_beast: 'Divine Beast 神兽',
-  fierce_beast: 'Fierce Beast 凶兽',
-  auspicious_beast: 'Auspicious Beast 祥兽',
-  deity: 'Deity 神',
-  strange_being: 'Strange Being 异人',
-  hybrid: 'Hybrid 异兽',
-};
+const imageSrc = getCreatureImage(d.id);
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -48,7 +36,7 @@ const jsonLd = {
   <article>
     <h2>{d.name.en} <span class="zh">{d.name.zh_cn}</span></h2>
     <p><em>{d.name.pinyin} · Wade-Giles: {d.name.wade_giles}</em></p>
-    <p><strong>{categoryLabels[d.taxonomy.category]}</strong>
+    <p><strong>{CATEGORY_LABELS[d.taxonomy.category]}</strong>
       {d.taxonomy.four_perils && <> · <a href="/four-perils/">Four Perils 四凶</a></>}
       {d.taxonomy.four_divine && <> · <a href="/four-divine/">Four Divine 四灵</a></>}
     </p>

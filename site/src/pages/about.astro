@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+
+const repo = 'https://github.com/shukuiwang0909/chinesebestiary';
+---
+<Base title="About — The Chinese Bestiary" description="Editorial method, sources, and licensing for The Chinese Bestiary: how the Classic of Mountains and Seas is translated, illustrated, and adapted.">
+  <h2>About <span class="zh">关于本站</span></h2>
+
+  <h3>Editorial Method</h3>
+  <p>The Chinese Bestiary catalogs the mythical beings of the <em>Shanhaijing</em> (山海经, <em>Classic of Mountains and Seas</em>, compiled c. 4th century BCE – 2nd century CE). Every entry follows the same discipline:</p>
+  <ul>
+    <li><strong>Original text first.</strong> Passages are quoted verbatim from the received text (Guo Pu commentary tradition) with our own new English translation — no recycled Victorian renditions.</li>
+    <li><strong>Transliteration.</strong> Modern pinyin is primary; Wade-Giles is given where it remains common in English-language scholarship.</li>
+    <li><strong>Sources stated honestly.</strong> Beings attested outside the Shanhaijing — Kun Peng from the <em>Zhuangzi</em>, the Qilin from the <em>Book of Songs</em>, Taowu from the <em>Zuo Zhuan</em> — are labeled with their true source rather than pinned to a passage that does not exist.</li>
+    <li><strong>Game statistics.</strong> D&D 5E stat blocks follow the monster-building tables in the <em>Dungeon Master's Guide</em> (p. 274); proficiency bonus scales with challenge rating per the standard chart.</li>
+  </ul>
+
+  <h3>Sources & Illustrations</h3>
+  <p>Historical illustrations are digitized plates from Ming–Qing editions — Hu Wenhuan's <em>Shanhaijing Tu</em> (胡文焕《山海经图》, Ming), Wang Fu's <em>Shanhaijing Cun</em> (汪绂《山海经存》, 1895), the Chongzhen-era color manuscript, and the <em>Sancai Tuhui</em> — alongside the Japanese <em>Kaiki Chōjū Emaki</em>. These works are in the public domain. The complete per-image attribution list is maintained in <a href={`${repo}/blob/main/IMAGE-ATTRIBUTIONS.md`}>IMAGE-ATTRIBUTIONS.md</a> in our <a href={repo}>GitHub repository</a>.</p>
+
+  <h3>Copyright & Licenses</h3>
+  <ul>
+    <li>English translations and site text: © The Chinese Bestiary.</li>
+    <li>Classical Chinese texts: public domain (ancient works).</li>
+    <li>Historical illustrations: public domain; any CC-licensed exception is credited in the image caption itself and in the attribution file.</li>
+    <li>Stat blocks are compatible with Dungeons & Dragons 5th Edition and based on the <a href="https://dnd.wizards.com/resources/systems-reference-document">Systems Reference Document 5.1</a>, licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">CC-BY-4.0</a> by Wizards of the Coast.</li>
+  </ul>
+
+  <h3>Corrections</h3>
+  <p>Classical Chinese is a living field of argument, and we would rather be corrected than wrong. Spot an error in a translation, an attribution, or a stat block? Open an issue on <a href={repo}>GitHub</a>.</p>
+</Base>

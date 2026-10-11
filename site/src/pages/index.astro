@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
+import CreatureCard from '../components/CreatureCard.astro';
 
 const creatures = await getCollection('creatures');
 const sorted = creatures.sort((a, b) => a.data.id.localeCompare(b.data.id));
@@ -10,15 +11,9 @@ const sorted = creatures.sort((a, b) => a.data.id.localeCompare(b.data.id));
   <p>The <em>Shanhaijing</em> (山海经, c. 4th century BCE) describes over 200 mythical beings — beasts that forecast empires, mountains that walk, and rivers that burn. This bestiary catalogs them with original-source texts, new English translations, and tabletop-ready stat blocks.</p>
 
   <h3>Creatures <span class="zh">神兽</span> ({sorted.length})</h3>
-  <ul>
-    {sorted.map(c => (
-      <li>
-        <a href={`/creatures/${c.data.id}/`}><strong>{c.data.name.en}</strong></a>
-        <span class="zh"> {c.data.name.zh_cn}</span>
-        <em> ({c.data.name.pinyin})</em> — {c.data.taxonomy.category.replace('_', ' ')}
-      </li>
-    ))}
-  </ul>
+  <div class="grid">
+    {sorted.map(c => <CreatureCard creature={c} />)}
+  </div>
 
   <p><em>More entries added weekly.</em></p>
 
@@ -27,4 +22,11 @@ const sorted = creatures.sort((a, b) => a.data.id.localeCompare(b.data.id));
     <li><a href="/four-perils/"><strong>The Four Perils</strong></a> <span class="zh">四凶</span> — Taotie, Hundun, Qiongqi, Taowu: China's villainous quartet, from exiled clans to man-eating beasts</li>
     <li><a href="/four-divine/"><strong>The Four Divine</strong></a> <span class="zh">四灵</span> — Qilin, Fenghuang, Tortoise, Dragon: the benevolent quartet of the Book of Rites</li>
   </ul>
+
+  <!-- P1: Real-World featured -->
+  <!-- P2: Stories + Name Generator -->
 </Base>
+
+<style>
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin: 1rem 0; }
+</style>

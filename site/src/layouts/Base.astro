@@ -2,8 +2,13 @@
 interface Props {
   title: string;
   description: string;
+  image?: string;
 }
-const { title, description } = Astro.props;
+import SiteNav from '../components/SiteNav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+const { title, description, image } = Astro.props;
+const ogImage = image ? new URL(image, Astro.site) : null;
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -12,6 +17,12 @@ const { title, description } = Astro.props;
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={Astro.url.href} />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="The Chinese Bestiary" />
+  {ogImage && <meta property="og:image" content={ogImage.href} />}
   <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
   <style>
     :root {
@@ -33,18 +44,16 @@ const { title, description } = Astro.props;
     header h1 { margin: 0; font-size: 1.4rem; }
     header h1 a { color: var(--ink); text-decoration: none; }
     .zh { font-family: "Noto Serif SC", "Songti SC", serif; }
-    footer { margin-top: 4rem; padding-top: 1rem; border-top: 1px solid #ddd; font-size: 0.85rem; color: #666; }
   </style>
 </head>
 <body>
   <header>
     <h1><a href="/">The Chinese Bestiary <span class="zh">· 中国图鉴</span></a></h1>
+    <SiteNav />
     <div id="search"></div>
   </header>
   <slot />
-  <footer>
-    <p>Original texts from the Classic of Mountains and Seas (山海经). Translations are original works of this site.</p>
-  </footer>
+  <SiteFooter />
   <script src="/pagefind/pagefind-ui.js" is:inline></script>
   <script is:inline>
     window.addEventListener('DOMContentLoaded', () => {

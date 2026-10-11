@@ -1,0 +1,38 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getCreatureImage } from '../utils/creatureImage';
+import { CATEGORY_LABELS } from '../utils/taxonomy';
+
+interface Props {
+  creature: CollectionEntry<'creatures'>;
+}
+const { creature } = Astro.props;
+const d = creature.data;
+const img = getCreatureImage(d.id);
+---
+
+<a class="card" href={`/creatures/${d.id}/`}>
+  {img
+    ? <img src={img} alt={`${d.name.en} (${d.name.zh_cn})`} loading="lazy" />
+    : <span class="placeholder" aria-hidden="true">{d.name.zh_cn.slice(0, 1)}</span>}
+  <span class="names">
+    <strong>{d.name.en}</strong>
+    <span class="zh">{d.name.zh_cn}</span>
+    <em>{d.name.pinyin}</em>
+  </span>
+  <span class="badge">{CATEGORY_LABELS[d.taxonomy.category]}</span>
+</a>
+
+<style>
+  .card {
+    display: flex; flex-direction: column; gap: 0.4rem;
+    border: 1px solid #e0d9c8; background: #fff; padding: 0.8rem;
+    text-decoration: none; color: var(--ink);
+  }
+  .card:hover { border-color: var(--gold); box-shadow: 2px 2px 6px rgba(184,147,61,0.25); }
+  .card img { width: 100%; height: 140px; object-fit: contain; background: #fff; border: 1px solid #eee; }
+  .placeholder { display: flex; align-items: center; justify-content: center; height: 140px; font-size: 3rem; color: var(--gold); background: #f5f1e8; border: 1px solid #eee; }
+  .names { display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: baseline; }
+  .names em { color: #888; font-size: 0.85rem; }
+  .badge { font-size: 0.78rem; color: var(--vermillion); }
+</style>

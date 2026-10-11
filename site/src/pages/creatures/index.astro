@@ -1,0 +1,41 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import CreatureCard from '../../components/CreatureCard.astro';
+import { CATEGORY_LABELS, CATEGORY_ORDER } from '../../utils/taxonomy';
+
+const creatures = await getCollection('creatures');
+const byCategory = new Map<string, typeof creatures>();
+for (const c of creatures) {
+  const list = byCategory.get(c.data.taxonomy.category) ?? [];
+  list.push(c);
+  byCategory.set(c.data.taxonomy.category, list);
+}
+const groups = CATEGORY_ORDER
+  .filter(cat => byCategory.has(cat))
+  .map(cat => ({
+    cat,
+    label: CATEGORY_LABELS[cat],
+    items: (byCategory.get(cat) ?? []).sort((a, b) => a.data.id.localeCompare(b.data.id)),
+  }));
+---
+<Base title="All Creatures — The Chinese Bestiary" description="Every mythical creature cataloged in the Classic of Mountains and Seas (山海经): original texts, new translations, historical illustrations, and D&D 5E stat blocks.">
+  <h2>All Creatures <span class="zh">神兽总目</span></h2>
+  <p>Every entry in the bestiary, grouped by kind. Looking for something specific? Search any name in the box above.</p>
+  <ul class="toc">
+    {groups.map(g => <li><a href={`#${g.cat}`}>{g.label}</a> ({g.items.length})</li>)}
+  </ul>
+  {groups.map(g => (
+    <section id={g.cat}>
+      <h3>{g.label}</h3>
+      <div class="grid">
+        {g.items.map(c => <CreatureCard creature={c} />)}
+      </div>
+    </section>
+  ))}
+</Base>
+
+<style>
+  .toc { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; list-style: none; padding: 0; font-size: 0.95rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin: 1rem 0 2rem; }
+</style>
