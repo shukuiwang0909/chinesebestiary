@@ -39,7 +39,7 @@ cultural_references:
   - { work: "Honor of Kings (王者荣耀)", year: 2015, note: "Playable hero Nüwa" }
   - { work: "Ne Zha (animated film)", year: 2019, note: "The Spirit Pearl and Demon Orb derive from the primordial pearl of the Nüwa-told creation myth" }
 media:
-  historical_illustration: "Han dynasty pictorial stone, Fuxi–Nüwa entwined-tails motif (rubbing), public domain"
+  historical_illustration: "Ming dynasty, Jiang Yinghao's Illustrated Classic of Mountains and Seas (山海经图绘全像, late 16th century), public domain"
   ai_art_prompt: "An ancient Chinese creator goddess with a regal woman's face and torso rising from a massive coiling serpent tail of iridescent scales, holding five glowing colored stones aloft before a cracked dome of heaven, flowing ribbons and clay figures coming to life at her feet, dark fantasy illustration, traditional Chinese ink wash texture, muted gold and vermillion palette, bestiary plate style, white background, ultra-detailed"
 dnd5e:
   name: "Nüwa (Creator Goddess)"

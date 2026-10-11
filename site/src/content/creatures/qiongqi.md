@@ -39,7 +39,7 @@ cultural_references:
   - { work: "Shen Yi Jing (神异经)", year: "Han compendium", note: "Source of its inverted justice: it eats the party in the right and rewards the wicked" }
   - { work: "Records of the Grand Historian (史记)", year: "Han history", note: "Shun banishes Qiongqi and the other three Perils to the four frontiers" }
 media:
-  historical_illustration: "Qing dynasty, Complete Collection of Illustrations and Writings from the Earliest to Current Times (古今图书集成, 1726), public domain"
+  historical_illustration: "Qing dynasty, Wang Fu's Shanhaijing Cun (山海经存, printed 1895), public domain"
   ai_art_prompt: "A monstrous winged tiger with tattered storm-cloud wings spread wide, jaws closing over a fallen warrior, bristling iron-dark fur, coils of wind spiraling around its claws, dark fantasy illustration, traditional Chinese ink wash texture, muted gold and vermillion palette, bestiary plate style, white background, ultra-detailed"
 dnd5e:
   name: "Qiongqi (Winged Devourer)"

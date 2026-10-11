@@ -37,7 +37,7 @@ cultural_references:
   - { work: "Sanwu Liji (三五历纪)", year: "3rd-century CE text", note: "Xu Zheng's Pangu myth — the primal Hundun split open at creation" }
   - { work: "Smite", year: 2023, note: "Hun Dun, the Faceless — playable Chinese god of chaos" }
 media:
-  historical_illustration: "Qing dynasty, Wu Renchen's Illustrated Amplification of the Classic of Mountains and Seas (Shanhaijing Guangzhu, 1667), public domain"
+  historical_illustration: "Ming dynasty, Hu Wenhuan's Illustrations of the Classic of Mountains and Seas (山海经图, 16th century), public domain — the original Dijiang 帝江"
   ai_art_prompt: "A faceless, sack-bodied creature flushed crimson as cinnabar fire over golden yellow, six clawed legs, four small wings, no eyes or mouth, dancing on a mountain of gold and jade, dark fantasy illustration, traditional Chinese ink wash texture, muted gold and vermillion palette, bestiary plate style, white background, ultra-detailed"
 dnd5e:
   name: "Hundun (Faceless Chaos)"

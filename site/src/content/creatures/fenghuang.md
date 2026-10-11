@@ -37,7 +37,7 @@ cultural_references:
   - { work: "Mulan (Disney live-action)", year: 2020, note: "The phoenix replaces Mushu as the family guardian emblem — huge exposure for Western audiences" }
   - { work: "The Dragon and Phoenix Bring Blessing (龙凤呈祥)", year: "Peking opera", note: "The pairing with the dragon as China's ultimate auspicious formula" }
 media:
-  historical_illustration: "Qing dynasty, Wu Renchen's Illustrated Expanded Commentary on the Classic of Mountains and Seas (山海经广注, 1667), public domain"
+  historical_illustration: "Ming dynasty, Hu Wenhuan's Illustrations of the Classic of Mountains and Seas (山海经图, 16th century), public domain"
   ai_art_prompt: "A resplendent fenghuang, crested rooster-bodied bird with five-colored plumage in vermillion, azure, gold, white and black, faint character-like patterns traced in its feathers, long ribbon tail feathers flowing, perched on a gold-veined jade mountain peak, dark fantasy illustration, traditional Chinese ink wash texture, muted gold and vermillion palette, bestiary plate style, white background, ultra-detailed"
 dnd5e:
   name: "Fenghuang (Chinese Phoenix)"

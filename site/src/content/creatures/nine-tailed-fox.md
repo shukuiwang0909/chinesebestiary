@@ -37,7 +37,7 @@ cultural_references:
   - { work: "League of Legends", year: 2011, note: "Ahri — likely the biggest modern exposure for Western audiences" }
   - { work: "Black Myth: Wukong", year: 2024 }
 media:
-  historical_illustration: "Ming dynasty, Hu Wenhuan edition (1593), public domain"
+  historical_illustration: "Qing dynasty illustrated edition of the Classic of Mountains and Seas, public domain"
   ai_art_prompt: "A majestic fox with nine flowing tails, flame-red fur fading to gold at the tips, golden eyes, seated on a jade-green mountain slope, dark fantasy illustration, muted gold and vermillion palette, bestiary plate style, white background, ultra-detailed"
 dnd5e:
   name: "Jiuweihu (Nine-Tailed Fox)"

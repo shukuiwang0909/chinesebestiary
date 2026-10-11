@@ -1,4 +1,5 @@
 ---
+import { existsSync } from 'node:fs';
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 
@@ -13,6 +14,12 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 const d = entry.data;
+
+const imageExts = ['jpg', 'png', 'gif', 'webp'];
+const imageExt = imageExts.find(ext =>
+  existsSync(new URL(`../../../public/images/creatures/${d.id}.${ext}`, import.meta.url))
+);
+const imageSrc = imageExt ? `/images/creatures/${d.id}.${imageExt}` : null;
 
 const categoryLabels: Record<string, string> = {
   divine_beast: 'Divine Beast 神兽',
@@ -34,6 +41,7 @@ const jsonLd = {
     "alternateName": [d.name.zh_cn, d.name.pinyin, ...d.name.alt_names],
   },
   "inLanguage": "en",
+  ...(imageSrc && { "image": `https://chinesebestiary.com${imageSrc}` }),
 };
 ---
 <Base title={d.seo.meta_title} description={d.seo.meta_description}>
@@ -44,6 +52,13 @@ const jsonLd = {
       {d.taxonomy.four_perils && <> · <a href="/four-perils/">Four Perils 四凶</a></>}
       {d.taxonomy.four_divine && <> · <a href="/four-divine/">Four Divine 四灵</a></>}
     </p>
+
+    {imageSrc && (
+      <figure>
+        <img src={imageSrc} alt={`${d.name.en} (${d.name.zh_cn}) — historical illustration`} loading="lazy" />
+        {d.media?.historical_illustration && <figcaption><small>{d.media.historical_illustration}</small></figcaption>}
+      </figure>
+    )}
 
     <h3>📜 Source Text 原文出处</h3>
     <p><strong>{d.source.chapter_zh}</strong> · {d.source.chapter_en}</p>
@@ -103,3 +118,9 @@ const jsonLd = {
 
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 </Base>
+
+<style>
+  figure { margin: 1.5rem 0; text-align: center; }
+  figure img { max-width: 100%; max-height: 420px; border: 1px solid #e0d9c8; padding: 0.5rem; background: #fff; }
+  figcaption { font-size: 0.85rem; color: #666; margin-top: 0.4rem; }
+</style>

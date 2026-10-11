@@ -37,7 +37,7 @@ cultural_references:
   - { work: "Houmuwu Ding (后母戊鼎) and other Shang bronzes", year: "Shang dynasty", note: "ritual ding and zun vessels wrapped in the symmetrical 'taotie mask'" }
   - { work: "The Great Wall (长城)", year: 2016, note: "Zhang Yimou's film turned the taotie into a swarm of invading monsters for Western audiences" }
 media:
-  historical_illustration: "Shang dynasty bronze ritual ding bearing taotie mask motifs (e.g., Houmuwu Ding), public domain"
+  historical_illustration: "Ming dynasty, Hu Wenhuan's Illustrations of the Classic of Mountains and Seas (山海经图, 16th century), public domain"
   ai_art_prompt: "A colossal beast with the woolly body of a ram and the scowling face of a human, its eyes gleaming in the hollows of its armpits, tiger fangs bared above long human claws, crouched over a mound of shattered bronze vessels and bones, dark fantasy illustration, traditional Chinese ink wash texture, muted gold and vermillion palette, bestiary plate style, white background, ultra-detailed"
 dnd5e:
   name: "Taotie (Paoxiao)"
