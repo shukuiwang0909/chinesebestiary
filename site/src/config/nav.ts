@@ -16,7 +16,7 @@ export const NAV_ITEMS: NavItem[] = [
     ],
   },
   { label: 'Stories', href: '/stories/', enabled: false },
-  { label: 'Real-World', href: '/real-world/', enabled: false },
+  { label: 'Real-World', href: '/real-world/' },
   { label: 'Name Generator', href: '/name-generator/', enabled: false },
   { label: 'About', href: '/about/' },
 ];

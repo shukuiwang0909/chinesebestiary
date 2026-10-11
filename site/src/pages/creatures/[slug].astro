@@ -17,6 +17,7 @@ const { Content } = await render(entry);
 const d = entry.data;
 
 const imageSrc = getCreatureImage(d.id);
+const rwIds = new Set((await getCollection('realworld')).map(e => e.data.id));
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -100,6 +101,12 @@ const jsonLd = {
             <li><a href={`/creatures/${id}/`}>{id.replace(/-/g, ' ')}</a></li>
           ))}
         </ul>
+      </>
+    )}
+    {rwIds.has(d.id) && (
+      <>
+        <h3>🌍 Real-World Theories</h3>
+        <p>Was the {d.name.en} based on a real animal? <a href={`/real-world/${d.id}/`}>Examine the claim, the evidence, and the verdict →</a></p>
       </>
     )}
   </article>

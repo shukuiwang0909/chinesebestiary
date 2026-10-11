@@ -1,0 +1,20 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+const entries = (await getCollection('realworld'))
+  .sort((a, b) => a.data.id.localeCompare(b.data.id));
+---
+<Base title="Real-World Theories — The Chinese Bestiary" description="Was the nine-tailed fox a real animal? Every page takes the internet's wildest Shanhaijing origin theory seriously enough to check it: the claim, the evidence, what scholars say, and a verdict.">
+  <h2>Real-World Theories <span class="zh">现实原型</span></h2>
+  <p>The internet claims every mythical beast was real — that the nine-tailed fox was a red panda, that dragons were dinosaurs, that the Shanhaijing is a misread field guide to a lost world. Each page here takes one such claim seriously enough to check it: the claim, the evidence its supporters cite, what scholars actually say, and a verdict.</p>
+  <ul>
+    {entries.map(e => (
+      <li>
+        <a href={`/real-world/${e.data.id}/`}><strong>{e.data.seo.meta_title}</strong></a>
+        <em> — verdict: {e.data.verdict}</em><br />
+        <small>{e.data.claim.slice(0, 140)}…</small>
+      </li>
+    ))}
+  </ul>
+</Base>

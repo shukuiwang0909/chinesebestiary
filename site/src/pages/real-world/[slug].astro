@@ -1,0 +1,80 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('realworld');
+  return entries.map(entry => ({
+    params: { slug: entry.data.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+
+const creature = (await getCollection('creatures')).find(c => c.data.id === d.id);
+
+const verdictColors: Record<string, string> = {
+  likely: '#2e7d32',
+  unlikely: '#c0392b',
+  dubious: '#b8933d',
+  unverified: '#666',
+};
+---
+<Base title={d.seo.meta_title} description={d.seo.meta_description}>
+  <article>
+    <p><a href="/real-world/">← All real-world theories</a>
+      {creature && <> · <a href={`/creatures/${d.id}/`}>The myth: {creature.data.name.en} <span class="zh">{creature.data.name.zh_cn}</span></a></>}
+    </p>
+    <h2>{d.seo.meta_title}</h2>
+
+    <section class="claim">
+      <h3>🎙️ The Claim</h3>
+      <p>{d.claim}</p>
+    </section>
+
+    <section>
+      <h3>📌 The Evidence They Cite</h3>
+      <p>{d.evidence}</p>
+    </section>
+
+    <section class="scholars">
+      <h3>🎓 What Scholars Say</h3>
+      <p>{d.scholars_say}</p>
+    </section>
+
+    <section>
+      <h3>⚖️ The Verdict</h3>
+      <p><strong style={`color:${verdictColors[d.verdict]}; font-size:1.3rem; letter-spacing:0.08em;`}>{d.verdict.toUpperCase()}</strong></p>
+      <Content />
+    </section>
+
+    {d.candidates.length > 0 && (
+      <>
+        <h3>🔍 The Candidates</h3>
+        <div class="candidates">
+          {d.candidates.map(c => (
+            <figure>
+              <img src={c.image} alt={c.name} loading="lazy" />
+              <figcaption>
+                <strong>{c.name}</strong><br />
+                <small><a href={c.source_url} rel="noopener">{c.license}</a></small>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </>
+    )}
+  </article>
+</Base>
+
+<style>
+  section { border: 1px solid #e0d9c8; background: #fff; padding: 0.6rem 1.2rem; margin: 1rem 0; }
+  .scholars { border-left: 4px solid var(--gold); }
+  .candidates { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+  .candidates figure { margin: 0; border: 1px solid #eee; padding: 0.5rem; background: #fff; }
+  .candidates img { width: 100%; height: 150px; object-fit: cover; }
+  .candidates figcaption { font-size: 0.85rem; color: #666; margin-top: 0.4rem; }
+</style>

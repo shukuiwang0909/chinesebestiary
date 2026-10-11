@@ -65,4 +65,26 @@ const creatures = defineCollection({
   }),
 });
 
-export const collections = { creatures };
+const realworld = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/realworld' }),
+  schema: z.object({
+    id: z.string(),
+    claim: z.string(),
+    evidence: z.string(),
+    scholars_say: z.string(),
+    verdict: z.enum(['likely', 'unlikely', 'dubious', 'unverified']),
+    candidates: z.array(z.object({
+      name: z.string(),
+      image: z.string(),
+      license: z.string(),
+      source_url: z.string(),
+    })).default([]),
+    seo: z.object({
+      primary_keyword: z.string(),
+      meta_title: z.string(),
+      meta_description: z.string(),
+    }),
+  }),
+});
+
+export const collections = { creatures, realworld };
