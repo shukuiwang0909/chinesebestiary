@@ -24,6 +24,13 @@ const ogImage = image ? new URL(image, Astro.site) : null;
   <meta property="og:site_name" content="The Chinese Bestiary" />
   {ogImage && <meta property="og:image" content={ogImage.href} />}
   <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+  <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-8D19N0VGQP"></script>
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-8D19N0VGQP');
+  </script>
   <style>
     :root {
       --ink: #1a1a2e;
