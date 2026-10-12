@@ -1,0 +1,435 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { getCreatureImage } from '../utils/creatureImage';
+
+const CATEGORY_LABELS: Record<string, string> = {
+  divine_beast: 'Divine Beast',
+  fierce_beast: 'Fierce Beast',
+  auspicious_beast: 'Auspicious Beast',
+  deity: 'Deity',
+  strange_being: 'Strange Being',
+  hybrid: 'Hybrid',
+};
+
+const beasts = (await getCollection('creatures')).map(c => ({
+  slug: c.data.id,
+  en: c.data.name.en,
+  zh: c.data.name.zh_cn,
+  pinyin: c.data.name.pinyin,
+  element: c.data.taxonomy.element,
+  category: c.data.taxonomy.category,
+  categoryLabel: CATEGORY_LABELS[c.data.taxonomy.category] ?? c.data.taxonomy.category,
+  image: getCreatureImage(c.data.id),
+}));
+
+const title = 'Chinese Fantasy Name Generator — Xianxia & Cultivation Dao Names';
+const description = 'Forge your cultivation name (道号): daoist titles, xianxia realms from Qi Refining to Tribulation Transcendence, a five-element affinity, and a guardian beast drawn from the Classic of Mountains and Seas.';
+---
+
+<Base title={title} description={description}>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a dao hao (道号)?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A dao hao is the religious or literary name a Chinese cultivator, monk, or scholar takes on initiation — the 'Perfected One of Purple Sky' style of name familiar from xianxia novels. It typically combines a two-character poetic epithet (often a place, celestial phenomenon, or virtue) with a title such as zhenren (Perfected One), zi (Master), or jun (Lord)." }
+      },
+      {
+        "@type": "Question",
+        "name": "Are the generated names real Chinese names?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Every morpheme is a real classical Chinese word with attested meanings — names like Lingxiao (Sky-Piercing) or Guixu (Returning Void, the mythic whirlpool where all waters end) come from genuine texts, not random syllables. The combinations are invented, as all dao hao are." }
+      },
+      {
+        "@type": "Question",
+        "name": "What do the cultivation realms mean?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The realm ladder follows modern xianxia convention: Qi Refining (炼气), Foundation Establishment (筑基), Golden Core (金丹), Nascent Soul (元婴), Spirit Transformation (化神), Unity (合体), Great Ascension (大乘), and Tribulation Transcendence (渡劫). The system descends from 20th-century wuxia novels and was codified by web novels." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use a generated name in my novel or game?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Individual names are not copyrightable, and every component here is built from public-domain classical vocabulary. Use them freely for characters, sects, weapons, or usernames." }
+      }
+    ]
+  })} />
+
+  <h2>Name Generator <span class="zh">道号生成器</span></h2>
+
+  <p class="lede">Every cultivator needs a name worthy of tribulation lightning. This generator forges a complete <strong>xianxia identity</strong> in the classical style: a <em>dao hao</em> (道号) built from real classical morphemes, a cultivation realm, a five-element affinity — and a <strong>guardian beast drawn from the original 4th-century BCE bestiary</strong>, each linked to its full entry.</p>
+
+  <div class="generator">
+    <div class="controls">
+      <label>
+        Path <span class="zh">道途</span>
+        <select id="gen-path">
+          <option value="any">Fate decides</option>
+          <option value="sword">Sword Cultivator 剑修</option>
+          <option value="dao">Dao Cultivator 道修</option>
+          <option value="arcana">Arcana Cultivator 玄修</option>
+          <option value="nature">Spirit Cultivator 灵修</option>
+          <option value="shadow">Shadow Cultivator 幽修</option>
+        </select>
+      </label>
+      <label>
+        Element <span class="zh">五行</span>
+        <select id="gen-element">
+          <option value="any">Fate decides</option>
+          <option value="fire">Fire 火</option>
+          <option value="water">Water 水</option>
+          <option value="wood">Wood 木</option>
+          <option value="metal">Metal 金</option>
+          <option value="earth">Earth 土</option>
+          <option value="wind">Wind 风</option>
+          <option value="thunder">Thunder 雷</option>
+        </select>
+      </label>
+      <button id="gen-btn" class="forge-btn" type="button">Forge My Name <span class="zh">铸名</span></button>
+    </div>
+
+    <div class="result" id="gen-result" hidden>
+      <div class="result-main">
+        <div class="seal" aria-hidden="true">名</div>
+        <div class="result-name-block">
+          <div class="result-zh zh" id="r-zh">—</div>
+          <div class="result-pinyin" id="r-pinyin"></div>
+          <div class="result-gloss" id="r-gloss"></div>
+        </div>
+      </div>
+      <dl class="result-meta">
+        <div><dt>Realm</dt><dd id="r-realm"></dd></div>
+        <div><dt>Path</dt><dd id="r-path"></dd></div>
+        <div><dt>Element</dt><dd id="r-element"></dd></div>
+      </dl>
+      <div class="guardian" id="r-guardian"></div>
+      <div class="result-actions">
+        <button id="copy-btn" class="ghost-btn" type="button">Copy result</button>
+        <button id="again-btn" class="ghost-btn" type="button">Forge again</button>
+      </div>
+    </div>
+
+    <div class="history" id="gen-history" hidden>
+      <h3>Previous names <span class="zh">前世</span></h3>
+      <ul id="history-list"></ul>
+    </div>
+  </div>
+
+  <h3>How xianxia names work <span class="zh">取名之道</span></h3>
+  <p>A classic <em>dao hao</em> has two parts. The <strong>epithet</strong> is usually a two-character image drawn from nature or cosmology — Purple Sky (紫霄), Azure Firmament (青冥), Returning Void (归墟), the whirlpool where the world's rivers end. The <strong>title</strong> declares status: <em>zhenren</em> (真人, Perfected One) for accomplished masters, <em>zi</em> (子, Master) in the style of Laozi, <em>jianxian</em> (剑仙, Sword Immortal) for those who solve problems with flying swords.</p>
+  <p>Several epithets in this generator are lifted straight from the <em>Shanhaijing</em> bestiary: <strong>Torch-Illumination</strong> (烛照) from the candle-dragon Zhulong, <strong>Stone-Holding</strong> (衔石) from Jingwei the bird who fills the ocean, <strong>Sun-Chasing</strong> (逐日) from Kuafu, <strong>Fire-Bathing</strong> (浴火) from the Fenghuang, and <strong>Heaven-Devouring</strong> (吞天) from the Taotie. Take one, and the matching guardian beast is already waiting in the card above.</p>
+
+  <h3>FAQ</h3>
+  <details>
+    <summary>What is a dao hao (道号)?</summary>
+    <p>A dao hao is the religious or literary name a Chinese cultivator, monk, or scholar takes on initiation — the "Perfected One of Purple Sky" style familiar from xianxia novels. It typically combines a two-character poetic epithet with a title such as <em>zhenren</em> (Perfected One), <em>zi</em> (Master), or <em>jun</em> (Lord).</p>
+  </details>
+  <details>
+    <summary>Are these real Chinese words?</summary>
+    <p>Yes — every morpheme is a real classical word with attested meaning. The combinations are invented, as all dao hao are; individual names are not copyrightable, so use them freely in novels, games, or usernames.</p>
+  </details>
+  <details>
+    <summary>What do the cultivation realms mean?</summary>
+    <p>The ladder follows modern xianxia convention: Qi Refining, Foundation Establishment, Golden Core, Nascent Soul, Spirit Transformation, Unity, Great Ascension, and Tribulation Transcendence. It descends from 20th-century wuxia and was codified by Chinese web novels.</p>
+  </details>
+</Base>
+
+<script type="application/json" id="gen-data" set:html={JSON.stringify({ beasts })}></script>
+
+<script is:inline>
+(function () {
+  var data = JSON.parse(document.getElementById('gen-data').textContent);
+  var beasts = data.beasts;
+
+  // Epithets: [zh, pinyin, gloss, optional beastSlug]
+  var EPITHETS = [
+    ['紫霄', 'Zǐxiāo', 'Purple Sky', null],
+    ['青冥', 'Qīngmíng', 'Azure Firmament', null],
+    ['太虚', 'Tàixū', 'Grand Void', null],
+    ['凌霄', 'Língxiāo', 'Sky-Piercing', null],
+    ['玄霜', 'Xuánshuāng', 'Mysterious Frost', null],
+    ['沧溟', 'Cāngmíng', 'Azure Depths', null],
+    ['昊天', 'Hàotiān', 'Vast Heaven', null],
+    ['琅嬛', 'Lánghuán', 'Gem-Grove', null],
+    ['赤焰', 'Chìyàn', 'Crimson Flame', null],
+    ['惊雷', 'Jīngléi', 'Startling Thunder', null],
+    ['流云', 'Liúyún', 'Drifting Clouds', null],
+    ['寒渊', 'Hányuān', 'Cold Abyss', null],
+    ['曦和', 'Xīhé', 'Morning Sun', null],
+    ['九曜', 'Jiǔyào', 'Nine Luminaries', null],
+    ['归墟', 'Guīxū', 'Returning Void', null],
+    ['烛照', 'Zhúzhào', 'Torch-Illumination', 'zhulong'],
+    ['衔石', 'Xiánshí', 'Stone-Holding', 'jingwei'],
+    ['逐日', 'Zhúrì', 'Sun-Chasing', 'kua-fu'],
+    ['浴火', 'Yùhuǒ', 'Fire-Bathing', 'fenghuang'],
+    ['九尾', 'Jiǔwěi', 'Nine-Tailed', 'nine-tailed-fox'],
+    ['吞天', 'Tūntiān', 'Heaven-Devouring', 'taotie'],
+    ['衔火', 'Xiánhuǒ', 'Fire-Carrying', 'bifang'],
+    ['应龙', 'Yìnglóng', 'Responsive Dragon', null],
+  ];
+
+  var TITLES = [
+    ['真人', 'Zhēnrén', 'Perfected One'],
+    ['子', 'Zǐ', 'Master'],
+    ['道人', 'Dàorén', 'Wayfarer'],
+    ['居士', 'Jūshì', 'Retired Scholar'],
+    ['仙君', 'Xiānjūn', 'Immortal Lord'],
+    ['散人', 'Sǎnrén', 'Free Wanderer'],
+    ['天尊', 'Tiānzūn', 'Heavenly Honored One'],
+    ['仙子', 'Xiānzǐ', 'Immortal Master'],
+  ];
+
+  var PATHS = {
+    sword:   { label: 'Sword Cultivator 剑修', titles: [['剑仙', 'Jiànxiān', 'Sword Immortal'], ['剑主', 'Jiànzhǔ', 'Sword Sovereign'], ['剑痴', 'Jiànchī', 'Sword Fanatic']], epithets: ['藏锋', '无名', '断岳', '飞雪'] },
+    dao:     { label: 'Dao Cultivator 道修',   titles: [['真人', 'Zhēnrén', 'Perfected One'], ['道人', 'Dàorén', 'Wayfarer'], ['天尊', 'Tiānzūn', 'Heavenly Honored One']], epithets: ['抱朴', '守一', '无为', '观复'] },
+    arcana:  { label: 'Arcana Cultivator 玄修', titles: [['仙君', 'Xiānjūn', 'Immortal Lord'], ['天师', 'Tiānshī', 'Heavenly Master'], ['星君', 'Xīngjūn', 'Star Lord']], epithets: ['观星', '紫微', '太乙', '玄机'] },
+    nature:  { label: 'Spirit Cultivator 灵修', titles: [['灵君', 'Língjūn', 'Spirit Lord'], ['药圣', 'Yàoshèng', 'Sage of Medicine'], ['山人', 'Shānrén', 'Mountain Hermit']], epithets: ['百草', '回春', '栖梧', '驭风'] },
+    shadow:  { label: 'Shadow Cultivator 幽修', titles: [['冥君', 'Míngjūn', 'Nether Lord'], ['夜帝', 'Yèdì', 'Night Emperor'], ['隐者', 'Yǐnzhě', 'Hidden One']], epithets: ['无影', '渡魂', '蚀月', '九幽'] },
+  };
+
+  // [zh, pinyin] for path-biased epithets (gloss omitted, built from PATHS label context)
+  var PATH_EPITHET_GLOSS = { '藏锋': 'Hidden Edge', '无名': 'Nameless', '断岳': 'Peak-Splitting', '飞雪': 'Flying Snow', '抱朴': 'Embracing Simplicity', '守一': 'Guarding the One', '无为': 'Non-Action', '观复': 'Observing Return', '观星': 'Star-Gazing', '紫微': 'Purple Tenuity', '太乙': 'Supreme One', '玄机': 'Arcane Mechanism', '百草': 'Hundred Herbs', '回春': 'Returning Spring', '栖梧': 'Roosting on Wutong', '驭风': 'Wind-Driving', '无影': 'Shadowless', '渡魂': 'Ferrying Souls', '蚀月': 'Moon-Eroding', '九幽': 'Nine Darknesses' };
+
+  var REALMS = [
+    ['炼气期', 'Liànqì', 'Qi Refining'],
+    ['筑基期', 'Zhùjī', 'Foundation Establishment'],
+    ['金丹期', 'Jīndān', 'Golden Core'],
+    ['元婴期', 'Yuányīng', 'Nascent Soul'],
+    ['化神期', 'Huàshén', 'Spirit Transformation'],
+    ['合体期', 'Hétǐ', 'Unity'],
+    ['大乘期', 'Dàchéng', 'Great Ascension'],
+    ['渡劫期', 'Dùjié', 'Tribulation Transcendence'],
+  ];
+
+  var ELEMENTS = { fire: 'Fire 火', water: 'Water 水', wood: 'Wood 木', metal: 'Metal 金', earth: 'Earth 土', wind: 'Wind 风', thunder: 'Thunder 雷' };
+  var PINYIN = { '藏锋': 'Cángfēng', '无名': 'Wúmíng', '断岳': 'Duànyuè', '飞雪': 'Fēixuě', '抱朴': 'Bàopǔ', '守一': 'Shǒuyī', '无为': 'Wúwéi', '观复': 'Guānfù', '观星': 'Guānxīng', '紫微': 'Zǐwēi', '太乙': 'Tàiyǐ', '玄机': 'Xuánjī', '百草': 'Bǎicǎo', '回春': 'Huíchūn', '栖梧': 'Qīwú', '驭风': 'Yùfēng', '无影': 'Wúyǐng', '渡魂': 'Dùhún', '蚀月': 'Shíyuè', '九幽': 'Jiǔyōu' };
+
+  var SURNAMES = [['云', 'Yún'], ['楚', 'Chǔ'], ['白', 'Bái'], ['沈', 'Shěn'], ['顾', 'Gù'], ['叶', 'Yè'], ['苏', 'Sū'], ['秦', 'Qín'], ['洛', 'Luò'], ['萧', 'Xiāo'], ['凌', 'Líng'], ['江', 'Jiāng']];
+  var GIVEN = [['昭', 'Zhāo', 'Clear-Brilliance'], ['翎', 'Líng', 'Plume'], ['珩', 'Héng', 'Jade Ornament'], ['瑶', 'Yáo', 'Fine Jade'], ['玦', 'Jué', 'Broken Ring'], ['阑', 'Lán', 'Railing at Dusk'], ['湛', 'Zhàn', 'Deep Clarity'], ['徊', 'Huái', 'Wandering'], ['烬', 'Jìn', 'Ember'], ['昙', 'Tán', 'Epiphyllum Bloom'], ['霄', 'Xiāo', 'Heavens'], ['朔', 'Shuò', 'New Moon']];
+
+  function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+  function generate() {
+    var pathId = document.getElementById('gen-path').value;
+    var elementId = document.getElementById('gen-element').value;
+    var path = pathId === 'any' ? null : PATHS[pathId];
+
+    var nameZh, namePy, gloss;
+    var beastSlug = null;
+    if (Math.random() < 0.28) {
+      // Two-character poetic given name
+      var s = pick(SURNAMES), g = pick(GIVEN);
+      nameZh = s[0] + g[0];
+      namePy = s[1] + ' ' + g[1];
+      gloss = '(' + s[0] + ' family) ' + g[2];
+    } else {
+      var ep;
+      if (path && Math.random() < 0.5) {
+        var zh = pick(path.epithets);
+        ep = [zh, PINYIN[zh], PATH_EPITHET_GLOSS[zh], null];
+      } else {
+        ep = pick(EPITHETS);
+      }
+      var ti;
+      if (path && Math.random() < 0.7) {
+        ti = pick(path.titles);
+      } else {
+        ti = pick(TITLES);
+      }
+      nameZh = ep[0] + ti[0];
+      namePy = ep[1] + ' ' + ti[1];
+      gloss = ep[2] + ' ' + ti[2];
+      beastSlug = ep[3];
+    }
+
+    var realm = pick(REALMS);
+
+    var element = elementId;
+    if (element === 'any') {
+      var pool = beasts.filter(function (b) { return b.element !== 'none'; });
+      element = pool.length ? pick(pool).element : 'fire';
+    }
+
+    var guardians = beasts.filter(function (b) { return b.element === element; });
+    var guardian = beastSlug
+      ? (beasts.find(function (b) { return b.slug === beastSlug; }) || (guardians.length ? pick(guardians) : pick(beasts)))
+      : (guardians.length ? pick(guardians) : pick(beasts));
+
+    return {
+      zh: nameZh, pinyin: namePy, gloss: gloss,
+      realm: realm, pathLabel: path ? path.label : 'Wandering Cultivator 散修',
+      element: ELEMENTS[element] || element,
+      guardian: guardian
+    };
+  }
+
+  var history = [];
+
+  function render(r) {
+    document.getElementById('r-zh').textContent = r.zh;
+    document.getElementById('r-pinyin').textContent = r.pinyin;
+    document.getElementById('r-gloss').textContent = r.gloss;
+    document.getElementById('r-realm').textContent = r.realm[2] + ' (' + r.realm[0] + ')';
+    document.getElementById('r-path').textContent = r.pathLabel;
+    document.getElementById('r-element').textContent = r.element;
+
+    var g = r.guardian;
+    var el = document.getElementById('r-guardian');
+    el.innerHTML = '';
+    var card = document.createElement('a');
+    card.href = '/creatures/' + g.slug + '/';
+    card.className = 'guardian-card';
+    if (g.image) {
+      var img = document.createElement('img');
+      img.src = g.image;
+      img.alt = g.en;
+      img.width = 72; img.height = 72;
+      card.appendChild(img);
+    }
+    var info = document.createElement('div');
+    info.className = 'guardian-info';
+    var t1 = document.createElement('div');
+    t1.className = 'guardian-name';
+    t1.innerHTML = 'Guardian beast: <strong>' + g.en + ' <span class="zh">' + g.zh + '</span></strong>';
+    var t2 = document.createElement('div');
+    t2.className = 'guardian-sub';
+    t2.textContent = g.categoryLabel + ' · ' + g.pinyin;
+    var t3 = document.createElement('div');
+    t3.className = 'guardian-link';
+    t3.textContent = 'Read its original Shanhaijing entry →';
+    info.appendChild(t1); info.appendChild(t2); info.appendChild(t3);
+    card.appendChild(info);
+    el.appendChild(card);
+
+    document.getElementById('gen-result').hidden = false;
+    document.getElementById('gen-result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    history.unshift(r);
+    if (history.length > 5) history.pop();
+    renderHistory();
+  }
+
+  function renderHistory() {
+    var box = document.getElementById('gen-history');
+    var list = document.getElementById('history-list');
+    list.innerHTML = '';
+    history.forEach(function (r) {
+      var li = document.createElement('li');
+      li.innerHTML = '<span class="zh">' + r.zh + '</span> <em>' + r.pinyin + '</em> — ' + r.gloss + ' · ' + r.realm[2];
+      list.appendChild(li);
+    });
+    box.hidden = history.length === 0;
+  }
+
+  function copyResult() {
+    if (!history.length) return;
+    var r = history[0];
+    var g = r.guardian;
+    var text = r.zh + ' ' + r.pinyin + ' — ' + r.gloss +
+      ' · ' + r.realm[2] + ' · ' + r.element +
+      ' · Guardian beast: ' + g.en + ' (' + g.zh + ')' +
+      ' https://chinesebestiary.com/creatures/' + g.slug + '/';
+    var done = function () {
+      var btn = document.getElementById('copy-btn');
+      btn.textContent = 'Copied!';
+      setTimeout(function () { btn.textContent = 'Copy result'; }, 1500);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text); done(); });
+    } else {
+      fallbackCopy(text); done();
+    }
+  }
+
+  function fallbackCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+
+  document.getElementById('gen-btn').addEventListener('click', function () {
+    if (typeof gtag === 'function') gtag('event', 'generate_name');
+    render(generate());
+  });
+  document.getElementById('again-btn').addEventListener('click', function () {
+    if (typeof gtag === 'function') gtag('event', 'generate_name');
+    render(generate());
+  });
+  document.getElementById('copy-btn').addEventListener('click', copyResult);
+})();
+</script>
+
+<style>
+  .lede { font-size: 0.97rem; }
+  .generator { background: #fff; border: 1px solid #e0d9c8; border-radius: 4px; padding: 1.5rem; margin: 1.5rem 0; }
+  .controls { display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; align-items: flex-end; }
+  .controls label { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.85rem; color: var(--mist); }
+  .controls select {
+    font-family: Georgia, serif; font-size: 0.95rem; padding: 0.45rem 0.6rem;
+    border: 1px solid #d8d0bc; border-radius: 3px; background: var(--paper); color: var(--ink);
+    min-width: 12rem;
+  }
+  .forge-btn {
+    font-family: 'Cinzel', Georgia, serif; font-size: 1rem; letter-spacing: 0.04em;
+    background: var(--vermillion); color: #faf8f3; border: none; border-radius: 3px;
+    padding: 0.6rem 1.6rem; cursor: pointer; transition: background 0.15s, transform 0.1s;
+  }
+  .forge-btn:hover { background: #a5301f; }
+  .forge-btn:active { transform: scale(0.98); }
+  .forge-btn .zh { font-family: "Noto Serif SC", serif; margin-left: 0.3rem; }
+
+  .result { margin-top: 1.5rem; border-top: 1px solid #e0d9c8; padding-top: 1.5rem; }
+  .result-main { display: flex; gap: 1.25rem; align-items: center; }
+  .seal {
+    flex-shrink: 0; width: 4rem; height: 4rem;
+    background: var(--vermillion); color: #faf8f3; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: "Noto Serif SC", serif; font-size: 2.2rem; font-weight: 600;
+    box-shadow: 2px 2px 0 rgba(192,57,43,0.25);
+  }
+  .result-zh { font-size: 2.2rem; font-weight: 600; line-height: 1.2; }
+  .result-pinyin { color: var(--vermillion); font-size: 0.95rem; letter-spacing: 0.03em; }
+  .result-gloss { color: var(--mist); font-size: 0.9rem; font-style: italic; }
+  .result-meta { display: flex; flex-wrap: wrap; gap: 0.75rem 2rem; margin: 1.25rem 0; padding: 0; }
+  .result-meta dt { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--mist); }
+  .result-meta dd { margin: 0.15rem 0 0; font-size: 0.95rem; }
+
+  .guardian-card {
+    display: flex; gap: 1rem; align-items: center; text-decoration: none;
+    background: var(--paper); border: 1px solid #e0d9c8; border-radius: 4px;
+    padding: 0.9rem 1.1rem; transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .guardian-card:hover { border-color: var(--gold); box-shadow: 2px 3px 10px rgba(26,26,46,0.08); }
+  .guardian-card img { width: 72px; height: 72px; object-fit: cover; border-radius: 3px; border: 1px solid #e0d9c8; background: #fff; }
+  .guardian-name { font-size: 0.95rem; color: var(--ink); }
+  .guardian-sub { font-size: 0.82rem; color: var(--mist); }
+  .guardian-link { font-size: 0.85rem; color: var(--vermillion); margin-top: 0.2rem; }
+
+  .result-actions { display: flex; gap: 0.75rem; margin-top: 1.25rem; }
+  .ghost-btn {
+    font-family: Georgia, serif; font-size: 0.88rem; padding: 0.45rem 1.1rem;
+    background: transparent; color: var(--ink); border: 1px solid #d8d0bc; border-radius: 3px;
+    cursor: pointer; transition: border-color 0.15s, color 0.15s;
+  }
+  .ghost-btn:hover { border-color: var(--vermillion); color: var(--vermillion); }
+
+  .history { margin-top: 1.5rem; }
+  .history h3 { margin-top: 0; }
+  .history ul { list-style: none; margin: 0; padding: 0; }
+  .history li { font-size: 0.88rem; color: var(--mist); padding: 0.35rem 0; border-bottom: 1px dashed #e0d9c8; }
+  .history li .zh { color: var(--ink); }
+  .history li em { color: var(--vermillion); font-style: normal; }
+
+  details { border: 1px solid #e0d9c8; border-radius: 4px; padding: 0.7rem 1rem; margin: 0.6rem 0; background: #fff; }
+  summary { cursor: pointer; font-weight: bold; font-size: 0.95rem; }
+  details p { font-size: 0.9rem; margin: 0.6rem 0 0.2rem; }
+
+  @media (max-width: 46rem) {
+    .controls { flex-direction: column; align-items: stretch; }
+    .controls select { min-width: 0; }
+    .result-zh { font-size: 1.7rem; }
+  }
+</style>
