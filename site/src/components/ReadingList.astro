@@ -1,0 +1,82 @@
+---
+const AFFILIATE_TAG = ''; // 批准后填，如 'chinesebestiary-20'
+
+interface Book {
+  title: string; author: string; year: string;
+  publisher: string; note: string; asin: string;
+}
+
+const BOOKS: Book[] = [
+  {
+    title: 'The Classic of Mountains and Seas',
+    author: 'Anne Birrell',
+    year: '1999',
+    publisher: 'Penguin Classics',
+    note: 'The most readable English translation currently in print.',
+    asin: '0140447199', // TODO 部署前点验 amazon.com/dp/0140447199
+  },
+  {
+    title: 'A Chinese Bestiary',
+    author: 'Richard E. Strassberg',
+    year: '2002',
+    publisher: 'University of California Press',
+    note: 'Bilingual annotated edition with Ming-Qing original illustrations.',
+    asin: '0520218442', // TODO 部署前点验
+  },
+  {
+    title: 'Handbook of Chinese Mythology',
+    author: 'Lihui Yang & Deming An',
+    year: '2005',
+    publisher: 'ABC-CLIO',
+    note: 'Encyclopedic reference covering creatures, deities, and cosmology.',
+    asin: '157607806X', // TODO 部署前点验
+  },
+];
+
+const bookUrl = (asin: string) =>
+  `https://www.amazon.com/dp/${asin}${AFFILIATE_TAG ? `?tag=${AFFILIATE_TAG}` : ''}`;
+---
+
+<aside class="reading-list" aria-label="Further reading">
+  <h3>Where to Read More <span class="zh">延伸阅读</span></h3>
+  <ul>
+    {BOOKS.map(b => (
+      <li>
+        <div class="book-info">
+          <span class="book-title">{b.title}</span>
+          <span class="book-meta">{b.author} · {b.publisher}, {b.year}</span>
+          <span class="book-note">{b.note}</span>
+        </div>
+        <a class="book-link" href={bookUrl(b.asin)} target="_blank" rel="sponsored nofollow noopener">
+          Amazon <span aria-hidden="true">→</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</aside>
+
+<style>
+  .reading-list { margin: 2rem 0; }
+  .reading-list ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.8rem; }
+  .reading-list li {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    border-left: 3px solid var(--gold);
+    background: #b8933d0d;
+    border-radius: 0 4px 4px 0;
+    padding: 0.7rem 1rem;
+  }
+  .book-info { display: grid; gap: 0.15rem; min-width: 0; }
+  .book-title { font-family: 'Cinzel', Georgia, serif; font-weight: 700; font-size: 0.95rem; color: var(--ink); }
+  .book-meta { font-size: 0.82rem; color: var(--mist); }
+  .book-note { font-size: 0.85rem; font-style: italic; color: var(--ink); opacity: 0.85; }
+  .book-link {
+    flex-shrink: 0; font-size: 0.82rem; text-decoration: none;
+    color: var(--ink); border: 1px solid #c9c2b2; border-radius: 3px;
+    padding: 0.3rem 0.8rem; white-space: nowrap;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+  }
+  .book-link:hover { color: #fff; background: var(--vermillion); border-color: var(--vermillion); }
+  @media (max-width: 560px) {
+    .reading-list li { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  }
+</style>

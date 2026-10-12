@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import { getCreatureImage } from '../../utils/creatureImage';
 import { CATEGORY_LABELS } from '../../utils/taxonomy';
+import ReadingList from '../../components/ReadingList.astro';
 
 export async function getStaticPaths() {
   const creatures = await getCollection('creatures');
@@ -100,6 +101,8 @@ const jsonLd = {
         <pre class="stat-block-body">{d.dnd5e.stat_block}</pre>
       </div>
     )}
+
+    <ReadingList />
 
     {d.seo.related_entries.length > 0 && (
       <>
