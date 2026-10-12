@@ -38,7 +38,7 @@ cultural_references:
   - { work: "Huainanzi (淮南子) · Seasonal Rules", year: "Western Han, c. 139 BCE", note: "The northern palace's beast — the tortoise-and-snake Dark Warrior later fused with Xuanming" }
   - { work: "Tang & Song poetry", year: "7th–13th century", note: "'Xuanming' as a poetic common noun for winter, the black sea, and the shades below" }
 media:
-  historical_illustration: "Han dynasty, figure identified as the sea god Yujiang (later called Xuanming) on the Mawangdui Tomb No. 1 silk painting (c. 168 BCE); photo by Kaedegami, CC BY-SA 4.0"
+  historical_illustration: "Qing dynasty, Gujin Tushu Jicheng / Imperial Encyclopaedia (1726), the sea god Yujiang (禺彊, later called Xuanming) riding dragons, public domain"
   ai_art_prompt: "A severe Chinese god of winter water enthroned in the black depths of a frozen northern sea, dark layered robes the color of deep water, one hand resting on a coiled tortoise entwined with a snake, frost spreading from his feet across the palace floor, Zhuanxu's shadow on the wall behind, dark fantasy illustration, traditional Chinese ink wash texture, muted gold and vermillion palette, bestiary plate style, white background, ultra-detailed"
 dnd5e:
   name: "Xuanming (Water Rectifier)"

@@ -39,7 +39,7 @@ cultural_references:
   - { work: "Huainanzi (淮南子) · Seasonal Rules", year: "Western Han, c. 139 BCE", note: "Zhurong enthroned as the god of the southern pole, matching the Classic's gallery" }
   - { work: "Xianxia webnovels (洪荒流)", year: "post-2006", note: "Member of the 'Twelve Ancestral Witches' as the fire witch — modern systematization" }
 media:
-  historical_illustration: "Ming dynasty woodblock print, Pangu zhi Tangyu Zhuan (盘古至唐虞传), public domain"
+  historical_illustration: "Qing dynasty woodblock print, Zhurong riding two dragons amid flames, artist unknown, public domain"
   ai_art_prompt: "A towering Chinese fire god with the body of a great vermilion-furred beast and a stern human face, standing on two coiling dragons, red-gold flames wreathing his shoulders, a bronze fire-brand in one hand, the southern sky blazing behind him, dark fantasy illustration, traditional Chinese ink wash texture, muted gold and vermillion palette, bestiary plate style, white background, ultra-detailed"
 dnd5e:
   name: "Zhurong (Fire Rectifier)"

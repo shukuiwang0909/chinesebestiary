@@ -39,7 +39,7 @@ cultural_references:
   - { work: "Han Wudi's Fenyin sacrifices (汾阴祀后土)", year: "113 BCE onward", note: "The emperor's repeated pilgrimages to the Houtu temple — and, by tradition, his 'Autumn Wind' song composed there" }
   - { work: "Daoist liturgy & funerary rites", year: "Tang–Song onward", note: "Houtu recast as the Earth Queen (后土皇地祇), maternal ruler of all lands beneath the soil" }
 media:
-  historical_illustration: "Ming dynasty, Xinke Chuxiang Zengbu Soushen Ji (新刻出像增补搜神记, Wanli era), public domain"
+  historical_illustration: "Qing dynasty temple painting, Houtu Huangdiqi (后土皇地祗, Sovereign Earth) enthroned, artist unknown, public domain"
   ai_art_prompt: "A serene Chinese earth sovereign seated upon a throne of packed yellow soil at the center of a cosmic diagram, layered ochre and gold robes, one hand resting on a mound of living earth from which crops and small mountains sprout, the four directional spirits faint in the four corners, calm maternal face, dark fantasy illustration, traditional Chinese ink wash texture, muted gold and vermillion palette, bestiary plate style, white background, ultra-detailed"
 dnd5e:
   name: "Houtu (Earth Rectifier)"

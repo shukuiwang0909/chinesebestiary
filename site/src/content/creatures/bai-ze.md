@@ -36,7 +36,7 @@ cultural_references:
   - { work: "Youyang Zazu (酉阳杂俎) & Tang miscellanies", year: "9th century", note: "Bai Ze scrolls hung at doors and Bai Ze pillows against nightmares" }
   - { work: "Hoozuki no Reitetsu (鬼灯的冷彻)", year: "manga 2011 / anime 2014", note: "Hakutaku — the Japanese Bai Ze — as a smug encyclopedic cow-physician, introducing the beast to global anime audiences" }
 media:
-  historical_illustration: "Tang dynasty, Dunhuang manuscript Baize Jingguai Tu (白泽精怪图, Pelliot chinois 2682), public domain"
+  historical_illustration: "Edo-period Okinawan scroll painting of Baize by Gusukuma Seihō, with full inscription from the Qianshe Shilu, public domain"
   ai_art_prompt: "A white lion-like Chinese auspicious beast with two curved horns and grave all-knowing eyes, extra small eyes dotting its shoulders and flanks, seated like a magistrate before the Yellow Emperor, a scroll of ghost-names unrolling between them, auspicious clouds and sea-mist at the edge of the eastern shore, dark fantasy illustration, traditional Chinese ink wash texture, muted gold and vermillion palette, bestiary plate style, white background, ultra-detailed"
 dnd5e:
   name: "Bai Ze (Patron of Bestiaries)"

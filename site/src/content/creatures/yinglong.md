@@ -38,7 +38,7 @@ cultural_references:
   - { work: "Comprehensive Mirror illustrations (三才图会)", year: "Ming dynasty", note: "The winged dragon's standard portrait in the great Ming encyclopedia" }
   - { work: "Xianxia webnovels & guofeng games (洪荒流)", year: "post-2006", note: "Routinely cast as the Yellow Emperor's war-dragon and ancestor of later dragon kings" }
 media:
-  historical_illustration: "17th-century Chinese woodblock print, artist unknown, public domain"
+  historical_illustration: "Qing dynasty, Gujin Tushu Jicheng / Imperial Encyclopaedia (1726), Yinglong the winged dragon (應龍圖), public domain"
   ai_art_prompt: "A colossal winged Chinese dragon with stag-like horns and tiger claws, two great feathered wings spread at the shoulders, coiling above a storm-dark plain where two defeated giants lie far below, rain curtains trailing from his wings over the southern mountains, a river channel glowing where his tail once gouged the earth, dark fantasy illustration, traditional Chinese ink wash texture, muted gold and vermillion palette, bestiary plate style, white background, ultra-detailed"
 dnd5e:
   name: "Yinglong (Responding Dragon)"
