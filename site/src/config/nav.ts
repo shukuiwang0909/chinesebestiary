@@ -13,6 +13,7 @@ export const NAV_ITEMS: NavItem[] = [
       { label: 'All Creatures', href: '/creatures/' },
       { label: 'Four Perils 四凶', href: '/four-perils/' },
       { label: 'Four Divine 四灵', href: '/four-divine/' },
+      { label: 'Four Symbols 四象', href: '/four-symbols/' },
     ],
   },
   { label: 'Stories', href: '/stories/' },

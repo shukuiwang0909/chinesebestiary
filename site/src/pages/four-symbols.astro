@@ -1,0 +1,180 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+const creatures = await getCollection('creatures');
+const existing = new Set(creatures.map(c => c.data.id));
+
+const roster = [
+  {
+    id: 'qinglong',
+    name_en: 'Qinglong', name_zh: '青龙', pinyin: 'qīng lóng',
+    direction: 'East', season: 'Spring', element: 'Wood', planet: 'Jupiter',
+    domain: 'Rain, rivers, new growth; the first of the four to rise each year',
+    source: 'Book of Rites directional formula; eastern mountain chapters of the Shanhaijing',
+  },
+  {
+    id: 'zhu-que',
+    name_en: 'Zhu Que', name_zh: '朱雀', pinyin: 'zhū què',
+    direction: 'South', season: 'Summer', element: 'Fire', planet: 'Mars',
+    domain: 'Southern sky and summer fire; the fiery bird of the southern constellations',
+    source: 'Book of Rites directional formula; Han tomb murals across southern China',
+    note: 'Not yet catalogued — see Fenghuang for the related phoenix tradition',
+    proxy_id: 'fenghuang',
+    proxy_note: 'The fenghuang is often conflated with the Vermilion Bird in popular tradition, though the two are distinct in classical sources.',
+  },
+  {
+    id: 'bai-hu',
+    name_en: 'Bai Hu', name_zh: '白虎', pinyin: 'bái hǔ',
+    direction: 'West', season: 'Autumn', element: 'Metal', planet: 'Venus',
+    domain: 'Harvest, military force, and the cutting precision of metal',
+    source: 'Book of Rites directional formula; western mountain chapters of the Shanhaijing',
+  },
+  {
+    id: 'xuanwu',
+    name_en: 'Xuanwu', name_zh: '玄武', pinyin: 'xuán wǔ',
+    direction: 'North', season: 'Winter', element: 'Water', planet: 'Mercury',
+    domain: 'Depth, endurance, and the stillness beneath all motion',
+    source: 'Book of Rites directional formula; Songs of Chu; Huainanzi',
+  },
+];
+
+const metaTitle = 'The Four Symbols (四象): Azure Dragon, White Tiger, Vermilion Bird & Black Warrior';
+const metaDescription = 'The Four Symbols (四象) guard the four cardinal directions: Qinglong east, Zhu Que south, Bai Hu west, Xuanwu north. China\'s cosmic directional system explained with original sources.';
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "The Four Symbols (四象)",
+  "description": metaDescription,
+  "hasPart": roster.map(r => ({
+    "@type": "ListItem",
+    "name": r.name_en,
+    "url": `https://chinesebestiary.com/creatures/${r.id}/`,
+  })),
+};
+---
+<Base title={metaTitle} description={metaDescription}>
+  <div class="group-hero symbols-hero">
+    <div class="gh-watermark" aria-hidden="true">四象</div>
+    <div class="gh-body">
+      <p class="gh-eyebrow">The Four Symbols · 四象</p>
+      <p class="gh-desc">The divine beasts that guard the four quarters of the sky — and organize time, space, and the cosmos</p>
+    </div>
+  </div>
+
+  <article>
+    <h2>The Four Symbols <span class="zh">四象</span></h2>
+    <p><em>sì xiàng · Wade-Giles: ssŭ-hsiang</em></p>
+
+    <p>The Four Symbols (四象) are the divine guardians of the cardinal directions: the Azure Dragon of the East, the Vermilion Bird of the South, the White Tiger of the West, and the Black Warrior of the North. Together they divide the sky into four quadrants, each containing seven lunar mansions, and map the year into four seasons. They are not merely mythological animals — they are a working cosmological system, used in astronomy, military formation, burial rites, and feng shui for over two thousand years.</p>
+
+    <h3>The Sky Divided</h3>
+    <p>The Twenty-Eight Lunar Mansions (二十八宿) — the stations the moon passes through in a month — are the Four Symbols' anatomy. Each guardian governs seven mansions, and the position of the moon in those mansions tracks the seasons with precision. The Azure Dragon rises in the east as spring begins; the Vermilion Bird transits the southern meridian at midsummer; the White Tiger sets in the west as autumn comes; the Black Warrior's stars are highest at midnight in winter. To read the sky is to watch the four creatures move through the year.</p>
+
+    <h3>Not to Be Confused With</h3>
+    <p>The Four Symbols are often conflated with the <a href="/four-divine/">Four Divine (四灵)</a> — the qilin, fenghuang, tortoise, and dragon of the <em>Book of Rites</em>. The two systems overlap but differ in kind. The Four Divine are omens of good governance — benevolent creatures that appear when a true ruler reigns. The Four Symbols are cosmic guardians — directional forces built into the structure of heaven itself, present regardless of who rules. The Black Tortoise of the north is not the oracle tortoise of the <em>Book of Rites</em>; the Vermilion Bird of the south is not the fenghuang. The names sound similar; the traditions are distinct.</p>
+
+    <h3>The Quartet</h3>
+    <div class="symbols-grid">
+      {roster.map(r => (
+        <div class="symbol-card" data-direction={r.direction.toLowerCase()}>
+          <div class="symbol-direction">{r.direction}</div>
+          <div class="symbol-names">
+            <span class="symbol-en">{r.name_en}</span>
+            <span class="symbol-zh zh">{r.name_zh}</span>
+            <span class="symbol-pinyin">{r.pinyin}</span>
+          </div>
+          <dl class="symbol-attrs">
+            <dt>Season</dt><dd>{r.season}</dd>
+            <dt>Element</dt><dd>{r.element}</dd>
+            <dt>Planet</dt><dd>{r.planet}</dd>
+          </dl>
+          <p class="symbol-domain">{r.domain}</p>
+          {r.note
+            ? <p class="symbol-note">
+                {r.note} <a href={`/creatures/${r.proxy_id}/`}>See {r.proxy_id === 'fenghuang' ? 'Fenghuang →' : ''}</a>
+              </p>
+            : existing.has(r.id)
+              ? <a class="symbol-link" href={`/creatures/${r.id}/`}>Read the full entry →</a>
+              : null}
+        </div>
+      ))}
+    </div>
+
+    <h3>Four Directions, Five Elements</h3>
+    <p>Alert readers will note: the Four Symbols cover only four of the Five Elements (wood, fire, metal, water) — earth is absent. Earth belongs to the centre, the fifth direction that is not a direction: the point from which all four radiations extend. The emperor sat at the centre. The Yellow Emperor, whose name contains the character for yellow (the colour of earth), governed the centre while the four guardians held the perimeter. The fifth symbol — sometimes depicted as a yellow dragon — rarely appears in popular iconography, but it is always implicit.</p>
+
+    <h3>From Tomb to City</h3>
+    <p>The Four Symbols structured not only the sky but the ground beneath it. Han dynasty tombs paint the four guardians on their walls — Dragon east, Bird south, Tiger west, Warrior north — so the dead are oriented correctly in the cosmos. Cities were founded at sites where the terrain echoed the pattern: a hill to the north (Xuanwu's backing), open ground to the south (Zhu Que's vista), a stream to the east (Qinglong's water), and a road to the west (Bai Hu's edge). The feng shui of a site is the Four Symbols made geographic.</p>
+  </article>
+
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+</Base>
+
+<style>
+  .group-hero { position: relative; overflow: hidden; border-radius: 6px; padding: 2rem 1.8rem; margin: 0 0 2rem; }
+  .gh-watermark {
+    position: absolute; right: -0.5rem; top: 50%; transform: translateY(-50%);
+    font-family: "Noto Serif SC", serif; font-size: clamp(4rem, 12vw, 7rem); font-weight: 600;
+    opacity: 0.1; pointer-events: none; white-space: nowrap; color: #faf8f3;
+    line-height: 1; user-select: none;
+  }
+  .gh-body { position: relative; z-index: 1; }
+  .gh-eyebrow {
+    font-family: 'Cinzel', Georgia, serif; font-size: 1.1rem; font-weight: 700;
+    letter-spacing: 0.08em; margin: 0 0 0.4rem; color: #faf8f3;
+  }
+  .gh-desc { font-size: 0.92rem; margin: 0; line-height: 1.55; }
+
+  .symbols-hero {
+    background:
+      radial-gradient(ellipse at 15% 50%, rgba(30,60,120,0.6) 0%, transparent 55%),
+      radial-gradient(ellipse at 85% 50%, rgba(120,30,18,0.5) 0%, transparent 55%),
+      radial-gradient(ellipse at 50% 20%, rgba(20,80,40,0.4) 0%, transparent 50%),
+      linear-gradient(160deg, #080c18 0%, #0e1420 50%, #080c18 100%);
+  }
+  .symbols-hero .gh-desc { color: rgba(200,220,255,0.7); }
+
+  .symbols-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 1rem;
+    margin: 1rem 0 1.5rem;
+  }
+  .symbol-card {
+    border: 1px solid #e0d9c8;
+    border-radius: 4px;
+    padding: 1rem 1.1rem;
+    background: #fff;
+    border-top: 3px solid var(--card-color, var(--gold));
+  }
+  .symbol-card[data-direction="east"]  { --card-color: #2e7d52; }
+  .symbol-card[data-direction="south"] { --card-color: var(--vermillion); }
+  .symbol-card[data-direction="west"]  { --card-color: #888; }
+  .symbol-card[data-direction="north"] { --card-color: #1a2a4a; }
+
+  .symbol-direction {
+    font-family: 'Cinzel', Georgia, serif;
+    font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--card-color, var(--gold));
+    margin-bottom: 0.4rem;
+  }
+  .symbol-names { display: flex; flex-direction: column; gap: 0.1rem; margin-bottom: 0.7rem; }
+  .symbol-en { font-family: 'Cinzel', Georgia, serif; font-size: 1rem; font-weight: 700; color: var(--ink); }
+  .symbol-zh { font-size: 1rem; color: var(--mist); }
+  .symbol-pinyin { font-size: 0.8rem; color: var(--mist); font-style: italic; }
+
+  .symbol-attrs { display: grid; grid-template-columns: auto 1fr; gap: 0.15rem 0.6rem; font-size: 0.8rem; margin: 0 0 0.6rem; }
+  .symbol-attrs dt { color: var(--mist); }
+  .symbol-attrs dd { margin: 0; color: var(--ink); }
+
+  .symbol-domain { font-size: 0.85rem; color: var(--ink); margin: 0 0 0.6rem; line-height: 1.5; }
+  .symbol-note { font-size: 0.8rem; color: var(--mist); font-style: italic; margin: 0; }
+  .symbol-link {
+    display: inline-block; font-size: 0.82rem;
+    color: var(--vermillion); text-decoration: none;
+  }
+  .symbol-link:hover { color: var(--gold); }
+</style>
