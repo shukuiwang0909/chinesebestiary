@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import ReadingList from '../../components/ReadingList.astro';
 
 export async function getStaticPaths() {
   const entries = await getCollection('realworld');
@@ -85,6 +86,8 @@ const VERDICT_COLOR: Record<string, string> = {
       </section>
     )}
   </article>
+
+  <ReadingList />
 
   <script is:inline>
     (function() {

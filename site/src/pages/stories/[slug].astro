@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import ReadingList from '../../components/ReadingList.astro';
 
 export async function getStaticPaths() {
   const entries = await getCollection('stories');
@@ -56,6 +57,8 @@ const related = d.related_creatures
       </>
     )}
   </article>
+
+  <ReadingList />
 
   <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
