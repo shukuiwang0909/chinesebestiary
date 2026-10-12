@@ -1,0 +1,76 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { getCreatureImage } from '../../utils/creatureImage';
+
+const battles = (await getCollection('versus')).sort((a, b) => a.data.id.localeCompare(b.data.id));
+const creatures = await getCollection('creatures');
+const info = (slug: string) => {
+  const c = creatures.find(c => c.data.id === slug);
+  return c
+    ? { name: c.data.name.en, zh: c.data.name.zh_cn, image: getCreatureImage(slug) }
+    : { name: slug, zh: '', image: null };
+};
+---
+
+<Base title="Beast Battles — Mythological Matchups from the Shanhaijing" description="Who wins when the Classic of Mountains and Seas fights itself? Taotie vs nine-tailed fox, Zhulong vs Kuafu, Qiongqi vs Qilin — judged strictly on original-text evidence." wide={true}>
+  <h2>Beast Battles <span class="zh">神兽对决</span></h2>
+  <p class="lede">Every matchup on this site is argued from the <em>Shanhaijing</em>'s own record — no feats invented, no power-scaling imported from games. The original texts are the rulebook; the verdicts are debatable by design. Disagree? The comment sections of the internet await your dissent.</p>
+
+  <div class="grid">
+    {battles.map(b => {
+      const A = info(b.data.fighter_a);
+      const B = info(b.data.fighter_b);
+      return (
+        <a class="card battle-card" href={`/versus/${b.data.id}/`}>
+          <div class="faceoff">
+            <div class="fighter">
+              {A.image && <img src={A.image} alt={A.name} width="120" height="120" loading="lazy" />}
+              <span class="f-name">{A.name}</span>
+              {A.zh && <span class="f-zh zh">{A.zh}</span>}
+            </div>
+            <span class="vs" aria-hidden="true">VS</span>
+            <div class="fighter">
+              {B.image && <img src={B.image} alt={B.name} width="120" height="120" loading="lazy" />}
+              <span class="f-name">{B.name}</span>
+              {B.zh && <span class="f-zh zh">{B.zh}</span>}
+            </div>
+          </div>
+          <h3>{b.data.title}</h3>
+          <p class="hook">{b.data.hook}</p>
+          <span class:list={['verdict-badge', b.data.winner]}>{
+            b.data.winner === 'draw' ? 'Verdict: Draw' : `Verdict: ${(b.data.winner === 'a' ? A : B).name}`
+          }</span>
+        </a>
+      );
+    })}
+  </div>
+</Base>
+
+<style>
+  .lede { max-width: 46rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; margin: 1.5rem 0; }
+  .battle-card {
+    display: flex; flex-direction: column; text-decoration: none; color: var(--ink);
+    background: #fff; border: 1px solid #e0d9c8; border-radius: 4px; padding: 1.25rem;
+    transition: border-color 0.15s, box-shadow 0.15s, translate 0.2s, opacity 0.45s;
+    opacity: 0; translate: 0 14px;
+  }
+  .battle-card.in-view, .no-js .battle-card { opacity: 1; translate: 0 0; }
+  .battle-card:hover { border-color: var(--gold); box-shadow: 2px 4px 14px rgba(26,26,46,0.1); }
+  .faceoff { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin-bottom: 1rem; }
+  .fighter { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; flex: 1; text-align: center; }
+  .fighter img { width: 84px; height: 84px; object-fit: cover; border-radius: 4px; border: 1px solid #e0d9c8; background: #fff; }
+  .f-name { font-size: 0.82rem; font-weight: bold; line-height: 1.25; }
+  .f-zh { font-size: 0.78rem; color: var(--mist); }
+  .vs { font-family: 'Cinzel', Georgia, serif; font-weight: 700; color: var(--vermillion); font-size: 0.95rem; flex-shrink: 0; }
+  .battle-card h3 { font-size: 0.98rem; margin: 0 0 0.5rem; border: none; padding: 0; line-height: 1.35; }
+  .hook { font-size: 0.87rem; color: #444; margin: 0 0 0.9rem; flex: 1; }
+  .verdict-badge {
+    align-self: flex-start; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em;
+    text-transform: uppercase; font-family: 'Cinzel', Georgia, serif;
+    padding: 0.25rem 0.6rem; border-radius: 3px;
+    background: rgba(184,147,61,0.12); color: #8a6d2a; border: 1px solid rgba(184,147,61,0.4);
+  }
+  .verdict-badge.draw { background: rgba(107,124,140,0.12); color: var(--mist); border-color: rgba(107,124,140,0.4); }
+</style>

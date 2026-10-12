@@ -105,4 +105,23 @@ const stories = defineCollection({
   }),
 });
 
-export const collections = { creatures, realworld, stories };
+const versus = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/versus' }),
+  schema: z.object({
+    id: z.string(),
+    title: z.string(),
+    fighter_a: z.string(),
+    fighter_b: z.string(),
+    arena: z.string(),
+    hook: z.string(),
+    winner: z.enum(['a', 'b', 'draw']),
+    verdict_line: z.string(),
+    seo: z.object({
+      primary_keyword: z.string(),
+      meta_title: z.string(),
+      meta_description: z.string(),
+    }),
+  }),
+});
+
+export const collections = { creatures, realworld, stories, versus };

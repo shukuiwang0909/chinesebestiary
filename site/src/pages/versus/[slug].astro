@@ -1,0 +1,143 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { getCreatureImage } from '../../utils/creatureImage';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('versus');
+  return entries.map(entry => ({
+    params: { slug: entry.data.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+
+const creatures = await getCollection('creatures');
+const fighterData = (slug: string) => {
+  const c = creatures.find(c => c.data.id === slug);
+  return c ? {
+    slug: c.data.id,
+    en: c.data.name.en,
+    zh: c.data.name.zh_cn,
+    pinyin: c.data.name.pinyin,
+    cr: c.data.dnd5e?.cr ?? null,
+    category: c.data.taxonomy.category.replace(/_/g, ' '),
+    element: c.data.taxonomy.element,
+    abilities: c.data.abilities.slice(0, 4),
+    appearance: c.data.appearance ?? null,
+    image: getCreatureImage(c.data.id),
+  } : null;
+};
+const A = fighterData(d.fighter_a);
+const B = fighterData(d.fighter_b);
+---
+
+<Base title={d.seo.meta_title} description={d.seo.meta_description} wide={true}>
+  <div class="read-progress" id="read-progress" role="progressbar" aria-hidden="true"></div>
+  <article>
+    <a class="back-link" href="/versus/">All Battles</a>
+    <h2>{d.title}</h2>
+    <p class="arena"><strong>Arena:</strong> {d.arena}</p>
+
+    <div class="fighters">
+      {[A, B].map((f, i) => f && (
+        <div class:list={['fighter-card', i === 1 && 'fighter-b']}>
+          {f.image && <a href={`/creatures/${f.slug}/`}><img src={f.image} alt={f.en} width="150" height="150" /></a>}
+          <div class="fighter-info">
+            <a class="fighter-name" href={`/creatures/${f.slug}/`}>{f.en} <span class="zh">{f.zh}</span></a>
+            <div class="fighter-sub">{f.pinyin} · {f.category}{f.cr != null && <> · CR {f.cr}</>}</div>
+            {f.appearance && <p class="fighter-desc">{f.appearance}</p>}
+            <ul class="fighter-abilities">
+              {f.abilities.map(a => <li>{a}</li>)}
+            </ul>
+            <a class="fighter-link" href={`/creatures/${f.slug}/`}>Full entry →</a>
+          </div>
+        </div>
+      ))}
+      <div class="vs-badge" aria-hidden="true">VS</div>
+    </div>
+
+    <Content />
+
+    <aside class="verdict-box">
+      <div class="verdict-label">The Verdict</div>
+      <p>{d.verdict_line}</p>
+    </aside>
+  </article>
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": d.seo.meta_title,
+    "description": d.seo.meta_description,
+    "inLanguage": "en",
+    "about": [A?.en, B?.en].filter(Boolean),
+  })} />
+
+  <script is:inline>
+    (function() {
+      var bar = document.getElementById('read-progress');
+      if (!bar) return;
+      window.addEventListener('scroll', function() {
+        var h = document.documentElement;
+        var pct = (h.scrollTop || document.body.scrollTop) / (h.scrollHeight - h.clientHeight);
+        bar.style.width = Math.min(Math.round(pct * 1000) / 10, 100) + '%';
+      }, { passive: true });
+    })();
+  </script>
+</Base>
+
+<style>
+  .read-progress {
+    position: fixed; top: 0; left: 0; height: 3px; width: 0;
+    background: linear-gradient(90deg, var(--gold), var(--vermillion));
+    z-index: 200; pointer-events: none; transition: width 0.1s linear;
+  }
+  @media (prefers-reduced-motion: reduce) { .read-progress { display: none; } }
+
+  .arena { color: var(--mist); font-size: 0.9rem; margin: 0.5rem 0 1.5rem; }
+
+  .fighters { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin: 1.5rem 0 2rem; }
+  .fighter-card {
+    display: flex; gap: 1rem; background: #fff; border: 1px solid #e0d9c8;
+    border-top: 3px solid var(--vermillion); border-radius: 4px; padding: 1.1rem;
+  }
+  .fighter-b { border-top-color: var(--gold); }
+  .fighter-card img { width: 90px; height: 90px; object-fit: cover; border-radius: 3px; border: 1px solid #e0d9c8; flex-shrink: 0; }
+  .fighter-name { font-weight: bold; color: var(--ink); text-decoration: none; font-size: 1rem; }
+  .fighter-name:hover { color: var(--vermillion); }
+  .fighter-sub { font-size: 0.78rem; color: var(--mist); margin: 0.15rem 0 0.5rem; text-transform: capitalize; }
+  .fighter-desc { font-size: 0.82rem; color: #444; margin: 0 0 0.5rem; line-height: 1.5; }
+  .fighter-abilities { margin: 0 0 0.5rem; padding-left: 1.1rem; font-size: 0.8rem; color: #444; }
+  .fighter-abilities li { margin: 0.2rem 0; }
+  .fighter-link { font-size: 0.82rem; }
+  .vs-badge {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 3rem; height: 3rem; border-radius: 50%;
+    background: var(--ink); color: var(--gold);
+    border: 2px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cinzel', Georgia, serif; font-weight: 700; font-size: 0.9rem;
+    z-index: 2;
+  }
+
+  .verdict-box {
+    margin: 2rem 0 1rem; padding: 1.2rem 1.5rem;
+    background: rgba(192,57,43,0.05); border: 1px solid rgba(192,57,43,0.3);
+    border-left: 4px solid var(--vermillion); border-radius: 0 4px 4px 0;
+  }
+  .verdict-label {
+    font-family: 'Cinzel', Georgia, serif; font-size: 0.75rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--vermillion);
+    margin-bottom: 0.4rem;
+  }
+  .verdict-box p { margin: 0; font-size: 1.02rem; }
+
+  @media (max-width: 46rem) {
+    .fighters { grid-template-columns: 1fr; }
+    .vs-badge { top: 0; transform: translate(-50%, -50%) rotate(0); }
+  }
+</style>
