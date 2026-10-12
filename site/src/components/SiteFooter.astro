@@ -1,12 +1,62 @@
 ---
 ---
 <footer>
-  <p>Original texts from the <em>Classic of Mountains and Seas</em> (山海经). Translations are original works of this site.</p>
-  <p>Historical illustrations are public-domain works from Ming–Qing dynasty illustrated editions; see <a href="/about/">About &amp; Sources</a> for the full attribution list.</p>
-  <p>Stat blocks are compatible with Dungeons &amp; Dragons 5th Edition, based on the <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">SRD 5.1 (CC-BY-4.0)</a>.</p>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <strong>Browse</strong>
+      <ul>
+        <li><a href="/creatures/">All Creatures 神兽总目</a></li>
+        <li><a href="/four-perils/">Four Perils 四凶</a></li>
+        <li><a href="/four-divine/">Four Divine 四灵</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <strong>Explore</strong>
+      <ul>
+        <li><a href="/stories/">Stories 民间故事</a></li>
+        <li><a href="/real-world/">Real-World Theories 现实原型</a></li>
+        <li><a href="/about/">About &amp; Sources</a></li>
+      </ul>
+    </div>
+    <div class="footer-copy">
+      <p>Original texts from the <em>Classic of Mountains and Seas</em> (山海经, c. 4th century BCE). Translations are original works of this site.</p>
+      <p>Historical illustrations are public-domain works from Ming–Qing dynasty illustrated editions. See <a href="/about/">About &amp; Sources</a> for the full attribution list.</p>
+      <p>Stat blocks compatible with D&amp;D 5E, based on the <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">SRD 5.1 (CC-BY-4.0)</a>.</p>
+    </div>
+  </div>
 </footer>
 
 <style>
-  footer { margin-top: 4rem; padding-top: 1rem; border-top: 1px solid #ddd; font-size: 0.85rem; color: #666; }
-  footer p { margin: 0.35rem 0; }
+  footer {
+    margin-top: 4rem; padding-top: 1.5rem;
+    border-top: 1px solid #ddd;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    gap: 1rem 3rem;
+    align-items: start;
+  }
+  .footer-col strong {
+    display: block;
+    font-family: 'Cinzel', Georgia, serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+  .footer-col ul { list-style: none; margin: 0; padding: 0; }
+  .footer-col li { margin: 0.3rem 0; }
+  .footer-col a { font-size: 0.85rem; color: #666; text-decoration: none; }
+  .footer-col a:hover { color: var(--vermillion); }
+  .footer-copy { font-size: 0.8rem; color: #888; border-left: 1px solid #e0d9c8; padding-left: 2rem; }
+  .footer-copy p { margin: 0.3rem 0; line-height: 1.6; }
+  .footer-copy a { color: #888; }
+  .footer-copy a:hover { color: var(--vermillion); }
+
+  @media (max-width: 46rem) {
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .footer-copy { grid-column: 1 / -1; border-left: none; padding-left: 0; border-top: 1px solid #e0d9c8; padding-top: 1rem; margin-top: 0.5rem; }
+  }
 </style>

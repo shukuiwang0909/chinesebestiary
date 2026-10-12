@@ -21,15 +21,19 @@ const related = d.related_creatures
 ---
 
 <Base title={d.seo.meta_title} description={d.seo.meta_description}>
+  <div class="read-progress" id="read-progress" role="progressbar" aria-hidden="true"></div>
   <article>
-    <p><a href="/stories/">← All stories</a></p>
-    <h2>{d.title}</h2>
-    <p>
-      <em>{d.source_work}</em><br />
-      <small>{d.era}</small>
-    </p>
+    <a class="back-link" href="/stories/">All Stories</a>
 
-    <section class="summary">
+    <div class="story-header">
+      <div class="story-header-meta">
+        <span class="source-badge">{d.source_work}</span>
+        <span class="era-label">{d.era}</span>
+      </div>
+      <h2>{d.title}</h2>
+    </div>
+
+    <section class="summary-box">
       <p>{d.summary}</p>
     </section>
 
@@ -37,10 +41,16 @@ const related = d.related_creatures
 
     {related.length > 0 && (
       <>
-        <h3>🦊 Creatures in This Story</h3>
-        <ul>
+        <h3>Creatures in This Story <span class="zh">登场神兽</span></h3>
+        <ul class="creature-list">
           {related.map(c => (
-            <li><a href={`/creatures/${c.data.id}/`}>{c.data.name.en} <span class="zh">{c.data.name.zh_cn}</span></a></li>
+            <li>
+              <a href={`/creatures/${c.data.id}/`}>
+                <strong>{c.data.name.en}</strong>
+                <span class="zh"> {c.data.name.zh_cn}</span>
+                <em class="pinyin">{c.data.name.pinyin}</em>
+              </a>
+            </li>
           ))}
         </ul>
       </>
@@ -55,8 +65,53 @@ const related = d.related_creatures
     "inLanguage": "en",
     "about": related.map(c => c.data.name.en),
   })} />
+
+  <script is:inline>
+    (function() {
+      var bar = document.getElementById('read-progress');
+      if (!bar) return;
+      window.addEventListener('scroll', function() {
+        var h = document.documentElement;
+        var pct = (h.scrollTop || document.body.scrollTop) / (h.scrollHeight - h.clientHeight);
+        bar.style.width = Math.min(Math.round(pct * 1000) / 10, 100) + '%';
+      }, { passive: true });
+    })();
+  </script>
 </Base>
 
 <style>
-  section.summary { border-left: 4px solid var(--gold); background: #fff; border-top: 1px solid #e0d9c8; border-right: 1px solid #e0d9c8; border-bottom: 1px solid #e0d9c8; padding: 0.6rem 1.2rem; margin: 1rem 0; }
+  .read-progress {
+    position: fixed; top: 0; left: 0; height: 3px; width: 0;
+    background: linear-gradient(90deg, var(--gold), var(--vermillion));
+    z-index: 200; pointer-events: none; transition: width 0.1s linear;
+  }
+  @media (prefers-reduced-motion: reduce) { .read-progress { display: none; } }
+
+  .story-header { margin-bottom: 1.2rem; }
+  .story-header h2 { margin-top: 0.4rem; }
+  .story-header-meta { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
+  .source-badge {
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--vermillion);
+    font-family: 'Cinzel', Georgia, serif;
+  }
+  .era-label { font-size: 0.78rem; color: var(--mist); }
+
+  .summary-box {
+    border-left: 4px solid var(--gold);
+    background: rgba(184,147,61,0.05);
+    border-top: 1px solid #e0d9c8;
+    border-right: 1px solid #e0d9c8;
+    border-bottom: 1px solid #e0d9c8;
+    border-radius: 0 4px 4px 0;
+    padding: 0.8rem 1.2rem;
+    margin: 0 0 1.5rem;
+  }
+  .summary-box p { margin: 0; font-style: italic; }
+
+  .creature-list { list-style: none; padding: 0; margin: 0.6rem 0; }
+  .creature-list li { margin: 0.45rem 0; }
+  .creature-list a { text-decoration: none; color: var(--ink); display: inline-flex; align-items: baseline; gap: 0.4rem; }
+  .creature-list a:hover { color: var(--vermillion); }
+  .creature-list .pinyin { font-size: 0.8rem; color: var(--mist); }
 </style>

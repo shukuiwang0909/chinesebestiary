@@ -1,7 +1,45 @@
 ---
 import Base from '../layouts/Base.astro';
 ---
-<Base title="Page Not Found — The Chinese Bestiary" description="The page you are looking for has not been catalogued.">
-  <h2>Not Found <span class="zh">未找到</span></h2>
-  <p>The creature you seek has not been catalogued yet — or never existed. Try the search box above, or return to <a href="/">the full bestiary</a>.</p>
+<Base title="Page Not Found — The Chinese Bestiary" description="This creature has not been catalogued. Yet.">
+  <div class="not-found">
+    <div class="nf-char" aria-hidden="true">迷</div>
+    <h2>Lost in the Mountains <span class="zh">迷途</span></h2>
+    <p>The creature you seek has not been catalogued — or perhaps it never was. Even the <em>Shanhaijing</em> left some things unnamed.</p>
+    <blockquote>
+      <p class="zh">知之为知之，不知为不知，是知也。</p>
+      <p><em>"To know what you know, and know what you don't know — that is knowledge."</em></p>
+      <p><small>Confucius, <em>Analects</em> 2.17</small></p>
+    </blockquote>
+    <p class="nf-links">
+      <a href="/">Return to the Bestiary</a>
+      <span class="nf-sep" aria-hidden="true">·</span>
+      <a href="/creatures/">All Creatures</a>
+      <span class="nf-sep" aria-hidden="true">·</span>
+      <a href="/four-perils/">Four Perils</a>
+    </p>
+  </div>
 </Base>
+
+<style>
+  .not-found {
+    text-align: center;
+    padding: 3rem 1rem;
+    position: relative;
+  }
+  .nf-char {
+    font-family: "Noto Serif SC", serif;
+    font-size: clamp(6rem, 20vw, 10rem);
+    color: rgba(184,147,61,0.12);
+    line-height: 1;
+    margin-bottom: -1rem;
+    user-select: none;
+  }
+  .not-found h2 { font-size: 1.6rem; }
+  .not-found blockquote {
+    display: inline-block; text-align: left;
+    max-width: 30rem; margin: 1.5rem auto;
+  }
+  .nf-links { font-size: 0.95rem; display: flex; justify-content: center; flex-wrap: wrap; gap: 0.4rem 1rem; margin-top: 2rem; }
+  .nf-sep { color: var(--gold); }
+</style>

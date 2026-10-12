@@ -51,6 +51,13 @@ const jsonLd = {
 };
 ---
 <Base title={metaTitle} description={metaDescription}>
+  <div class="group-hero divine-hero">
+    <div class="gh-watermark" aria-hidden="true">四灵</div>
+    <div class="gh-body">
+      <p class="gh-eyebrow">The Four Divine · 四灵</p>
+      <p class="gh-desc">The benevolent quartet whose appearance signals that heaven approves of the reign</p>
+    </div>
+  </div>
   <article>
     <h2>The Four Divine <span class="zh">四灵</span></h2>
     <p><em>sì líng · Wade-Giles: ssŭ-ling</em></p>
@@ -106,3 +113,22 @@ const jsonLd = {
 
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 </Base>
+
+<style>
+  .group-hero { position: relative; overflow: hidden; border-radius: 6px; padding: 2rem 1.8rem; margin: 0 0 2rem; }
+  .gh-watermark {
+    position: absolute; right: -0.5rem; top: 50%; transform: translateY(-50%);
+    font-family: "Noto Serif SC", serif; font-size: clamp(4rem, 12vw, 7rem); font-weight: 600;
+    opacity: 0.1; pointer-events: none; white-space: nowrap; color: #faf8f3;
+    line-height: 1; user-select: none;
+  }
+  .gh-body { position: relative; z-index: 1; }
+  .gh-eyebrow {
+    font-family: 'Cinzel', Georgia, serif; font-size: 1.1rem; font-weight: 700;
+    letter-spacing: 0.08em; margin: 0 0 0.4rem; color: #faf8f3;
+  }
+  .gh-desc { font-size: 0.92rem; margin: 0; line-height: 1.55; }
+
+  .divine-hero { background: linear-gradient(135deg, #1f1a08 0%, #302610 50%, #1a1505 100%); }
+  .divine-hero .gh-desc { color: rgba(250,235,180,0.75); }
+</style>

@@ -6,7 +6,7 @@ import CreatureCard from '../components/CreatureCard.astro';
 const creatures = await getCollection('creatures');
 const sorted = creatures.sort((a, b) => a.data.id.localeCompare(b.data.id));
 ---
-<Base title="The Chinese Bestiary — Every Creature from the Shanhaijing" description="A searchable bestiary of every mythical creature in the Classic of Mountains and Seas (山海经): original texts, new translations, and D&D 5E stat blocks.">
+<Base title="The Chinese Bestiary — Every Creature from the Shanhaijing" description="A searchable bestiary of every mythical creature in the Classic of Mountains and Seas (山海经): original texts, new translations, and D&D 5E stat blocks." wide={true}>
   <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -22,31 +22,102 @@ const sorted = creatures.sort((a, b) => a.data.id.localeCompare(b.data.id));
       "logo": "https://chinesebestiary.com/favicon.png"
     }
   })} />
-  <h2>Every creature from the <em>Classic of Mountains and Seas</em></h2>
-  <p>The <em>Shanhaijing</em> (山海经, c. 4th century BCE) describes over 200 mythical beings — beasts that forecast empires, mountains that walk, and rivers that burn. This bestiary catalogs them with original-source texts, new English translations, and tabletop-ready stat blocks.</p>
 
-  <h3>Creatures <span class="zh">神兽</span> ({sorted.length})</h3>
+  <section class="hero" aria-label="Introduction">
+    <div class="hero-watermark" aria-hidden="true">山海经</div>
+    <div class="hero-inner">
+      <p class="hero-eyebrow"><span class="zh">c. 4th century BCE</span></p>
+      <h2>The mythical beasts of the <em>Shanhaijing</em></h2>
+      <p class="hero-desc">China's oldest geography describes over 200 beings — beasts that forecast empires, mountains that breathe, and rivers that burn. Every creature catalogued with original texts, fresh translations, and tabletop stat blocks.</p>
+      <div class="hero-stats">
+        <span><strong>{sorted.length}</strong> creatures</span>
+        <span class="hero-divider" aria-hidden="true">·</span>
+        <span><strong>D&amp;D 5E</strong> stat blocks</span>
+        <span class="hero-divider" aria-hidden="true">·</span>
+        <span><strong>Original</strong> translations</span>
+      </div>
+    </div>
+  </section>
+
+  <h3>Creatures <span class="zh">神兽</span></h3>
   <div class="grid">
     {sorted.map(c => <CreatureCard creature={c} />)}
   </div>
+  <p class="update-note"><em>More entries added weekly.</em></p>
 
-  <p><em>More entries added weekly.</em></p>
-
-  <h3>Groups <span class="zh">合集</span></h3>
-  <ul>
-    <li><a href="/four-perils/"><strong>The Four Perils</strong></a> <span class="zh">四凶</span> — Taotie, Hundun, Qiongqi, Taowu: China's villainous quartet, from exiled clans to man-eating beasts</li>
-    <li><a href="/four-divine/"><strong>The Four Divine</strong></a> <span class="zh">四灵</span> — Qilin, Fenghuang, Tortoise, Dragon: the benevolent quartet of the Book of Rites</li>
-  </ul>
-
-  <h3>Real-World Theories <span class="zh">现实原型</span></h3>
-  <p>Was the nine-tailed fox based on a real animal? Each page takes the internet's wildest origin theory seriously enough to check it — claim, evidence, what scholars say, and a verdict. <a href="/real-world/">Explore the theories</a>.</p>
-
-  <h3>Stories <span class="zh">民间故事</span></h3>
-  <p>The bestiary tells you what each creature is; the stories tell you what it did — fox spirits, dynasty-killers, and the legend cycles behind the beasts, retold in English from public-domain sources. <a href="/stories/">Read the stories</a>.</p>
-
-  <!-- P2: Name Generator -->
+  <div class="section-row">
+    <div class="section-card">
+      <h3>Groups <span class="zh">合集</span></h3>
+      <ul>
+        <li><a href="/four-perils/"><strong>The Four Perils</strong> <span class="zh">四凶</span></a> — Taotie, Hundun, Qiongqi, Taowu: China's villainous quartet</li>
+        <li><a href="/four-divine/"><strong>The Four Divine</strong> <span class="zh">四灵</span></a> — Qilin, Fenghuang, Tortoise, Dragon: the benevolent quartet</li>
+      </ul>
+    </div>
+    <div class="section-card">
+      <h3>Real-World Theories <span class="zh">现实原型</span></h3>
+      <p>Was the nine-tailed fox based on a real animal? Each page takes the wildest origin theory seriously enough to check it — evidence, scholarship, verdict.</p>
+      <p><a href="/real-world/">Explore the theories →</a></p>
+    </div>
+    <div class="section-card">
+      <h3>Stories <span class="zh">民间故事</span></h3>
+      <p>The bestiary tells you <em>what</em> each creature is; the stories tell you <em>what it did</em> — fox spirits, dynasty-killers, retold from public-domain sources.</p>
+      <p><a href="/stories/">Read the stories →</a></p>
+    </div>
+  </div>
 </Base>
 
 <style>
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin: 1rem 0; }
+  /* Hero */
+  .hero {
+    background:
+      linear-gradient(160deg, rgba(26,26,46,0.92) 0%, rgba(30,20,45,0.88) 100%),
+      url('/images/og-default.jpg') center / cover no-repeat;
+    background-color: #1a1a2e;
+    color: #faf8f3;
+    padding: 3.5rem 2rem 3rem;
+    margin: 0 0 2.5rem;
+    border-radius: 6px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+  .hero-watermark {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: "Noto Serif SC", serif;
+    font-size: clamp(5rem, 18vw, 12rem);
+    font-weight: 600;
+    color: rgba(184,147,61,0.08);
+    pointer-events: none;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+  }
+  .hero-inner { position: relative; z-index: 1; max-width: 40rem; margin: 0 auto; }
+  .hero-eyebrow { font-size: 0.85rem; color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase; margin: 0 0 0.8rem; }
+  .hero h2 {
+    font-family: 'Cinzel', Georgia, serif;
+    font-size: clamp(1.4rem, 3.5vw, 2rem);
+    color: #faf8f3;
+    margin: 0 0 1rem;
+    border: none;
+    padding: 0;
+    line-height: 1.3;
+  }
+  .hero h2 em { color: var(--gold-light); font-style: normal; }
+  .hero-desc { color: rgba(250,248,243,0.8); font-size: 0.97rem; line-height: 1.7; margin: 0 0 1.5rem; }
+  .hero-stats { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.5rem 1rem; font-size: 0.9rem; color: rgba(250,248,243,0.65); }
+  .hero-stats strong { color: var(--gold-light); }
+  .hero-divider { color: rgba(184,147,61,0.5); }
+
+  /* Creatures grid */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(175px, 1fr)); gap: 1.25rem; margin: 1rem 0; }
+  .update-note { font-size: 0.85rem; color: var(--mist); margin: 0.5rem 0 2rem; }
+
+  /* Section cards row */
+  .section-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 1.25rem; margin: 2rem 0 1rem; }
+  .section-card { background: #fff; border: 1px solid #e0d9c8; border-radius: 4px; padding: 1.25rem 1.5rem; }
+  .section-card h3 { margin-top: 0; font-size: 0.95rem; border-bottom-color: #e0d9c8; }
+  .section-card ul { margin: 0; padding-left: 1.1rem; }
+  .section-card li { margin: 0.5rem 0; font-size: 0.9rem; }
+  .section-card p { font-size: 0.9rem; margin: 0.5rem 0; }
 </style>

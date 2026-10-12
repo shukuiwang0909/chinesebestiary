@@ -51,6 +51,13 @@ const jsonLd = {
 };
 ---
 <Base title={metaTitle} description={metaDescription}>
+  <div class="group-hero perils-hero">
+    <div class="gh-watermark" aria-hidden="true">四凶</div>
+    <div class="gh-body">
+      <p class="gh-eyebrow">The Four Perils · 四凶</p>
+      <p class="gh-desc">Exiled ministers of the sage-kings, reborn as man-eating beasts at the world's edge</p>
+    </div>
+  </div>
   <article>
     <h2>The Four Perils <span class="zh">四凶</span></h2>
     <p><em>sì xiōng · Wade-Giles: ssŭ-hsiung</em></p>
@@ -102,3 +109,22 @@ const jsonLd = {
 
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 </Base>
+
+<style>
+  .group-hero { position: relative; overflow: hidden; border-radius: 6px; padding: 2rem 1.8rem; margin: 0 0 2rem; display: flex; align-items: center; gap: 1.5rem; }
+  .gh-watermark {
+    position: absolute; right: -0.5rem; top: 50%; transform: translateY(-50%);
+    font-family: "Noto Serif SC", serif; font-size: clamp(4rem, 12vw, 7rem); font-weight: 600;
+    opacity: 0.1; pointer-events: none; white-space: nowrap; color: #faf8f3;
+    line-height: 1; user-select: none;
+  }
+  .gh-body { position: relative; z-index: 1; }
+  .gh-eyebrow {
+    font-family: 'Cinzel', Georgia, serif; font-size: 1.1rem; font-weight: 700;
+    letter-spacing: 0.08em; margin: 0 0 0.4rem; color: #faf8f3;
+  }
+  .gh-desc { font-size: 0.92rem; margin: 0; line-height: 1.55; }
+
+  .perils-hero { background: linear-gradient(135deg, #2a0a0a 0%, #3d1010 50%, #1a0505 100%); }
+  .perils-hero .gh-desc { color: rgba(250,220,220,0.75); }
+</style>
