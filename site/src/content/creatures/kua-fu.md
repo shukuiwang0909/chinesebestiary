@@ -52,7 +52,7 @@ seo:
   secondary_keywords: ["kuafu chasing the sun", "kua fu chinese mythology", "kua fu shan hai jing", "kua fu legend", "kuafu chinese giant"]
   meta_title: "Kua Fu (夸父) — The Giant Who Chased the Sun"
   meta_description: "Kua Fu (夸父), the Chinese giant who raced the sun, drank rivers dry, and died of thirst — his staff became a forest. Original texts and lore."
-  related_entries: ["zhulong"]
+  related_entries: ["zhulong", "yinglong", "houtu"]
 ---
 
 ## A Race Against the Sun

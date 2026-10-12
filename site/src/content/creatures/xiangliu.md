@@ -57,7 +57,7 @@ seo:
   secondary_keywords: ["xiangliu nine headed snake", "xiangliu chinese mythology", "xiangliu vs hydra", "shan hai jing nine headed serpent", "gong gong minister xiangliu"]
   meta_title: "Xiangliu (相柳) — Nine-Headed Serpent Slain by Yu the Great"
   meta_description: "Xiangliu (相柳), the nine-headed minister of Gong Gong: Yu the Great slew the poison-blooded serpent and raised the Terraces of the Many Emperors over its corpse."
-  related_entries: []
+  related_entries: ["gonggong", "jiufeng", "taowu", "hundun"]
 ---
 
 ## A Minister of the Flood God

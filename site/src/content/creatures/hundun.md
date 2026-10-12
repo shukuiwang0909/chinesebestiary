@@ -48,7 +48,7 @@ seo:
   secondary_keywords: ["hundun chinese mythology", "dijiang shanhaijing", "hundun zhuangzi seven orifices", "four perils chinese mythology"]
   meta_title: "Hundun (混沌) — the Faceless Chaos Beast & the Seven Orifices"
   meta_description: "Hundun (混沌) — the faceless chaos god of the Classic of Mountains and Seas. Six legs, four wings, master of song and dance, killed by kindness in the Zhuangzi."
-  related_entries: ["taotie", "qiongqi", "taowu", "kun-peng"]
+  related_entries: ["taotie", "qiongqi", "taowu", "kun-peng", "dijiang"]
 ---
 
 ## Dijiang, the God of Mount Tian

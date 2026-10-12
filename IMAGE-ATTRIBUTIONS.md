@@ -22,7 +22,21 @@
 | zhulong-alt | zhulong-alt.png | 海外北经·烛阴 |
 | tiangou | tiangou.jpg | 日本《怪奇鳥獣図巻》 |
 | bifang | bifang.png | 《古今图书集成·禽虫典》 |
-| dijiang | dijiang.png | 西山经·帝江 |
+| dijiang | dijiang.jpg | 清《古今图书集成》帝江神图（2025-10-12 更换；旧 dijiang.png 与 hundun.png 撞脸已废弃） |
+| goumang | goumang.jpg | 清·汪绂《山海经存》(1895) |
+| zhurong | zhurong.jpg | 明《按鉴演义帝王御世盘古至唐虞传》祝融氏大战康回 |
+| gonggong | gonggong.jpg | 明《按鉴演义帝王御世盘古至唐虞传》共工氏头触不周山 |
+| houtu | houtu.jpg | 明万历《新刻出像增补搜神记》后土神祗 |
+| rushou | rushou.jpg | 明·胡文焕《山海经图》海外西经·蓐收 |
+| jiufeng | jiufeng.jpg | 清代彩印九头凤（World Digital Library 藏） |
+| yinglong | yinglong.jpg | 17 世纪中国木刻版画，作者佚名 |
+| bai-ze | bai-ze.jpg | 唐·敦煌残卷《白泽精怪图》（法藏 Pelliot chinois 2682） |
+
+## CC BY-SA 4.0 —— 必须署名
+
+| 词条 slug | 文件 | 来源 | 署名要求 |
+|---|---|---|---|
+| xuanming | xuanming.jpg | 马王堆一号汉墓帛画·海神禺强局部（公元前168年） | Photo: Kaedegami, CC BY-SA 4.0（图注已含，勿删） |
 
 ## Commons 总分类（备用图库）
 
@@ -36,9 +50,9 @@
 |---|---|---|
 | kun-peng | 出自《庄子》，非山海经 | 用 AI 新图 |
 | taowu | 四凶之一但不在山海经原文 | AI 新图 |
-| bai-ze | 出自《轩辕本纪》，非山海经 | AI 新图 |
 | qilin | 出自春秋典籍，非山海经 | AI 新图 |
 | xiezhi | 出自《异物志》，非山海经 | AI 新图 |
 | zouyu | 出自《诗经》，非山海经 | AI 新图 |
 
-> 这 6 个词条保留在站内（文化概念），但页面需注明"非山海经原文生物，无古图传世"。
+> 这 5 个词条保留在站内（文化概念），但页面需注明"非山海经原文生物，无古图传世"。
+> bai-ze 已移出此表：虽非山海经原文生物，但敦煌唐卷《白泽精怪图》有传世古图（2025-10-12 已上线）。
