@@ -44,6 +44,7 @@ cultural_references:
   - { work: "Kirin Company (Japan)", year: 1885, note: "Brewery founded under the qilin name; its logo fixed the beast's modern image across East Asia" }
   - { work: "Final Fantasy series", year: 1987, note: "The kirin has recurred as monster and summon since the first game" }
 media:
+  historical_illustration: "Qilin — Imperial Encyclopaedia (Gujin Tushu Jicheng), Qing dynasty, public domain"
   ai_art_prompt: "A qilin, the benevolent Chinese unicorn: deer-like body wreathed in five-colored flames, ox tail, cloven hooves, a single flesh-tipped horn, standing calmly amid clouds and sprouting grain, soft golden auspicious light radiating from its hide, dark fantasy illustration, traditional Chinese ink wash texture, muted gold and vermillion palette, bestiary plate style, white background, ultra-detailed"
 dnd5e:
   name: "Qilin (麒麟)"

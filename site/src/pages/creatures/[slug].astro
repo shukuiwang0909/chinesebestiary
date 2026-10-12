@@ -34,7 +34,7 @@ const jsonLd = {
   ...(imageSrc && { "image": `https://chinesebestiary.com${imageSrc}` }),
 };
 ---
-<Base title={d.seo.meta_title} description={d.seo.meta_description}>
+<Base title={d.seo.meta_title} description={d.seo.meta_description} image={imageSrc ?? undefined}>
   <article>
     <h2>{d.name.en} <span class="zh">{d.name.zh_cn}</span></h2>
     <p><em>{d.name.pinyin} · Wade-Giles: {d.name.wade_giles}</em></p>

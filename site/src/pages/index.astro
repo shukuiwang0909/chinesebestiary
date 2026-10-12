@@ -7,6 +7,21 @@ const creatures = await getCollection('creatures');
 const sorted = creatures.sort((a, b) => a.data.id.localeCompare(b.data.id));
 ---
 <Base title="The Chinese Bestiary — Every Creature from the Shanhaijing" description="A searchable bestiary of every mythical creature in the Classic of Mountains and Seas (山海经): original texts, new translations, and D&D 5E stat blocks.">
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "The Chinese Bestiary",
+    "alternateName": "中国图鉴 · 山海经异兽",
+    "url": "https://chinesebestiary.com/",
+    "description": "A searchable bestiary of every mythical creature in the Classic of Mountains and Seas (山海经): original texts, new translations, and D&D 5E stat blocks.",
+    "inLanguage": "en",
+    "publisher": {
+      "@type": "Organization",
+      "name": "The Chinese Bestiary",
+      "url": "https://chinesebestiary.com/",
+      "logo": "https://chinesebestiary.com/favicon.png"
+    }
+  })} />
   <h2>Every creature from the <em>Classic of Mountains and Seas</em></h2>
   <p>The <em>Shanhaijing</em> (山海经, c. 4th century BCE) describes over 200 mythical beings — beasts that forecast empires, mountains that walk, and rivers that burn. This bestiary catalogs them with original-source texts, new English translations, and tabletop-ready stat blocks.</p>
 

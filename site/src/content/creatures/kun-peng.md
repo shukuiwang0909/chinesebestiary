@@ -39,7 +39,7 @@ cultural_references:
   - { work: "Big Fish & Begonia (大鱼海棠)", year: 2016, note: "Souls as fish — the giant Kun anchors the film's imagery" }
   - { work: "Chang An (长安三万里)", year: 2023, note: "Animated portrait of young Li Bai, with the peng poem as its emblematic line" }
 media:
-  historical_illustration: "Qing dynasty woodblock frontispiece, Zhuangzi 'Free and Easy Wandering', public domain"
+  historical_illustration: "The Peng — the bird form of the Kun-Peng — soaring over the northern dark sea. Imperial Encyclopaedia (Gujin Tushu Jicheng), Qing dynasty, public domain"
   ai_art_prompt: "A colossal Peng bird with wings unfurled like storm clouds hanging from the sky, above a dark northern sea where the vast shadow of the fish Kun glides beneath ink-wash waves, tiny sailboats below for scale, dark fantasy illustration, traditional Chinese ink wash texture, muted gold and vermillion palette, bestiary plate style, white background, ultra-detailed"
 dnd5e:
   name: "Kun-Peng (Roc of the Northern Darkness)"

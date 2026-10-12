@@ -38,7 +38,7 @@ cultural_references:
   - { work: "Mencius (孟子)", year: "c. 3rd century BCE", note: "Records that the state of Chu titled its official chronicle 'Taowu'" }
   - { work: "Idle Criticism of Taowu (梼杌闲评)", year: "late Ming novel", note: "Anonymous court novel on the corrupt eunuch Wei Zhongxian; aka The Pearl Romance (明珠缘)" }
 media:
-  historical_illustration: "Qing dynasty woodblock bestiary print, public domain"
+  historical_illustration: "Taowu — Wakan Sansai Zue (Japanese-Chinese Illustrated Encyclopedia of the Three Realms), 1712, public domain"
   ai_art_prompt: "A low-slung monstrous beast with a tiger's body covered in bristling dog-like fur, a scowling human face, tiger paws, a pig's snout with curved boar tusks, and an absurdly long whip-like tail lashing behind it as it prowls a barren ochre wasteland, dark fantasy illustration, traditional Chinese ink wash texture, muted gold and vermillion palette, bestiary plate style, white background, ultra-detailed"
 dnd5e:
   name: "Taowu (Incorrigible Beast)"

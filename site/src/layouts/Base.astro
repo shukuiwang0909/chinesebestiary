@@ -8,7 +8,7 @@ import SiteNav from '../components/SiteNav.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 
 const { title, description, image } = Astro.props;
-const ogImage = image ? new URL(image, Astro.site) : null;
+const ogImage = new URL(image ?? '/images/og-default.jpg', Astro.site);
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -22,7 +22,11 @@ const ogImage = image ? new URL(image, Astro.site) : null;
   <meta property="og:url" content={Astro.url.href} />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="The Chinese Bestiary" />
-  {ogImage && <meta property="og:image" content={ogImage.href} />}
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" href="/favicon.png" type="image/png" />
+  <meta property="og:image" content={ogImage.href} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content={ogImage.href} />
   <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
   <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-8D19N0VGQP"></script>
   <script is:inline>
