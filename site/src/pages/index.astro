@@ -70,9 +70,11 @@ const sorted = creatures.sort((a, b) => a.data.id.localeCompare(b.data.id));
   /* Hero */
   .hero {
     background:
-      linear-gradient(160deg, rgba(26,26,46,0.92) 0%, rgba(30,20,45,0.88) 100%),
-      url('/images/og-default.jpg') center / cover no-repeat;
-    background-color: #1a1a2e;
+      radial-gradient(ellipse at 20% 60%, rgba(120, 30, 18, 0.55) 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 20%, rgba(40, 20, 80, 0.50) 0%, transparent 55%),
+      radial-gradient(ellipse at 55% 80%, rgba(20, 40, 70, 0.40) 0%, transparent 50%),
+      linear-gradient(160deg, #0e0c1c 0%, #160f22 45%, #0c1420 100%);
+    background-color: #0e0c1c;
     color: #faf8f3;
     padding: 3.5rem 2rem 3rem;
     margin: 0 0 2.5rem;
@@ -80,6 +82,16 @@ const sorted = creatures.sort((a, b) => a.data.id.localeCompare(b.data.id));
     position: relative;
     overflow: hidden;
     text-align: center;
+  }
+  /* 淡云纹装饰条 */
+  .hero::after {
+    content: '';
+    position: absolute; inset: 0; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='80'%3E%3Cpath d='M0,40 Q25,18 50,30 Q75,42 100,22 Q125,2 150,20 Q175,38 200,28' fill='none' stroke='%23b8933d' stroke-width='0.8' opacity='0.18'/%3E%3Cpath d='M0,60 Q30,45 60,55 Q90,65 120,48 Q150,31 180,50 Q195,58 200,55' fill='none' stroke='%23b8933d' stroke-width='0.6' opacity='0.10'/%3E%3C/svg%3E");
+    background-size: 200px 80px;
+    background-repeat: repeat-x;
+    background-position: center bottom;
+    opacity: 0.6;
   }
   .hero-watermark {
     position: absolute; inset: 0;
