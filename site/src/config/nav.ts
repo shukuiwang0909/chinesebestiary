@@ -18,7 +18,16 @@ export const NAV_ITEMS: NavItem[] = [
   },
   { label: 'Stories', href: '/stories/' },
   { label: 'Real-World', href: '/real-world/' },
-  { label: 'Name Generator', href: '/name-generator/', enabled: true },
+  {
+    label: 'Name Generator',
+    href: '/name-generator/',
+    enabled: true,
+    children: [
+      { label: 'Xianxia Name 道号', href: '/name-generator/' },
+      { label: 'Fox Spirit 狐仙名', href: '/fox-name-generator/' },
+      { label: 'Dragon Name 龙名', href: '/dragon-name-generator/' },
+    ],
+  },
   { label: 'Versus', href: '/versus/' },
   { label: 'About', href: '/about/' },
 ];

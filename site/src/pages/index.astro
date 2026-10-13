@@ -45,6 +45,28 @@ const sorted = creatures.sort((a, b) => a.data.id.localeCompare(b.data.id));
   </div>
   <p class="update-note"><em>More entries added weekly.</em></p>
 
+  <section class="subscribe-band" aria-label="Free PDF download">
+    <div class="subscribe-inner">
+      <div class="subscribe-text">
+        <p class="subscribe-eyebrow">Free PDF Guide</p>
+        <h3 class="subscribe-heading">Ten Creatures of the <em>Shanhaijing</em></h3>
+        <p class="subscribe-desc">Nine-Tailed Fox, Nüwa, Taotie, Qilin and six more — original source passages, English translations, and D&D Challenge Ratings. Yours free when you subscribe.</p>
+        <ul class="subscribe-list">
+          <li>10 creatures from the original 4th-century BCE text</li>
+          <li>New creature entries straight to your inbox</li>
+        </ul>
+      </div>
+      <div class="subscribe-form-wrap">
+        <form class="subscribe-form" action="https://buttondown.com/api/emails/embed-subscribe/YOUR_BUTTONDOWN_USERNAME" method="POST" target="_blank">
+          <label for="subscribe-email" class="subscribe-label">Email address</label>
+          <input id="subscribe-email" type="email" name="email" placeholder="you@example.com" required class="subscribe-input" autocomplete="email" />
+          <button type="submit" class="subscribe-btn">Get the Free PDF →</button>
+          <p class="subscribe-note">No spam. Unsubscribe any time.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
   <div class="section-row">
     <div class="section-card">
       <h3>Groups <span class="zh">合集</span></h3>
@@ -142,4 +164,44 @@ const sorted = creatures.sort((a, b) => a.data.id.localeCompare(b.data.id));
   .section-card ul { margin: 0; padding-left: 1.1rem; }
   .section-card li { margin: 0.5rem 0; font-size: 0.9rem; }
   .section-card p { font-size: 0.9rem; margin: 0.5rem 0; }
+
+  /* Subscribe band */
+  .subscribe-band {
+    background:
+      radial-gradient(ellipse at 90% 50%, rgba(40,20,80,0.55) 0%, transparent 60%),
+      linear-gradient(135deg, #0e0c1c 0%, #1a1030 100%);
+    border-radius: 6px;
+    padding: 2.5rem 2rem;
+    margin: 0 0 2rem;
+    color: #faf8f3;
+  }
+  .subscribe-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; }
+  .subscribe-eyebrow { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--gold); margin: 0 0 0.5rem; }
+  .subscribe-heading { font-family: 'Cinzel', Georgia, serif; font-size: 1.25rem; color: #faf8f3; margin: 0 0 0.75rem; border: none; padding: 0; }
+  .subscribe-heading em { color: var(--gold-light); font-style: normal; }
+  .subscribe-desc { font-size: 0.9rem; color: rgba(250,248,243,0.8); margin: 0 0 0.75rem; line-height: 1.6; }
+  .subscribe-list { margin: 0; padding-left: 1.1rem; }
+  .subscribe-list li { font-size: 0.85rem; color: rgba(250,248,243,0.65); margin: 0.3rem 0; }
+  .subscribe-form-wrap { background: rgba(255,255,255,0.06); border: 1px solid rgba(184,147,61,0.25); border-radius: 4px; padding: 1.5rem; }
+  .subscribe-label { display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(250,248,243,0.6); margin-bottom: 0.4rem; }
+  .subscribe-input {
+    display: block; width: 100%; box-sizing: border-box;
+    font-family: Georgia, serif; font-size: 0.95rem; padding: 0.55rem 0.75rem;
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(184,147,61,0.35); border-radius: 3px;
+    color: #faf8f3; margin-bottom: 0.75rem;
+  }
+  .subscribe-input::placeholder { color: rgba(250,248,243,0.35); }
+  .subscribe-input:focus { outline: none; border-color: var(--gold); }
+  .subscribe-btn {
+    width: 100%; font-family: 'Cinzel', Georgia, serif; font-size: 0.95rem; letter-spacing: 0.04em;
+    background: var(--vermillion); color: #faf8f3; border: none; border-radius: 3px;
+    padding: 0.65rem 1rem; cursor: pointer; transition: background 0.15s;
+  }
+  .subscribe-btn:hover { background: #a5301f; }
+  .subscribe-note { font-size: 0.75rem; color: rgba(250,248,243,0.4); margin: 0.6rem 0 0; text-align: center; }
+
+  @media (max-width: 46rem) {
+    .subscribe-inner { grid-template-columns: 1fr; gap: 1.5rem; }
+    .subscribe-band { padding: 2rem 1.25rem; }
+  }
 </style>
