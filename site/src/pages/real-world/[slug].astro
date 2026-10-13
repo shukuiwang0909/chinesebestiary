@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import ReadingList from '../../components/ReadingList.astro';
+import { getCreatureImage } from '../../utils/creatureImage';
 
 export async function getStaticPaths() {
   const entries = await getCollection('realworld');
@@ -30,7 +31,7 @@ const VERDICT_COLOR: Record<string, string> = {
   unverified: 'var(--mist)',
 };
 ---
-<Base title={d.seo.meta_title} description={d.seo.meta_description}>
+<Base title={d.seo.meta_title} description={d.seo.meta_description} image={getCreatureImage(d.id) ?? undefined}>
   <div class="read-progress" id="read-progress" role="progressbar" aria-hidden="true"></div>
   <article>
     <nav class="rw-breadcrumb">

@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import ReadingList from '../../components/ReadingList.astro';
+import { getCreatureImage } from '../../utils/creatureImage';
 
 export async function getStaticPaths() {
   const entries = await getCollection('stories');
@@ -19,9 +20,10 @@ const creatures = await getCollection('creatures');
 const related = d.related_creatures
   .map(id => creatures.find(c => c.data.id === id))
   .filter(c => c !== undefined);
+const ogImage = (related[0] ? getCreatureImage(related[0].data.id) : null) ?? undefined;
 ---
 
-<Base title={d.seo.meta_title} description={d.seo.meta_description}>
+<Base title={d.seo.meta_title} description={d.seo.meta_description} image={ogImage}>
   <div class="read-progress" id="read-progress" role="progressbar" aria-hidden="true"></div>
   <article>
     <a class="back-link" href="/stories/">All Stories</a>
