@@ -37,7 +37,7 @@ cultural_references:
   - { work: "Mid-Autumn Festival (中秋节)", year: "annually", note: "The harvest-moon festival on the 15th of the 8th lunar month centers on Chang'e — mooncakes are offered, families gather, and the full moon is understood as her face at the window" }
   - { work: "Chang'e Lunar Exploration Program (嫦娥工程)", year: 2007, note: "China's lunar program carries her name: Chang'e 1 through 6 have orbited, landed, and returned samples from the moon, making her name globally recognizable through space news every few years" }
 media:
-  historical_illustration: "Chang'e ascending to the moon — woodblock print, Ming dynasty, public domain"
+  historical_illustration: "Chang'e before the moon palace, with the cassia tree — Wu Youru's Gujin Bai Mei Tu (古今百美图), 1891 woodblock print, public domain"
   ai_art_prompt: "Chang'e the Chinese moon goddess: a luminously beautiful woman in flowing white and silver robes drifting upward through moonlit clouds toward a pale full moon, a white jade rabbit at her feet, a glowing immortality pill in her hand, cold silver and midnight blue palette, long dark hair floating in the moonlight, soft radiant cold light, traditional Chinese ink wash textures, solitary otherworldly atmosphere, detailed bestiary plate style"
 dnd5e:
   name: "Chang'e (嫦娥)"

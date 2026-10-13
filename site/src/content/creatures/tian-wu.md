@@ -36,7 +36,7 @@ cultural_references:
   - { work: "Mawangdui Silk Manuscripts (马王堆帛书)", year: "c. 168 BCE", note: "Tian Wu appears in the cosmological imagery of the Mawangdui silk paintings — Han dynasty funeral art incorporated Shanhaijing creature imagery as markers of the cosmic directions" }
   - { work: "Water deity tradition", year: "ongoing", note: "Tian Wu represents the pre-bureaucratic layer of Chinese water deity mythology — the older tradition of creature-deities governing water before the medieval Dragon King system organized all aquatic governance into hierarchical courts" }
 media:
-  historical_illustration: "Eight-headed deity — detail from Mawangdui silk banner, Western Han dynasty, Hunan Museum, public domain"
+  historical_illustration: "The god Tian Wu, eight human heads on a tiger's body (天吳神圖) — Gujin Tushu Jicheng (Imperial Encyclopaedia), 1725 edition, public domain"
   ai_art_prompt: "Tian Wu the eight-faced Chinese water deity: a vast aquatic creature rising from the eastern sea, eight human faces arranged in a ring around the central body all watching in different directions, eight legs and eight tails trailing in the water, blue-green and yellow scales, the Valley of the Rising Sun glowing in the east behind it, waves and tidal surge, traditional Chinese ink wash style, cerulean and jade green palette, otherworldly plurality of form, detailed bestiary plate style"
 dnd5e:
   name: "Tian Wu (天吴)"

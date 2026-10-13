@@ -37,7 +37,7 @@ cultural_references:
   - { work: "Gyeongbokgung Palace, Seoul (경복궁)", year: 1394, note: "Haetae (Korean xiezhi) stone statues placed at palace gates as guardians against fire and injustice; still present today" }
   - { work: "Seoul Metropolitan Government", year: 2009, note: "Haetae adopted as the official mascot of Seoul city" }
 media:
-  historical_illustration: "Xiezhi — rank badge embroidery, Qing dynasty censor's robe, 18th century, public domain"
+  historical_illustration: "The Xiezhi (kaichi 獬豸) resting among peonies — Kinmō Zui (訓蒙図彙) illustrated encyclopaedia, Japan, 1875 edition, public domain"
   ai_art_prompt: "A xiezhi, the Chinese justice beast: powerful one-horned creature between a lion and a ram, single straight horn pointing forward, blue-green scales and dark fur, crouching in a judicial posture with eyes burning with intelligence and judgment, dark fantasy illustration, traditional Chinese ink wash texture, deep indigo and silver palette, ultra-detailed bestiary plate style"
 dnd5e:
   name: "Xiezhi (獬豸)"
