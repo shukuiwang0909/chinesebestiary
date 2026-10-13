@@ -37,7 +37,7 @@ cultural_references:
   - { work: "Journey to the West (西游记)", year: "c. 1592 CE", note: "Lei Gong appears as a heavenly official in the celestial court that Sun Wukong disrupts; by the Ming dynasty he was fully integrated into the Daoist bureaucratic heaven with a fixed appearance and role" }
   - { work: "Chinese popular religion", year: "ongoing", note: "Lei Gong and Dian Mu (Thunder and Lightning) are among the most widely recognized divine pairs in Chinese folk religion; thunder is still commonly attributed to Lei Gong's activity in traditional Chinese communities" }
 media:
-  historical_illustration: "Lei Gong figure — Daoist ritual painting, Song dynasty, public domain"
+  historical_illustration: "The God of Thunder — colour plate from Donald A. Mackenzie, Myths of China and Japan, London, 1923, public domain"
   ai_art_prompt: "Lei Gong the Chinese thunder god in his ancient form: a powerful deity with a dragon's body and a fierce human head, drumming on its own vast belly with thunderous force, the Thunder Marsh below and storm clouds roiling above, lightning flickering in the distance, traditional Chinese ink wash style, dark storm grey and electric blue palette, the sound of thunder visible in concentric shockwave rings around him, ancient and powerful creature form, detailed bestiary plate style"
 dnd5e:
   name: "Lei Gong (雷公)"

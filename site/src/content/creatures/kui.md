@@ -35,7 +35,7 @@ cultural_references:
   - { work: "Huainanzi (淮南子)", year: "c. 139 BCE", note: "The Yellow Emperor's Kui-skin drum appears again; the creature's role in the war against Chi You elaborated" }
   - { work: "Chinese idiom 夔一而足 (kuí yī ér zú)", year: "ongoing", note: "Meaning 'one Kui is enough' — from the Confucian tradition that one truly talented person is sufficient; the idiom preserves the creature's name in common usage" }
 media:
-  historical_illustration: "Kui pattern — Shang dynasty bronze ritual vessel (you 卣), 13th–11th century BCE, public domain"
+  historical_illustration: "Kui, the one-legged ox, with its original description — Wu Renchen's Shanhaijing Guangzhu (山海經廣注), 1786 woodblock edition, public domain"
   ai_art_prompt: "Kui, the one-legged thunder beast: a massive blue-grey one-legged ox-like creature standing on a remote island in the Eastern Sea, its body radiating light like simultaneous sun and moon, a vast stormcloud forming around it as it raises its single leg, its roar visible as visible shockwaves, the sea churning below, dark fantasy illustration, traditional Chinese ink wash texture, electric blue and storm-black palette with blazing silver radiance, ultra-detailed bestiary plate style"
 dnd5e:
   name: "Kui (夔)"

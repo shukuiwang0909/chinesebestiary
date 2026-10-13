@@ -36,7 +36,7 @@ cultural_references:
   - { work: "Huainanzi (淮南子·本经训)", year: "c. 139 BCE", note: "Records Hou Yi's destruction of the 修蛇 (Long Serpent) at Dongting Lake as one of his six world-clearing monster-kills; the identification of 修蛇 with 巴蛇 is standard in Chinese scholarship" }
   - { work: "Chinese idiom: 巴蛇吞象 (the Ba She swallowing an elephant)", year: "ongoing", note: "This image became a classical idiom for extreme greed or unrealistic ambition — attempting to consume something impossibly large; the Chuci's Tian Wen asks rhetorically: 'One snake swallows an elephant — what does that look like?'" }
 media:
-  historical_illustration: "Great serpent detail — Han dynasty silk painting, Mawangdui, public domain"
+  historical_illustration: "The Ba Snake devouring an elephant (巴蛇圖) — Gujin Tushu Jicheng (Imperial Encyclopaedia), 1725 edition, public domain"
   ai_art_prompt: "Ba She the Chinese elephant-swallowing serpent: a colossal four-colored serpent — banded in scales of blue-green, yellow, red, and black — coiled half in a vast southern marsh and half emerging from the water, its head enormous, an elephant-shaped bulge visible somewhere in its vast body, the marsh around it disturbed and flattened by its passage, Dongting Lake in the background, traditional Chinese ink wash style, marsh greens and muddy waters, ancient and massive presence, detailed bestiary plate style"
 dnd5e:
   name: "Ba She (巴蛇)"

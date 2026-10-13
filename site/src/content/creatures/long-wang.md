@@ -39,7 +39,7 @@ cultural_references:
   - { work: "Chinese rain ritual traditions", year: "ongoing", note: "Dragon King temples (龙王庙) were built throughout China; farmers petitioned them during drought; the custom survived well into the 20th century" }
   - { work: "Ne Zha (哪吒) film series", year: 2019, note: "Ao Bing, son of the Dragon King, is a central character in the blockbuster Ne Zha animated film" }
 media:
-  historical_illustration: "Dragon King — temple mural, Ming dynasty, Shanxi province, 15th century, public domain"
+  historical_illustration: "The Sea Dragon King (海龍王) enthroned on the waves — Chinese painting, c. 1800–1850, British Museum, public domain"
   ai_art_prompt: "The Dragon King Ao Guang: a regal deity in blue-green armor and coral crown, half-transformed — lower body a massive coiling sea-dragon, upper body an imposing armored official — seated on a throne of coral and pearl in the Crystal Palace beneath the Eastern Sea, schools of fish-soldiers and crab-generals arrayed behind him, bioluminescent sea light filtering from above, dark fantasy illustration, traditional Chinese ink wash texture, deep ocean blue and jade green palette, ultra-detailed bestiary plate style"
 dnd5e:
   name: "Long Wang, Dragon King of the Eastern Sea (龙王)"

@@ -38,7 +38,7 @@ cultural_references:
   - { work: "Final Fantasy series", year: 1994, note: "Byakko (白虎) appears as a summon or boss in multiple Final Fantasy installments" }
   - { work: "Contemporary Chinese astrology and feng shui", year: "ongoing", note: "The White Tiger Star (白虎星) is one of the most consulted omens in Chinese horoscopes — its activation in a birth chart indicates conflict and decisive events" }
 media:
-  historical_illustration: "White Tiger — Han dynasty tomb mural, Luoyang, 2nd century CE, public domain"
+  historical_illustration: "The White Tiger — mural from a Goguryeo tomb (c. 5th–6th century), reproduced in Joseon Gojuk Dobo vol. 2 (1915), public domain"
   ai_art_prompt: "The White Tiger of the West, Bai Hu: a massive pure-white tiger of divine scale, silver-white fur gleaming like polished metal, autumn leaves swirling around it, standing on a rocky western mountain peak beneath a pale autumn sky, four stars glowing at its paws representing the western lunar mansions, dark fantasy illustration, traditional Chinese ink wash texture, silver and ivory palette, ultra-detailed bestiary plate style"
 dnd5e:
   name: "Bai Hu, White Tiger of the West (白虎)"

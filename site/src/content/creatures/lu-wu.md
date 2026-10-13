@@ -32,7 +32,7 @@ cultural_references:
   - { work: "Classic of Mountains and Seas (山海经·西次三经)", year: "c. 4th–2nd century BCE", note: "The sole classical source for Lu Wu — a single passage that establishes his form, location, and cosmic administrative role in full; the text gives him more functional responsibility than most Shanhaijing guardians" }
   - { work: "Kunlun mythology tradition", year: "ongoing", note: "Kunlun as the cosmic mountain is one of the organizing concepts of Chinese mythological geography — the home of the Queen Mother of the West, the source of the Yellow River, and the point where earth meets heaven; Lu Wu is its guardian in the oldest stratum of the tradition" }
 media:
-  historical_illustration: "Tiger-bodied guardian — Han dynasty bronze vessel mount, Metropolitan Museum of Art, public domain"
+  historical_illustration: "The god Lu Wu, human-faced and nine-tailed (陸吾神圖) — Gujin Tushu Jicheng (Imperial Encyclopaedia), 1725 edition, public domain"
   ai_art_prompt: "Lu Wu guardian of Kunlun Mountain: a majestic divine creature with a powerful tiger body and nine thick tails, a calm and authoritative human face, tiger claws poised at the gates of a mountain that glows with celestial light, enormous scale against the mountain's cliffs, the sky above layered with nine divisions of heaven, traditional Chinese mythological style, gold and white mountain light, guardian presence, detailed bestiary plate style"
 dnd5e:
   name: "Lu Wu (陆吾)"

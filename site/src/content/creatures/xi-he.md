@@ -36,7 +36,7 @@ cultural_references:
   - { work: "Huainanzi (淮南子·天文训)", year: "c. 139 BCE", note: "The full solar journey: Xi He drives the sun from the Valley of Dawn through the Salt Pool and Fusang tree to the six celestial rivers and finally the Ruomu trees at the west" }
   - { work: "Book of Documents (尚书·尧典)", year: "c. 6th century BCE", note: "The Shangshu mentions officials called Xi and He who governed the solar calendar — some scholars read this as a rationalization of the solar deity, demoting the divine Xi He to a human astronomical official" }
 media:
-  historical_illustration: "Solar charioteer with six dragons — Han dynasty stone relief, Henan province, public domain"
+  historical_illustration: "Xihe bathing the ten suns in the Sweet Abyss — 19th-century Chinese illustration, public domain"
   ai_art_prompt: "Xi He the Chinese sun mother: a radiant goddess in golden and orange robes standing at the reins of a great sky-chariot drawn by six celestial dragons, one blazing sun-orb cradled gently in her arms or being placed onto the chariot, the Sweet Abyss glowing below in the east at first light, soft dawn colors of gold and rose, vast scale of sky and sea, traditional Chinese ink wash textures, detailed bestiary plate style"
 dnd5e:
   name: "Xi He (羲和)"
