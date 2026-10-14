@@ -1,0 +1,70 @@
+---
+import Base from './Base.astro';
+
+interface Props {
+  frontmatter: {
+    title: string;
+    description: string;
+    image?: string;
+    wide?: boolean;
+    pubDate?: string;
+  };
+}
+
+const { title, description, image, wide = false, pubDate } = Astro.props.frontmatter;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": title,
+  "description": description,
+  "inLanguage": "en",
+  ...(pubDate && { "datePublished": pubDate }),
+  ...(image && { "image": `https://chinesebestiary.com${image}` }),
+};
+---
+
+<Base title={title} description={description} image={image} wide={wide}>
+  <article class="md-article">
+    <slot />
+  </article>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+</Base>
+
+<style>
+  .md-article :global(h2) {
+    font-family: 'Cinzel', Georgia, serif;
+    font-size: 1.45rem;
+    margin: 0 0 0.4rem;
+  }
+  .md-article :global(h3) {
+    font-family: 'Cinzel', Georgia, serif;
+    font-size: 1.05rem;
+    margin: 2rem 0 0.6rem;
+    color: var(--ink);
+    border-bottom: 1px solid #e0d9c8;
+    padding-bottom: 0.3rem;
+  }
+  .md-article :global(table) {
+    width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.8rem 0;
+  }
+  .md-article :global(th) {
+    text-align: left; padding: 0.4rem 0.6rem; background: #f5f1e8;
+    border-bottom: 2px solid var(--gold);
+    font-family: 'Cinzel', Georgia, serif; font-size: 0.82rem;
+  }
+  .md-article :global(td) {
+    padding: 0.4rem 0.6rem; border-bottom: 1px solid #e0d9c8; vertical-align: top;
+  }
+  .md-article :global(tr:last-child td) { border-bottom: none; }
+  .md-article :global(blockquote) {
+    border-left: 3px solid var(--gold);
+    margin: 1rem 0;
+    padding: 0.6rem 1rem;
+    background: rgba(184,147,61,0.05);
+    border-radius: 0 4px 4px 0;
+  }
+  .md-article :global(hr) {
+    border: none; border-top: 1px solid #e0d9c8; margin: 2rem 0;
+  }
+</style>

@@ -69,6 +69,12 @@ The Classic itself tells his family story twice, and the two versions do not agr
 
 The *Seasonal Rules* of the *Huainanzi* give him his full court: in the southern palace, wearing red, feeding on millet and mutton, the god of the summer months — when the ruler must honor the fire phase and forbid all executions that would chill the rising yang. His cult ran deepest in the south. The ruling house of Chu claimed Zhurong as its direct ancestor, and the state temple of the fire god at Danyang was among its holiest sites. Long after the rectifiers faded from state ceremony, Zhurong kept a hearthside post: later tradition installed him among the candidates for god of the kitchen stove — the most domestic of gods, descended from the brightest of offices.
 
+## Modern Echoes
+
+In May 2021, China's first Mars rover touched down in Utopia Planitia — and it carried the fire god's name. The Zhurong rover, part of the Tianwen-1 mission, was named after the ancient god of fire and the south. The choice was deliberate poetry: to Chinese astronomers of old, Mars was Yinghuo, the "Sparkling Deluder," a red wandering star associated with fire and war. Who better to walk its rust-red deserts than the deity who tamed flame itself? The name also carried a quiet ambition: a figure from a text over two thousand years old, driving across another world in the twenty-first.
+
+Zhurong is one officeholder in a much larger celestial bureaucracy — see [Why China Names Its Spacecraft After Mythology](/articles/why-china-names-spacecraft-after-mythology/).
+
 ---
 
 > 🎲 **D&D 5E**: See the full stat block in the lore box below. CR 20 celestial (legendary), neutral good.

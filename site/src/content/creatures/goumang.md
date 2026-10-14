@@ -64,6 +64,12 @@ The office came from the Zuo Zhuan. In Duke Zhao's twenty-ninth year an official
 
 The *Monthly Ordinances* (月令) of the Book of Rites turned Goumang into ritual procedure: in the first month of spring the ruler must greet the east in person, reward the officials of agriculture, and forbid all executions — because the east is the sector of wood, and wood is the phase of everything starting to grow. The bird body fits the same logic: the east is where the sun and its bird-carrier rise, and the spring wind blows from the sea the bird-god patrols. Later centuries gradually retired him from state ceremony into the almanac and the temple mural, but the iconography never drifted: green plumage, grave face, two dragons — the spring of the world, riding to work.
 
+## Modern Echoes
+
+The god with a bird's body and a human face, who rode two dragons and governed the forests of the east, now measures the breathing of the entire planet. Launched in August 2022, the Goumang satellite — formally the Terrestrial Ecosystem Carbon Inventory Satellite — tracks vegetation and carbon flux across Earth's forests, the same green kingdoms the deity once tended. It is a quietly perfect naming: the ancient guardian of wood, reborn as an eye in the sky watching whether the world's forests live or die.
+
+Goumang is one officeholder in a much larger celestial bureaucracy — see [Why China Names Its Spacecraft After Mythology](/articles/why-china-names-spacecraft-after-mythology/).
+
 ---
 
 > 🎲 **D&D 5E**: See the full stat block in the lore box below. CR 17 celestial (legendary), neutral good.

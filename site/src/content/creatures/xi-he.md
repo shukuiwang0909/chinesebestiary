@@ -88,6 +88,12 @@ Xi He bathes the suns at the eastern Sweet Abyss and drives them across the sky.
 
 Neither is named as the greater or the lesser. Neither is described as being aware of the other. They work in parallel, the sky between them, the daily cycle the product of both their labors.
 
+## Modern Echoes
+
+The mother of the ten suns now tends a single one from orbit. In October 2021, China launched its first dedicated solar exploration satellite, naming it Xihe-1 in honor of the goddess who bore the ten suns of legend. The satellite — formally the Chinese Hα Solar Explorer (CHASE) — stares at our nearest star in hydrogen-alpha light, watching solar flares and eruptions that once would have been read as omens of the goddess's children misbehaving. Mythology's sun-mother became modern heliophysics' sentinel.
+
+Xi He is one officeholder in a much larger celestial bureaucracy — see [Why China Names Its Spacecraft After Mythology](/articles/why-china-names-spacecraft-after-mythology/).
+
 ---
 
 *Sources: Classic of Mountains and Seas, Great Southern Wilderness (山海经·大荒南经) · Huainanzi, "Celestial Patterns" (淮南子·天文训, c. 139 BCE) · Book of Documents (尚书·尧典). Translations are this site's own.*

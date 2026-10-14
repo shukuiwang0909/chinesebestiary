@@ -18,6 +18,7 @@ export const NAV_ITEMS: NavItem[] = [
   },
   { label: 'Stories', href: '/stories/' },
   { label: 'Real-World', href: '/real-world/' },
+  { label: 'Articles', href: '/articles/' },
   {
     label: 'Name Generator',
     href: '/name-generator/',
