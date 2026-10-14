@@ -4,6 +4,7 @@ title: "The Nantianmen Project, Explained: China's Sci-Fi Space Fleet and Its My
 description: "The Nantianmen Project (南天门计划) is AVIC's aerospace science-fiction universe: the Luanniao carrier, Xuannü and Baidi fighters, Chengying mech. What it is, what the names mean, and why Western media can't classify it."
 image: /images/creatures/jiutian-xuannu.jpg
 pubDate: 2026-10-14
+updated: 2026-10-14
 wide: true
 ---
 

@@ -1,5 +1,6 @@
 ---
 import Base from './Base.astro';
+import SubscribeBand from '../components/SubscribeBand.astro';
 
 interface Props {
   frontmatter: {
@@ -7,11 +8,21 @@ interface Props {
     description: string;
     image?: string;
     wide?: boolean;
-    pubDate?: string;
+    pubDate?: string | Date;
+    updated?: string | Date;
   };
 }
 
-const { title, description, image, wide = false, pubDate } = Astro.props.frontmatter;
+const { title, description, image, wide = false, pubDate, updated } = Astro.props.frontmatter;
+
+const isoDate = (d?: string | Date) => d ? new Date(d).toISOString().slice(0, 10) : undefined;
+const dateLabel = (d?: string | Date) => d
+  ? new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })
+  : undefined;
+const pubIso = isoDate(pubDate);
+const updIso = isoDate(updated);
+const pubLabel = dateLabel(pubDate);
+const updLabel = dateLabel(updated);
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -19,7 +30,8 @@ const jsonLd = {
   "headline": title,
   "description": description,
   "inLanguage": "en",
-  ...(pubDate && { "datePublished": pubDate }),
+  ...(pubIso && { "datePublished": pubIso }),
+  ...(updIso && { "dateModified": updIso }),
   ...(image && { "image": `https://chinesebestiary.com${image}` }),
 };
 ---
@@ -27,8 +39,12 @@ const jsonLd = {
 <Base title={title} description={description} image={image} wide={wide}>
   <article class="md-article">
     <h1>{title}</h1>
+    <p class="article-meta">
+      {pubLabel && <>Published {pubLabel}</>}{pubLabel && updLabel && <> · </>}{updLabel && <>Last updated {updLabel}</>}
+    </p>
     <slot />
   </article>
+  <SubscribeBand />
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 </Base>
 
@@ -38,6 +54,11 @@ const jsonLd = {
     font-size: 1.6rem;
     line-height: 1.35;
     margin: 0 0 1.2rem;
+  }
+  .article-meta {
+    font-size: 0.82rem;
+    color: var(--mist);
+    margin: -0.6rem 0 1.5rem;
   }
   .md-article :global(h2) {
     font-family: 'Cinzel', Georgia, serif;

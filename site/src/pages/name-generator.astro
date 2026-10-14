@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
+import SubscribeBand from '../components/SubscribeBand.astro';
 import { getCreatureImage } from '../utils/creatureImage';
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -133,6 +134,8 @@ const description = 'Forge your cultivation name (道号): daoist titles, xianxi
     <summary>What do the cultivation realms mean?</summary>
     <p>The ladder follows modern xianxia convention: Qi Refining, Foundation Establishment, Golden Core, Nascent Soul, Spirit Transformation, Unity, Great Ascension, and Tribulation Transcendence. It descends from 20th-century wuxia and was codified by Chinese web novels.</p>
   </details>
+
+  <SubscribeBand />
 </Base>
 
 <script type="application/json" id="gen-data" set:html={JSON.stringify({ beasts })}></script>

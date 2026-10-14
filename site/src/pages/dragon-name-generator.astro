@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
+import SubscribeBand from '../components/SubscribeBand.astro';
 import { getCreatureImage } from '../utils/creatureImage';
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -122,6 +123,8 @@ const description = 'Generate an authentic Chinese dragon name (龙名): element
     <summary>Can I use a generated name in fiction?</summary>
     <p>Yes. Every component is from public-domain classical vocabulary. Use freely in novels, games, or usernames — names are not copyrightable.</p>
   </details>
+
+  <SubscribeBand />
 </Base>
 
 <script type="application/json" id="gen-data" set:html={JSON.stringify({ beasts })}></script>
