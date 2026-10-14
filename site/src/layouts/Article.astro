@@ -26,12 +26,19 @@ const jsonLd = {
 
 <Base title={title} description={description} image={image} wide={wide}>
   <article class="md-article">
+    <h1>{title}</h1>
     <slot />
   </article>
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 </Base>
 
 <style>
+  .md-article :global(h1) {
+    font-family: 'Cinzel', Georgia, serif;
+    font-size: 1.6rem;
+    line-height: 1.35;
+    margin: 0 0 1.2rem;
+  }
   .md-article :global(h2) {
     font-family: 'Cinzel', Georgia, serif;
     font-size: 1.45rem;

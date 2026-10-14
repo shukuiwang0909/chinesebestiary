@@ -38,7 +38,7 @@ cultural_references:
   - { work: "Han ritual chariots", year: "Han dynasty", note: "The luan-bell (鸾铃) standardized on imperial carriages; 銮驾, 'the luan carriage,' becomes a title for the emperor's procession" }
   - { work: "Nantianmen Project (南天门计划), AVIC", year: "2017–", note: "The Luan Bird reimagined as a colossal airborne carrier in the state aerospace giant's science-fiction universe" }
 media:
-  historical_illustration: "No securely attributable antique plate of the luan in our archive yet; Ming-Qing editions of the Classic illustrate it as a five-colored pheasant."
+  historical_illustration: "Qing-dynasty illustrated edition of the Classic of Mountains and Seas: the Luan Bird as a five-colored pheasant on a flowering branch, artist unknown, public domain"
   ai_art_prompt: "A magnificent Chinese luan bird, a long-tailed pheasant with plumage in five sacred colors — vermillion, azure, gold, white, and black — in sweeping patterned bands, crested head held high, tail plumes trailing like silk streamers, perched on a crag of Mount Nüchuang at dawn, dark fantasy illustration, traditional Chinese ink wash texture, muted gold and vermillion palette, bestiary plate style, white background, ultra-detailed"
 dnd5e:
   name: "Luan Bird (Omen of Peace)"

@@ -7,8 +7,6 @@ wide: true
 pubDate: 2026-10-14
 ---
 
-## Why China Names Its Spacecraft After Mythology
-
 *A field guide to the celestial bureaucracy*
 
 In 2021, a Chinese rover rolled onto the surface of Mars bearing the name of a fire god. In 2022, a satellite began measuring the carbon breath of Earth's forests under the name of a bird-bodied wood deity. China's space program is not merely inspired by its mythology — it is administered by it. Rockets, rovers, stations, and probes have been organized into a functioning celestial bureaucracy, with each machine assigned a mythological officeholder appropriate to its duties.
@@ -36,7 +34,7 @@ The full spectrum, grouped by celestial jurisdiction:
 | **Nantianmen Project** 南天门计划 | The South Gate of Heaven | Daoist and literary tradition | Aerospace science-fiction IP: the Luan Bird carrier, Xuannü and Baidi fighters |
 | **Lanyue** 揽月 | "To clasp the moon" — *one can climb the ninth heaven and clasp the moon* | Mao Zedong, 1958 | Planned crewed lunar lander |
 
-### The Moon Ministry: Chang'e, Yutu, and Queqiao
+## The Moon Ministry: Chang'e, Yutu, and Queqiao
 
 The lunar program is the oldest and most elaborately named branch of the celestial bureaucracy. [Chang'e](/creatures/chang-e/) is the moon goddess of the *Huainanzi*: wife of the divine archer Yi, she drank the elixir of immortality and fled to the moon, where she dwells to this day. When China's first lunar orbiter launched in 2007, naming it for her was obvious — the mission was, literally, a visit to her residence. Six missions in, the name has acquired layers of appropriateness: Chang'e-6's 2024 far-side sample return succeeded partly because the relay satellite network made the goddess's far-side home reachable.
 
@@ -44,7 +42,7 @@ Yutu, the Jade Rabbit, is her companion in the lunar palace: the rabbit who poun
 
 Queqiao — "Magpie Bridge" — completes the trio with the program's most precise naming. In the legend, the Cowherd and the Weaver Girl are lovers separated by the Milky Way, permitted to meet once a year when magpies form a bridge across it. The Queqiao satellites are relay craft stationed where no direct signal can reach: they hold position between Earth and the moon's far side, forming exactly the bridge the legend describes. When Chang'e-4 made the first far-side landing in 2019, every byte of its data crossed a magpie bridge.
 
-### The Solar Bureau: Xihe, Kuafu — and the Shanhaijing Connection
+## The Solar Bureau: Xihe, Kuafu — and the Shanhaijing Connection
 
 Here the naming system reaches deepest into the classical layer, because the sun deities of Chinese mythology are creatures of the *Classic of Mountains and Seas* (山海经, c. 4th century BCE) — the very text this bestiary catalogs.
 
@@ -54,15 +52,15 @@ Here the naming system reaches deepest into the classical layer, because the sun
 
 For readers of this bestiary, the solar bureau's names deserve special attention: [Xihe](/creatures/xi-he/) and [Kuafu](/creatures/kua-fu/) both have full entries, original texts, and translations.
 
-### The Ministry of Fire: Zhurong on Mars
+## The Ministry of Fire: Zhurong on Mars
 
 [Zhurong](/creatures/zhurong/) is the god of fire, the south, and summer — and a genuine Shanhaijing figure, appearing in the *Classic of Regions Within the Seas* as a descendant of the Flame Emperor through six named generations. When the Tianwen-1 mission's rover needed a name, the choice was mythological engineering at its finest: Mars was Yinghuo, the "Sparkling Deluder," to China's ancient astronomers — a red, wandering star of fire and war and omens. Sending the god of fire to walk the red planet resolves an omen two thousand years in the making. The rover landed in Utopia Planitia in May 2021 and operated for over a Martian year; its resting place is now, in a sense, the south god's new domain.
 
-### The Forest Office: Goumang Counts the World's Trees
+## The Forest Office: Goumang Counts the World's Trees
 
 The quietest perfect naming in the entire system. [Goumang](/creatures/goumang/) appears in the *Classic of Regions Beyond the Seas: East*: "Goumang of the East — bird's body, human face, riding two dragons." He is the god of wood, of spring, and of the eastern quarter of the world. In August 2022, the Terrestrial Ecosystem Carbon Inventory Satellite — which measures global vegetation and carbon flux, watching whether Earth's forests thrive or die — was named for him. The deity who governed the forests of the East is now an eye in the sky governing the forests of the whole Earth.
 
-### The Infrastructure: Beidou, Tiangong, Shenzhou
+## The Infrastructure: Beidou, Tiangong, Shenzhou
 
 Not every name is a deity. The workhorse systems draw on cosmology and state tradition.
 
@@ -72,7 +70,7 @@ Tiangong, the Heavenly Palace, is the Daoist celestial court — the seat of the
 
 Shenzhou, the crewed spacecraft, puns on two homophones: 神舟, "divine vessel," and 神州, an ancient name for China itself, recorded in the *Records of the Grand Historian* ("the Middle Kingdom is called the Red County and Divine Land"). The crewed ship is thus simultaneously "divine vessel" and "Chinese vessel" — one syllable carrying both.
 
-### The Fundamental Science Wing: Wukong and Mozi
+## The Fundamental Science Wing: Wukong and Mozi
 
 The particle physicists and quantum scientists reached for different shelves.
 
@@ -80,7 +78,7 @@ Wukong — the Monkey King, whose dharma name means "Awakened to Emptiness" — 
 
 Mozi honors the Warring States philosopher whose *Mo Jing* contains China's earliest systematic optics — pinhole imaging, plane mirrors, the properties of light. The quantum science satellite that demonstrated satellite-based quantum key distribution carries the name of the first Chinese optical physicist, twenty-four centuries prior.
 
-### The Fiction Frontier: The Nantianmen Project
+## The Fiction Frontier: The Nantianmen Project
 
 And then there is the strangest entry in the celestial bureaucracy — one that does not yet exist.
 
@@ -92,7 +90,7 @@ What elevated the Nantianmen Project from airshow curiosity to international new
 
 For mythology readers, though, its meaning is simpler: the celestial bureaucracy has become self-aware. The same imagination that assigned Xihe to the sun and Zhurong to Mars is now designing, in fiction, the hardware of heaven's own gate — with the South Gate staffed, naturally, by creatures from the Shanhaijing.
 
-### Why It Works
+## Why It Works
 
 Strip away the nationalism and the branding analysis, and the system remains elegant on purely engineering grounds. Mythological names are:
 

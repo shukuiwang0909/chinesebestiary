@@ -38,7 +38,7 @@ cultural_references:
   - { work: "Yunji Qiqian (云笈七签), Daoist canon", year: "Song dynasty", note: "Installed among the transmitting goddesses of esoteric doctrine" }
   - { work: "Nantianmen Project (南天门计划), AVIC", year: "2018–", note: "Her name on an unmanned aerospace superiority fighter — the myth's war-revelation logic applied to a machine" }
 media:
-  historical_illustration: "No securely attributable antique plate in our archive yet; Ming-Qing temple prints show her phoenix-crowned, scroll and sword in hand."
+  historical_illustration: "Song Jiang meets the Mysterious Lady of the Nine Heavens — woodblock illustration to chapter 42 of Water Margin, Ming-Qing illustrated edition, public domain"
   ai_art_prompt: "Jiutian Xuannü, the Chinese goddess of war strategy: a sovereign woman in deep near-black robes with dark gold trim, phoenix crown, standing on storm clouds above an ancient battlefield, sealed heavenly scrolls in one hand and a straight sword lowered in the other, a great dark bird circling behind her, dark fantasy illustration, traditional Chinese ink wash texture, muted gold and ink-black palette, bestiary plate style, white background, ultra-detailed"
 dnd5e:
   name: "Jiutian Xuannü (Lady of the Nine Heavens)"
