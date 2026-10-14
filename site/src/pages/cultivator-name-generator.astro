@@ -1,0 +1,408 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import SubscribeBand from '../components/SubscribeBand.astro';
+import { getCreatureImage } from '../utils/creatureImage';
+
+const CATEGORY_LABELS: Record<string, string> = {
+  divine_beast: 'Divine Beast',
+  fierce_beast: 'Fierce Beast',
+  auspicious_beast: 'Auspicious Beast',
+  deity: 'Deity',
+  strange_being: 'Strange Being',
+  hybrid: 'Hybrid',
+};
+
+const beasts = (await getCollection('creatures')).map(c => ({
+  slug: c.data.id,
+  en: c.data.name.en,
+  zh: c.data.name.zh_cn,
+  pinyin: c.data.name.pinyin,
+  element: c.data.taxonomy.element,
+  category: c.data.taxonomy.category,
+  categoryLabel: CATEGORY_LABELS[c.data.taxonomy.category] ?? c.data.taxonomy.category,
+  image: getCreatureImage(c.data.id),
+}));
+
+const title = 'Cultivator Name Generator — Xianxia Character Names with Real Chinese Meanings';
+const description = 'Generate xianxia cultivator names that actually mean something: real classical Chinese surnames and given names with pinyin, per-character meanings, and a guardian beast from the Classic of Mountains and Seas.';
+---
+
+<Base title={title} description={description} image="/images/creatures/qinglong.jpg">
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What makes a good cultivator name?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A good xianxia protagonist name reads like poetry compressed into two or three characters: a natural image, a virtue, or an allusion to a classical text. The best ones carry the character's arc in miniature — a demonic cultivator named 'Burying Flowers' (葬花) tells you the tragedy before the story starts." }
+      },
+      {
+        "@type": "Question",
+        "name": "Are these real Chinese names?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Every surname is a real, centuries-old Chinese family name, and every given name is built from classical morphemes with attested meanings — several are direct allusions to the Shijing, the Chu Ci, and the Zhuangzi. The combinations are invented for fiction, which is exactly how Chinese authors invent names too." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between a cultivator name and a dao hao?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A cultivator name (姓名) is the character's birth name — surname plus given name, like Ye Gucheng. A dao hao (道号) is the religious title they earn later, like 'Perfected One of Purple Sky'. Most xianxia protagonists carry both. Use our companion Dao Hao Generator for the title." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use a generated name in my novel or game?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Individual names are not copyrightable, and every component here is public-domain classical vocabulary. Use them freely for novels, tabletop campaigns, games, or usernames." }
+      }
+    ]
+  })} />
+
+  <h2>Cultivator Name Generator <span class="zh">修仙者名</span></h2>
+
+  <p class="lede">Your protagonist's birth name — not the title they earn later, but the name their mother gave them. Every result pairs a <strong>real classical surname</strong> with a given name built from attested Chinese morphemes, each with pinyin and a per-part meaning. Choose a register — righteous, demonic, or free-roaming — and the generator also assigns a <strong>guardian beast from the original 4th-century BCE bestiary</strong>.</p>
+
+  <div class="generator">
+    <div class="controls">
+      <label>
+        Register <span class="zh">气质</span>
+        <select id="gen-register">
+          <option value="any">Fate decides</option>
+          <option value="righteous">Righteous 浩然正道</option>
+          <option value="demonic">Demonic 魔道妖异</option>
+          <option value="free">Free-roaming 闲云野鹤</option>
+        </select>
+      </label>
+      <label>
+        Element <span class="zh">五行</span>
+        <select id="gen-element">
+          <option value="any">Fate decides</option>
+          <option value="fire">Fire 火</option>
+          <option value="water">Water 水</option>
+          <option value="wood">Wood 木</option>
+          <option value="metal">Metal 金</option>
+          <option value="earth">Earth 土</option>
+          <option value="wind">Wind 风</option>
+          <option value="thunder">Thunder 雷</option>
+        </select>
+      </label>
+      <button id="gen-btn" class="forge-btn" type="button">Generate Name <span class="zh">赐名</span></button>
+    </div>
+
+    <div class="result" id="gen-result" hidden>
+      <div class="result-main">
+        <div class="seal" aria-hidden="true">名</div>
+        <div class="result-name-block">
+          <div class="result-zh zh" id="r-zh">—</div>
+          <div class="result-pinyin" id="r-pinyin"></div>
+          <div class="result-gloss" id="r-gloss"></div>
+        </div>
+      </div>
+      <dl class="result-meta">
+        <div><dt>Register</dt><dd id="r-register"></dd></div>
+        <div><dt>Surname</dt><dd id="r-surname"></dd></div>
+        <div><dt>Given name</dt><dd id="r-given"></dd></div>
+      </dl>
+      <div class="guardian" id="r-guardian"></div>
+      <div class="result-actions">
+        <button id="copy-btn" class="ghost-btn" type="button">Copy result</button>
+        <button id="again-btn" class="ghost-btn" type="button">Generate again</button>
+      </div>
+    </div>
+
+    <div class="history" id="gen-history" hidden>
+      <h3>Previous names <span class="zh">前缘</span></h3>
+      <ul id="history-list"></ul>
+    </div>
+  </div>
+
+  <h3>How cultivator names work <span class="zh">取名之道</span></h3>
+  <p>A xianxia character name has a strict anatomy: <strong>surname first, given name second</strong>, no exceptions — Ye Gucheng, never Gucheng Ye. The given name is where the art lives. Chinese authors build them from a shared vocabulary of classical images: jades, weathers, waters, virtues, and above all <strong>allusions</strong>. A reader who recognizes that 怀瑾 ("Bearing Jade") quotes the Chu Ci's "怀瑾握瑜" understands instantly that this character is virtuous and probably doomed.</p>
+  <p>The three registers signal allegiance before the plot does. <strong>Righteous</strong> names glow with Confucian contentment — Still Water, Lofty Conduct. <strong>Demonic</strong> names are built from erosion and negation: Moon-Eroding, No Pardon, Extinguishing Light. <strong>Free-roaming</strong> names smell of pine resin and wine: Listening to Pines, Forgetting Schemes — the last one, 忘机, is the courtesy name of Lan Wangji in <em>The Grandmaster of Demonic Cultivation</em>, drawn from a Liezi parable about a man so free of intent that seabirds landed on him.</p>
+  <p>For the religious title a cultivator earns later in life — the "Perfected One of Purple Sky" style — use our companion <a href="/name-generator/">Dao Hao Name Generator</a>. Need a home for your character? The <a href="/sect-name-generator/">Sect Name Generator</a> builds their sect; the <a href="/sword-name-generator/">Sword Name Generator</a> names their blade.</p>
+
+  <h3>FAQ</h3>
+  <details>
+    <summary>What makes a good cultivator name?</summary>
+    <p>A good xianxia protagonist name reads like poetry compressed into two or three characters: a natural image, a virtue, or an allusion to a classical text. The best ones carry the character's arc in miniature — a demonic cultivator named "Burying Flowers" (葬花) tells you the tragedy before the story starts.</p>
+  </details>
+  <details>
+    <summary>Are these real Chinese names?</summary>
+    <p>Every surname is a real, centuries-old family name, and every given name is built from classical morphemes with attested meanings — several allude directly to the Shijing, the Chu Ci, and the Zhuangzi. The combinations are invented for fiction, which is exactly how Chinese authors invent names too.</p>
+  </details>
+  <details>
+    <summary>Cultivator name vs. dao hao — what's the difference?</summary>
+    <p>The cultivator name is the birth name (surname + given name); the dao hao is the earned religious title. Most protagonists carry both. This generator makes the birth name; the <a href="/name-generator/">Dao Hao Generator</a> makes the title.</p>
+  </details>
+  <details>
+    <summary>Can I use a generated name in my novel or game?</summary>
+    <p>Yes — individual names are not copyrightable, and every component is public-domain classical vocabulary. Use freely.</p>
+  </details>
+
+  <SubscribeBand />
+</Base>
+
+<script type="application/json" id="gen-data" set:html={JSON.stringify({ beasts })}></script>
+
+<script is:inline>
+(function () {
+  var data = JSON.parse(document.getElementById('gen-data').textContent);
+  var beasts = data.beasts;
+
+  // [zh, pinyin]
+  var SURNAMES = [
+    ['叶', 'Yè'], ['苏', 'Sū'], ['楚', 'Chǔ'], ['顾', 'Gù'], ['沈', 'Shěn'], ['秦', 'Qín'],
+    ['萧', 'Xiāo'], ['江', 'Jiāng'], ['林', 'Lín'], ['洛', 'Luò'], ['白', 'Bái'], ['云', 'Yún'],
+    ['凌', 'Líng'], ['裴', 'Péi'], ['燕', 'Yān'], ['祁', 'Qí'], ['魏', 'Wèi'], ['蓝', 'Lán']
+  ];
+
+  // [zh, pinyin, gloss, allusion-or-null]
+  var REGISTERS = {
+    righteous: {
+      label: 'Righteous 浩然正道',
+      given: [
+        ['昭明', 'Zhāomíng', 'Bright Clarity', null],
+        ['怀瑾', 'Huáijǐn', 'Bearing Jade', 'Chu Ci: "怀瑾握瑜" — carrying jade as the emblem of virtue kept hidden'],
+        ['清晏', 'Qīngyàn', 'Clear Peace', null],
+        ['景行', 'Jǐngxíng', 'Lofty Conduct', 'Shijing: "高山仰止，景行行止" — the high road that all men follow'],
+        ['明霁', 'Míngjì', 'Clear After Rain', null],
+        ['修远', 'Xiūyuǎn', 'The Long Road', 'Li Sao: "路漫漫其修远兮，吾将上下而求索"'],
+        ['止水', 'Zhǐshuǐ', 'Still Water', 'Zhuangzi: the mind in stillness, reflecting heaven and earth'],
+        ['观澜', 'Guānlán', 'Watching Waves', 'Mencius: "观水有术，必观其澜" — to study water, watch its waves'],
+        ['正青', 'Zhèngqīng', 'Upright Verdure', null],
+        ['弘毅', 'Hóngyì', 'Broad Resolve', 'Analects: "士不可以不弘毅" — the scholar must be broad and resolute']
+      ]
+    },
+    demonic: {
+      label: 'Demonic 魔道妖异',
+      given: [
+        ['蚀月', 'Shíyuè', 'Moon-Eroding', null],
+        ['渡厄', "Dù'è", 'Crossing Calamity', null],
+        ['无赦', 'Wúshè', 'No Pardon', null],
+        ['葬花', 'Zànghuā', 'Burying Flowers', 'The tragic image from Dream of the Red Chamber — beauty interred'],
+        ['饮鸩', 'Yǐnzhèn', 'Drinking Poison', 'The idiom 饮鸩止渴 — poison drunk to slake thirst'],
+        ['灭明', 'Mièmíng', 'Extinguishing Light', null],
+        ['孤煞', 'Gūshà', 'Lone Balefire', null],
+        ['祭寒', 'Jìhán', 'Offering to Cold', null],
+        ['衔恨', 'Xiánhèn', 'Holding Grievance', null],
+        ['断琴', 'Duànqín', 'The Broken Qin', 'The instrument broken when the only listener dies — grief as weapon']
+      ]
+    },
+    free: {
+      label: 'Free-roaming 闲云野鹤',
+      given: [
+        ['眠云', 'Miányún', 'Sleeping on Clouds', null],
+        ['拾遗', 'Shíyí', 'Picking Up the Lost', null],
+        ['听松', 'Tīngsōng', 'Listening to Pines', null],
+        ['醉月', 'Zuìyuè', 'Drunk on Moon', null],
+        ['忘机', 'Wàngjī', 'Forgetting Schemes', 'Liezi: the man so free of intent that seabirds landed on him — also Lan Wangji\u2019s courtesy name'],
+        ['栖迟', 'Qīchí', 'The Resting Perch', 'Shijing: "衡门之下，可以栖迟"'],
+        ['观鱼', 'Guānyú', 'Watching Fish', 'Zhuangzi on the Hao bridge: "子非鱼，安知鱼之乐"'],
+        ['种玉', 'Zhòngyù', 'Planting Jade', 'The Soushen Ji parable — jade planted in kindness, harvested in marriage'],
+        ['踏歌', 'Tàgē', 'Treading Song', 'Li Bai\u2019s farewell: "忽闻岸上踏歌声"'],
+        ['揽月', 'Lǎnyuè', 'Clasping the Moon', null]
+      ]
+    }
+  };
+
+  var ELEMENTS = { fire: 'Fire 火', water: 'Water 水', wood: 'Wood 木', metal: 'Metal 金', earth: 'Earth 土', wind: 'Wind 风', thunder: 'Thunder 雷' };
+
+  function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+  function generate() {
+    var registerId = document.getElementById('gen-register').value;
+    var elementId = document.getElementById('gen-element').value;
+    var reg = registerId === 'any' ? REGISTERS[pick(['righteous', 'demonic', 'free'])] : REGISTERS[registerId];
+
+    var s = pick(SURNAMES);
+    var g = pick(reg.given);
+
+    var element = elementId;
+    if (element === 'any') {
+      var pool = beasts.filter(function (b) { return b.element !== 'none'; });
+      element = pool.length ? pick(pool).element : 'fire';
+    }
+    var guardians = beasts.filter(function (b) { return b.element === element; });
+    var guardian = guardians.length ? pick(guardians) : pick(beasts);
+
+    return {
+      zh: s[0] + g[0],
+      pinyin: s[1] + ' ' + g[1],
+      gloss: g[2],
+      allusion: g[3],
+      registerLabel: reg.label,
+      surname: s[0] + ' (' + s[1] + ')',
+      given: g[0] + ' ' + g[1] + ' — ' + g[2],
+      element: ELEMENTS[element] || element,
+      guardian: guardian
+    };
+  }
+
+  var history = [];
+
+  function render(r) {
+    document.getElementById('r-zh').textContent = r.zh;
+    document.getElementById('r-pinyin').textContent = r.pinyin;
+    document.getElementById('r-gloss').textContent = r.allusion ? r.gloss + ' — ' + r.allusion : r.gloss;
+    document.getElementById('r-register').textContent = r.registerLabel;
+    document.getElementById('r-surname').textContent = r.surname;
+    document.getElementById('r-given').textContent = r.given;
+
+    var g = r.guardian;
+    var el = document.getElementById('r-guardian');
+    el.innerHTML = '';
+    var card = document.createElement('a');
+    card.href = '/creatures/' + g.slug + '/';
+    card.className = 'guardian-card';
+    if (g.image) {
+      var img = document.createElement('img');
+      img.src = g.image;
+      img.alt = g.en;
+      img.width = 72; img.height = 72;
+      card.appendChild(img);
+    }
+    var info = document.createElement('div');
+    info.className = 'guardian-info';
+    var t1 = document.createElement('div');
+    t1.className = 'guardian-name';
+    t1.innerHTML = 'Guardian beast: <strong>' + g.en + ' <span class="zh">' + g.zh + '</span></strong>';
+    var t2 = document.createElement('div');
+    t2.className = 'guardian-sub';
+    t2.textContent = g.categoryLabel + ' · ' + g.pinyin;
+    var t3 = document.createElement('div');
+    t3.className = 'guardian-link';
+    t3.textContent = 'Read its original Shanhaijing entry →';
+    info.appendChild(t1); info.appendChild(t2); info.appendChild(t3);
+    card.appendChild(info);
+    el.appendChild(card);
+
+    document.getElementById('gen-result').hidden = false;
+    document.getElementById('gen-result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    history.unshift(r);
+    if (history.length > 5) history.pop();
+    renderHistory();
+  }
+
+  function renderHistory() {
+    var box = document.getElementById('gen-history');
+    var list = document.getElementById('history-list');
+    list.innerHTML = '';
+    history.forEach(function (r) {
+      var li = document.createElement('li');
+      li.innerHTML = '<span class="zh">' + r.zh + '</span> <em>' + r.pinyin + '</em> — ' + r.gloss;
+      list.appendChild(li);
+    });
+    box.hidden = history.length === 0;
+  }
+
+  function copyResult() {
+    if (!history.length) return;
+    var r = history[0];
+    var g = r.guardian;
+    var text = r.zh + ' ' + r.pinyin + ' — ' + r.gloss +
+      (r.allusion ? ' (' + r.allusion + ')' : '') +
+      ' · Guardian beast: ' + g.en + ' (' + g.zh + ')' +
+      ' https://chinesebestiary.com/creatures/' + g.slug + '/';
+    var done = function () {
+      var btn = document.getElementById('copy-btn');
+      btn.textContent = 'Copied!';
+      setTimeout(function () { btn.textContent = 'Copy result'; }, 1500);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text); done(); });
+    } else {
+      fallbackCopy(text); done();
+    }
+  }
+
+  function fallbackCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+
+  document.getElementById('gen-btn').addEventListener('click', function () {
+    if (typeof gtag === 'function') gtag('event', 'generate_name', { tool: 'cultivator' });
+    render(generate());
+  });
+  document.getElementById('again-btn').addEventListener('click', function () {
+    if (typeof gtag === 'function') gtag('event', 'generate_name', { tool: 'cultivator' });
+    render(generate());
+  });
+  document.getElementById('copy-btn').addEventListener('click', copyResult);
+})();
+</script>
+
+<style>
+  .lede { font-size: 0.97rem; }
+  .generator { background: #fff; border: 1px solid #e0d9c8; border-radius: 4px; padding: 1.5rem; margin: 1.5rem 0; }
+  .controls { display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; align-items: flex-end; }
+  .controls label { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.85rem; color: var(--mist); }
+  .controls select {
+    font-family: Georgia, serif; font-size: 0.95rem; padding: 0.45rem 0.6rem;
+    border: 1px solid #d8d0bc; border-radius: 3px; background: var(--paper); color: var(--ink);
+    min-width: 12rem;
+  }
+  .forge-btn {
+    font-family: 'Cinzel', Georgia, serif; font-size: 1rem; letter-spacing: 0.04em;
+    background: var(--vermillion); color: #faf8f3; border: none; border-radius: 3px;
+    padding: 0.6rem 1.6rem; cursor: pointer; transition: background 0.15s, transform 0.1s;
+  }
+  .forge-btn:hover { background: #a5301f; }
+  .forge-btn:active { transform: scale(0.98); }
+  .forge-btn .zh { font-family: "Noto Serif SC", serif; margin-left: 0.3rem; }
+
+  .result { margin-top: 1.5rem; border-top: 1px solid #e0d9c8; padding-top: 1.5rem; }
+  .result-main { display: flex; gap: 1.25rem; align-items: center; }
+  .seal {
+    flex-shrink: 0; width: 4rem; height: 4rem;
+    background: var(--vermillion); color: #faf8f3; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: "Noto Serif SC", serif; font-size: 2.2rem; font-weight: 600;
+    box-shadow: 2px 2px 0 rgba(192,57,43,0.25);
+  }
+  .result-zh { font-size: 2.2rem; font-weight: 600; line-height: 1.2; }
+  .result-pinyin { color: var(--vermillion); font-size: 0.95rem; letter-spacing: 0.03em; }
+  .result-gloss { color: var(--mist); font-size: 0.9rem; font-style: italic; max-width: 34rem; }
+  .result-meta { display: flex; flex-wrap: wrap; gap: 0.75rem 2rem; margin: 1.25rem 0; padding: 0; }
+  .result-meta dt { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--mist); }
+  .result-meta dd { margin: 0.15rem 0 0; font-size: 0.95rem; }
+
+  .guardian-card {
+    display: flex; gap: 1rem; align-items: center; text-decoration: none;
+    background: var(--paper); border: 1px solid #e0d9c8; border-radius: 4px;
+    padding: 0.9rem 1.1rem; transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .guardian-card:hover { border-color: var(--gold); box-shadow: 2px 3px 10px rgba(26,26,46,0.08); }
+  .guardian-card img { width: 72px; height: 72px; object-fit: cover; border-radius: 3px; border: 1px solid #e0d9c8; background: #fff; }
+  .guardian-name { font-size: 0.95rem; color: var(--ink); }
+  .guardian-sub { font-size: 0.82rem; color: var(--mist); }
+  .guardian-link { font-size: 0.85rem; color: var(--vermillion); margin-top: 0.2rem; }
+
+  .result-actions { display: flex; gap: 0.75rem; margin-top: 1.25rem; }
+  .ghost-btn {
+    font-family: Georgia, serif; font-size: 0.88rem; padding: 0.45rem 1.1rem;
+    background: transparent; color: var(--ink); border: 1px solid #d8d0bc; border-radius: 3px;
+    cursor: pointer; transition: border-color 0.15s, color 0.15s;
+  }
+  .ghost-btn:hover { border-color: var(--vermillion); color: var(--vermillion); }
+
+  .history { margin-top: 1.5rem; }
+  .history h3 { margin-top: 0; }
+  .history ul { list-style: none; margin: 0; padding: 0; }
+  .history li { font-size: 0.88rem; color: var(--mist); padding: 0.35rem 0; border-bottom: 1px dashed #e0d9c8; }
+  .history li .zh { color: var(--ink); }
+  .history li em { color: var(--vermillion); font-style: normal; }
+
+  details { border: 1px solid #e0d9c8; border-radius: 4px; padding: 0.7rem 1rem; margin: 0.6rem 0; background: #fff; }
+  summary { cursor: pointer; font-weight: bold; font-size: 0.95rem; }
+  details p { font-size: 0.9rem; margin: 0.6rem 0 0.2rem; }
+
+  @media (max-width: 46rem) {
+    .controls { flex-direction: column; align-items: stretch; }
+    .controls select { min-width: 0; }
+    .result-zh { font-size: 1.7rem; }
+  }
+</style>

@@ -25,6 +25,9 @@ export const NAV_ITEMS: NavItem[] = [
     enabled: true,
     children: [
       { label: 'Xianxia Name 道号', href: '/name-generator/' },
+      { label: 'Cultivator 修仙者名', href: '/cultivator-name-generator/' },
+      { label: 'Sect 宗门名', href: '/sect-name-generator/' },
+      { label: 'Sword 剑名', href: '/sword-name-generator/' },
       { label: 'Fox Spirit 狐仙名', href: '/fox-name-generator/' },
       { label: 'Dragon Name 龙名', href: '/dragon-name-generator/' },
     ],

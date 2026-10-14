@@ -1,0 +1,409 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import SubscribeBand from '../components/SubscribeBand.astro';
+import { getCreatureImage } from '../utils/creatureImage';
+
+const CATEGORY_LABELS: Record<string, string> = {
+  divine_beast: 'Divine Beast',
+  fierce_beast: 'Fierce Beast',
+  auspicious_beast: 'Auspicious Beast',
+  deity: 'Deity',
+  strange_being: 'Strange Being',
+  hybrid: 'Hybrid',
+};
+
+const beasts = (await getCollection('creatures')).map(c => ({
+  slug: c.data.id,
+  en: c.data.name.en,
+  zh: c.data.name.zh_cn,
+  pinyin: c.data.name.pinyin,
+  element: c.data.taxonomy.element,
+  category: c.data.taxonomy.category,
+  categoryLabel: CATEGORY_LABELS[c.data.taxonomy.category] ?? c.data.taxonomy.category,
+  image: getCreatureImage(c.data.id),
+}));
+
+const title = 'Chinese Sword Name Generator — Legendary Jian Names from the Classics';
+const description = 'Generate legendary Chinese sword (剑 jian) names: real classical naming patterns from the Liezi and Yuejueshu traditions — with live odds of drawing an actual named sword of antiquity, provenance included.';
+---
+
+<Base title={title} description={description} image="/images/creatures/yinglong.jpg">
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How are legendary Chinese sword names built?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Two grammars dominate. Image names fuse two natural phenomena — Purple Lightning (紫电), Azure Frost (青霜) — the tradition of Wang Bo's famous line. Deed names are verb-plus-object — Heaven-Leaning (倚天), Immortal-Slaying (诛仙) — a sword named for what it does. The oldest named swords, like Chengying (Bearing-Shadow), are stranger and subtler: names as riddles." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can this generator produce real historical sword names?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes — about one result in seven is a genuine sword of legend: Chengying, Hanguang, and Xiaolian from the Liezi; the Ou Yezi forgings (Zhanlu, Chunjun, Shengxie, Yuchang, Juque, Longyuan, Tai'a, Gongbu) from the Yuejueshu; Ganjiang and Moye; the Han founder's Chixiao. Each legendary draw comes with its source." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a jian, and how is it different from a dao?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The jian 剑 is the double-edged straight sword — the 'gentleman of weapons', the scholar's and immortal's blade, flown on in xianxia fiction. The dao 刀 is the single-edged saber, the soldier's weapon. When xianxia characters ride a flying sword, it is always a jian." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use a generated sword name in my novel or game?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Names are not copyrightable; the generated ones are built from public-domain classical vocabulary, and the legendary ones are over two thousand years old — older than copyright by two millennia." }
+      }
+    ]
+  })} />
+
+  <h2>Chinese Sword Name Generator <span class="zh">剑名生成器</span></h2>
+
+  <p class="lede">In the Chinese tradition a sword of note has a name — and the name is older than the dynasty. This generator works in the classical grammar of the <em>jian</em> (剑), the double-edged gentleman's blade: image names, deed names, and Daoist riddle-names. About one draw in seven yields a <strong>genuine legendary sword</strong> — a blade recorded in the <em>Liezi</em> or the <em>Yuejueshu</em> — with its provenance attached.</p>
+
+  <div class="generator">
+    <div class="controls">
+      <label>
+        Register <span class="zh">剑意</span>
+        <select id="gen-style">
+          <option value="any">Fate decides</option>
+          <option value="celestial">Celestial image 天成</option>
+          <option value="war">Deed of war 杀伐</option>
+          <option value="dao">Daoist riddle 道韵</option>
+        </select>
+      </label>
+      <button id="gen-btn" class="forge-btn" type="button">Draw the Sword <span class="zh">拔剑</span></button>
+    </div>
+
+    <div class="result" id="gen-result" hidden>
+      <div class="result-main">
+        <div class="seal" aria-hidden="true">剑</div>
+        <div class="result-name-block">
+          <div class="result-zh zh" id="r-zh">—</div>
+          <div class="result-pinyin" id="r-pinyin"></div>
+          <div class="result-gloss" id="r-gloss"></div>
+        </div>
+      </div>
+      <dl class="result-meta">
+        <div><dt>Register</dt><dd id="r-style"></dd></div>
+        <div><dt>Provenance</dt><dd id="r-prov"></dd></div>
+      </dl>
+      <div class="guardian" id="r-guardian"></div>
+      <div class="result-actions">
+        <button id="copy-btn" class="ghost-btn" type="button">Copy result</button>
+        <button id="again-btn" class="ghost-btn" type="button">Draw again</button>
+      </div>
+    </div>
+
+    <div class="history" id="gen-history" hidden>
+      <h3>Blades drawn <span class="zh">剑谱</span></h3>
+      <ul id="history-list"></ul>
+    </div>
+  </div>
+
+  <h3>How Chinese sword names work <span class="zh">名剑之道</span></h3>
+  <p>Two grammars dominate the tradition. <strong>Image names</strong> fuse two natural phenomena into a single flash — Purple Lightning (紫电), Azure Frost (青霜), Startled Swan (惊鸿). Wang Bo's <em>Preface to the Pavilion of Prince Teng</em> put the pair into every schoolchild's mouth: "紫电青霜，王将军之武库" — Purple Lightning and Azure Frost, in General Wang's armory. <strong>Deed names</strong> are verb and object, a sword named for its work: Heaven-Leaning (倚天), after Song Yu's great sword that "rests against the sky"; Immortal-Slaying (诛仙), the blade of a web-novel so famous it named the genre's flagship.</p>
+  <p>The oldest stratum is stranger. The <em>Liezi</em> records Kong Zhou's three swords: <strong>Hanguang</strong> 含光, "Containing Light" — invisible; <strong>Chengying</strong> 承影, "Bearing-Shadow" — only its shadow exists; <strong>Xiaolian</strong> 宵练, "Evening Silk" — a blade with a shadow but no substance. A name as a riddle about what a sword even <em>is</em>. And the <em>Yuejueshu</em> keeps the foundry list of Ou Yezi, the smith of legend: Zhanlu the black, Juque the great gate, Yuchang the "fish-intestine" dagger that killed a king. When this generator serves you one of those, you are holding a name that has been sharp for two and a half thousand years.</p>
+  <p>Every blade needs a wielder — name them with the <a href="/cultivator-name-generator/">Cultivator Name Generator</a>, house them with the <a href="/sect-name-generator/">Sect Name Generator</a>, or give them a title with the <a href="/name-generator/">Dao Hao Generator</a>.</p>
+
+  <h3>FAQ</h3>
+  <details>
+    <summary>How are legendary Chinese sword names built?</summary>
+    <p>Two grammars dominate. Image names fuse two natural phenomena — Purple Lightning (紫电), Azure Frost (青霜). Deed names are verb plus object — Heaven-Leaning (倚天), Immortal-Slaying (诛仙). The oldest named swords, like Chengying (Bearing-Shadow), are names as riddles.</p>
+  </details>
+  <details>
+    <summary>Can this generator produce real historical sword names?</summary>
+    <p>Yes — about one draw in seven is a genuine sword of legend: Chengying, Hanguang, and Xiaolian from the Liezi; the Ou Yezi forgings (Zhanlu, Chunjun, Shengxie, Yuchang, Juque, Longyuan, Tai'a, Gongbu) from the Yuejueshu; Ganjiang and Moye; the Han founder's Chixiao. Each legendary draw comes with its source.</p>
+  </details>
+  <details>
+    <summary>What is a jian, and how is it different from a dao?</summary>
+    <p>The jian 剑 is the double-edged straight sword — the "gentleman of weapons," the blade immortals fly on in xianxia fiction. The dao 刀 is the single-edged saber of soldiers. Flying swords are always jian.</p>
+  </details>
+  <details>
+    <summary>Can I use a generated sword name in my novel or game?</summary>
+    <p>Yes — names are not copyrightable; the generated ones use public-domain classical vocabulary, and the legendary ones predate copyright by two millennia.</p>
+  </details>
+
+  <SubscribeBand />
+</Base>
+
+<script type="application/json" id="gen-data" set:html={JSON.stringify({ beasts })}></script>
+
+<script is:inline>
+(function () {
+  var data = JSON.parse(document.getElementById('gen-data').textContent);
+  var beasts = data.beasts;
+
+  // Legendary swords: [zh, pinyin, gloss, provenance]
+  var LEGENDARY = [
+    ['承影', 'Chéngyǐng', 'Bearing-Shadow', 'One of Kong Zhou\u2019s three swords in the Liezi — at dawn and dusk only its shadow can be seen'],
+    ['含光', 'Hánguāng', 'Containing Light', 'Liezi, Kong Zhou\u2019s first sword — invisible to the eye entirely'],
+    ['宵练', 'Xiāoliàn', 'Evening Silk', 'Liezi, Kong Zhou\u2019s third sword — a shadow without substance'],
+    ['干将', 'Gànjiàng', 'Ganjiang', 'The smith-husband\u2019s sword, Spring and Autumn period — cast with his wife Moye\u2019s sacrifice'],
+    ['莫邪', 'Mòyé', 'Moye', 'The wife\u2019s sword, twin of Ganjiang — the paired blades that named a legend'],
+    ['龙渊', 'Lóngyuān', 'Dragon Abyss', 'Forged by Ou Yezi per the Yuejueshu; renamed Longquan under Tang taboo — the forge-town still exists'],
+    ['太阿', "Tài'ē", 'Grand Eminence', 'Ou Yezi\u2019s sword of worldly rule, from the Yuejueshu'],
+    ['工布', 'Gōngbù', 'Gongbu', 'Ou Yezi\u2019s forging, Yuejueshu foundry list'],
+    ['湛卢', 'Zhànlú', 'Zhanlu the Black', 'Ou Yezi\u2019s darkest forging, the sword that left a tyrant for a just king'],
+    ['纯钧', 'Chúnjūn', 'Pure Alloy', 'Ou Yezi\u2019s flawless blade — the sword-dealer Xue Zhu prized it above cities'],
+    ['胜邪', 'Shèngxié', 'Surpassing Evil', 'Ou Yezi\u2019s blade, Yuejueshu list'],
+    ['鱼肠', 'Yúcháng', 'Fish Intestine', 'The dagger-sword hidden in a fish — Zhuan Zhu\u2019s assassination of King Liao'],
+    ['巨阙', 'Jùquē', 'Great Gate-Crossbar', 'Ou Yezi\u2019s heaviest blade; the Qianziwen names it among the wonders'],
+    ['赤霄', 'Chìxiāo', 'Crimson Firmament', 'Liu Bang\u2019s sword — with it he cut the white serpent and founded the Han'],
+    ['轩辕', 'Xuānyuán', 'Xuanyuan', 'The Yellow Emperor\u2019s own sword, in the later legend']
+  ];
+
+  var STYLES = {
+    celestial: {
+      label: 'Celestial image 天成',
+      cats: ['divine_beast', 'auspicious_beast'],
+      names: [
+        ['紫电', 'Zǐdiàn', 'Purple Lightning', 'The Wang Bo tradition — "紫电青霜", the armory of heaven'],
+        ['青霜', 'Qīngshuāng', 'Azure Frost', 'Wang Bo\u2019s paired blade-image, cold and unstained'],
+        ['流萤', 'Liúyíng', 'Drifting Firefly', null],
+        ['寒星', 'Hánxīng', 'Cold Star', null],
+        ['霁雪', 'Jìxuě', 'Snow After Storm', null],
+        ['惊鸿', 'Jīnghóng', 'Startled Swan', 'The Luoshen Fu: "翩若惊鸿" — beauty that startles'],
+        ['鸣鸿', 'Mínghóng', 'Crying Swan', null],
+        ['飞霜', 'Fēishuāng', 'Flying Frost', null],
+        ['照夜', 'Zhàoyè', 'Night-Illuminating', null],
+        ['追星', 'Zhuīxīng', 'Star-Chasing', null],
+        ['霁月', 'Jìyuè', 'Clear Moon After Rain', null],
+        ['破晓', 'Pòxiǎo', 'Dawn-Breaking', null]
+      ]
+    },
+    war: {
+      label: 'Deed of war 杀伐',
+      cats: ['fierce_beast'],
+      names: [
+        ['断岳', 'Duànyuè', 'Peak-Splitting', null],
+        ['斩邪', 'Zhǎnxié', 'Evil-Slaying', null],
+        ['倚天', 'Yǐtiān', 'Heaven-Leaning', 'Song Yu\u2019s great sword that "rests against the sky"'],
+        ['诛仙', 'Zhūxiān', 'Immortal-Slaying', 'The blade that named a genre-defining web novel'],
+        ['裂空', 'Lièkōng', 'Sky-Rending', null],
+        ['破军', 'Pòjūn', 'Army-Breaking', 'The star of war in the Dipper\u2019s handle'],
+        ['摧锋', 'Cuīfēng', 'Formation-Crushing', null],
+        ['弑神', 'Shìshén', 'God-Slaying', null],
+        ['屠龙', 'Túlóng', 'Dragon-Slaying', 'The Saber of the Heaven-Reliant Sword pair in Jin Yong'],
+        ['定军', 'Dìngjūn', 'Army-Stilling', null],
+        ['封喉', 'Fēnghóu', 'Throat-Sealing', null],
+        ['碎星', 'Suìxīng', 'Star-Shattering', null]
+      ]
+    },
+    dao: {
+      label: 'Daoist riddle 道韵',
+      cats: ['deity'],
+      names: [
+        ['无名', 'Wúmíng', 'Nameless', 'Daodejing: "无名天地之始" — the nameless is the origin'],
+        ['守拙', 'Shǒuzhuō', 'Guarding Simplicity', 'Tao Yuanming: "开荒南野际，守拙归园田"'],
+        ['抱一', 'Bàoyī', 'Embracing the One', 'Daodejing: "载营魄抱一"'],
+        ['冲虚', 'Chōngxū', 'Rushing Void', 'The style name of the Liezi\u2019s immortal author'],
+        ['忘言', 'Wàngyán', 'Forgetting Words', 'Zhuangzi: the trap forgotten once the fish is caught'],
+        ['秋水', 'Qiūshuǐ', 'Autumn Water', 'The Zhuangzi\u2019s chapter of floods and measures'],
+        ['太素', 'Tàisù', 'Grand Simplicity', 'The primal undyed silk of the cosmos'],
+        ['玄同', 'Xuántóng', 'Mysterious Unity', 'Daodejing: "是谓玄同"'],
+        ['静笃', 'Jìngdǔ', 'Still Profundity', null],
+        ['和光', 'Héguāng', 'Softened Light', 'Daodejing: "和其光，同其尘"'],
+        ['观复', 'Guānfù', 'Watching Return', 'Daodejing: all things return, and I watch them'],
+        ['致柔', 'Zhìróu', 'Attaining Softness', null]
+      ]
+    }
+  };
+
+  function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+  function generate() {
+    var styleId = document.getElementById('gen-style').value;
+    var styleKey = styleId === 'any' ? pick(['celestial', 'war', 'dao']) : styleId;
+    var style = STYLES[styleKey];
+
+    var name, prov;
+    if (Math.random() < 0.14) {
+      name = pick(LEGENDARY);
+      prov = name[3];
+    } else {
+      name = pick(style.names);
+      prov = name[3] || ('A name coined in the classical ' + style.label.split(' ')[0].toLowerCase() + ' register — the grammar is ancient, the blade is yours');
+    }
+
+    var guardianPool = beasts.filter(function (b) { return style.cats.indexOf(b.category) !== -1; });
+    var guardian = guardianPool.length ? pick(guardianPool) : pick(beasts);
+
+    return {
+      zh: name[0],
+      pinyin: name[1],
+      gloss: name[2],
+      styleLabel: style.label,
+      prov: prov,
+      guardian: guardian
+    };
+  }
+
+  var history = [];
+
+  function render(r) {
+    document.getElementById('r-zh').textContent = r.zh;
+    document.getElementById('r-pinyin').textContent = r.pinyin;
+    document.getElementById('r-gloss').textContent = r.gloss;
+    document.getElementById('r-style').textContent = r.styleLabel;
+    document.getElementById('r-prov').textContent = r.prov;
+
+    var g = r.guardian;
+    var el = document.getElementById('r-guardian');
+    el.innerHTML = '';
+    var card = document.createElement('a');
+    card.href = '/creatures/' + g.slug + '/';
+    card.className = 'guardian-card';
+    if (g.image) {
+      var img = document.createElement('img');
+      img.src = g.image;
+      img.alt = g.en;
+      img.width = 72; img.height = 72;
+      card.appendChild(img);
+    }
+    var info = document.createElement('div');
+    info.className = 'guardian-info';
+    var t1 = document.createElement('div');
+    t1.className = 'guardian-name';
+    t1.innerHTML = 'Tempering beast: <strong>' + g.en + ' <span class="zh">' + g.zh + '</span></strong>';
+    var t2 = document.createElement('div');
+    t2.className = 'guardian-sub';
+    t2.textContent = g.categoryLabel + ' · ' + g.pinyin;
+    var t3 = document.createElement('div');
+    t3.className = 'guardian-link';
+    t3.textContent = 'Read its original Shanhaijing entry →';
+    info.appendChild(t1); info.appendChild(t2); info.appendChild(t3);
+    card.appendChild(info);
+    el.appendChild(card);
+
+    document.getElementById('gen-result').hidden = false;
+    document.getElementById('gen-result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    history.unshift(r);
+    if (history.length > 5) history.pop();
+    renderHistory();
+  }
+
+  function renderHistory() {
+    var box = document.getElementById('gen-history');
+    var list = document.getElementById('history-list');
+    list.innerHTML = '';
+    history.forEach(function (r) {
+      var li = document.createElement('li');
+      li.innerHTML = '<span class="zh">' + r.zh + '</span> <em>' + r.pinyin + '</em> — ' + r.gloss;
+      list.appendChild(li);
+    });
+    box.hidden = history.length === 0;
+  }
+
+  function copyResult() {
+    if (!history.length) return;
+    var r = history[0];
+    var g = r.guardian;
+    var text = r.zh + ' ' + r.pinyin + ' — ' + r.gloss +
+      ' · ' + r.prov +
+      ' · Tempering beast: ' + g.en + ' (' + g.zh + ')' +
+      ' https://chinesebestiary.com/creatures/' + g.slug + '/';
+    var done = function () {
+      var btn = document.getElementById('copy-btn');
+      btn.textContent = 'Copied!';
+      setTimeout(function () { btn.textContent = 'Copy result'; }, 1500);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text); done(); });
+    } else {
+      fallbackCopy(text); done();
+    }
+  }
+
+  function fallbackCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+
+  document.getElementById('gen-btn').addEventListener('click', function () {
+    if (typeof gtag === 'function') gtag('event', 'generate_name', { tool: 'sword' });
+    render(generate());
+  });
+  document.getElementById('again-btn').addEventListener('click', function () {
+    if (typeof gtag === 'function') gtag('event', 'generate_name', { tool: 'sword' });
+    render(generate());
+  });
+  document.getElementById('copy-btn').addEventListener('click', copyResult);
+})();
+</script>
+
+<style>
+  .lede { font-size: 0.97rem; }
+  .generator { background: #fff; border: 1px solid #e0d9c8; border-radius: 4px; padding: 1.5rem; margin: 1.5rem 0; }
+  .controls { display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; align-items: flex-end; }
+  .controls label { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.85rem; color: var(--mist); }
+  .controls select {
+    font-family: Georgia, serif; font-size: 0.95rem; padding: 0.45rem 0.6rem;
+    border: 1px solid #d8d0bc; border-radius: 3px; background: var(--paper); color: var(--ink);
+    min-width: 12rem;
+  }
+  .forge-btn {
+    font-family: 'Cinzel', Georgia, serif; font-size: 1rem; letter-spacing: 0.04em;
+    background: var(--vermillion); color: #faf8f3; border: none; border-radius: 3px;
+    padding: 0.6rem 1.6rem; cursor: pointer; transition: background 0.15s, transform 0.1s;
+  }
+  .forge-btn:hover { background: #a5301f; }
+  .forge-btn:active { transform: scale(0.98); }
+  .forge-btn .zh { font-family: "Noto Serif SC", serif; margin-left: 0.3rem; }
+
+  .result { margin-top: 1.5rem; border-top: 1px solid #e0d9c8; padding-top: 1.5rem; }
+  .result-main { display: flex; gap: 1.25rem; align-items: center; }
+  .seal {
+    flex-shrink: 0; width: 4rem; height: 4rem;
+    background: var(--vermillion); color: #faf8f3; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: "Noto Serif SC", serif; font-size: 2.2rem; font-weight: 600;
+    box-shadow: 2px 2px 0 rgba(192,57,43,0.25);
+  }
+  .result-zh { font-size: 2.2rem; font-weight: 600; line-height: 1.2; }
+  .result-pinyin { color: var(--vermillion); font-size: 0.95rem; letter-spacing: 0.03em; }
+  .result-gloss { color: var(--mist); font-size: 0.9rem; font-style: italic; max-width: 34rem; }
+  .result-meta { display: flex; flex-wrap: wrap; gap: 0.75rem 2rem; margin: 1.25rem 0; padding: 0; }
+  .result-meta dt { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--mist); }
+  .result-meta dd { margin: 0.15rem 0 0; font-size: 0.95rem; max-width: 26rem; }
+
+  .guardian-card {
+    display: flex; gap: 1rem; align-items: center; text-decoration: none;
+    background: var(--paper); border: 1px solid #e0d9c8; border-radius: 4px;
+    padding: 0.9rem 1.1rem; transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .guardian-card:hover { border-color: var(--gold); box-shadow: 2px 3px 10px rgba(26,26,46,0.08); }
+  .guardian-card img { width: 72px; height: 72px; object-fit: cover; border-radius: 3px; border: 1px solid #e0d9c8; background: #fff; }
+  .guardian-name { font-size: 0.95rem; color: var(--ink); }
+  .guardian-sub { font-size: 0.82rem; color: var(--mist); }
+  .guardian-link { font-size: 0.85rem; color: var(--vermillion); margin-top: 0.2rem; }
+
+  .result-actions { display: flex; gap: 0.75rem; margin-top: 1.25rem; }
+  .ghost-btn {
+    font-family: Georgia, serif; font-size: 0.88rem; padding: 0.45rem 1.1rem;
+    background: transparent; color: var(--ink); border: 1px solid #d8d0bc; border-radius: 3px;
+    cursor: pointer; transition: border-color 0.15s, color 0.15s;
+  }
+  .ghost-btn:hover { border-color: var(--vermillion); color: var(--vermillion); }
+
+  .history { margin-top: 1.5rem; }
+  .history h3 { margin-top: 0; }
+  .history ul { list-style: none; margin: 0; padding: 0; }
+  .history li { font-size: 0.88rem; color: var(--mist); padding: 0.35rem 0; border-bottom: 1px dashed #e0d9c8; }
+  .history li .zh { color: var(--ink); }
+  .history li em { color: var(--vermillion); font-style: normal; }
+
+  details { border: 1px solid #e0d9c8; border-radius: 4px; padding: 0.7rem 1rem; margin: 0.6rem 0; background: #fff; }
+  summary { cursor: pointer; font-weight: bold; font-size: 0.95rem; }
+  details p { font-size: 0.9rem; margin: 0.6rem 0 0.2rem; }
+
+  @media (max-width: 46rem) {
+    .controls { flex-direction: column; align-items: stretch; }
+    .controls select { min-width: 0; }
+    .result-zh { font-size: 1.7rem; }
+  }
+</style>
