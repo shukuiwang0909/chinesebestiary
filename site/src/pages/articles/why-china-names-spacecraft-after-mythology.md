@@ -84,7 +84,7 @@ Mozi honors the Warring States philosopher whose *Mo Jing* contains China's earl
 
 And then there is the strangest entry in the celestial bureaucracy — one that does not yet exist.
 
-The Nantianmen Project (南天门计划, "South Gate of Heaven Project") began around 2017 as a science-fiction intellectual property of the Aviation Industry Corporation of China, the state aerospace giant. In its fictional universe, Earth faces extraterrestrial threats, and humanity responds with a fleet named entirely from mythology: the [Luan Bird](/creatures/luan-bird/) (鸾鸟) — a colossal airborne carrier of well over 100,000 tons; the [Xuannü](/creatures/jiutian-xuannu/) (玄女), an unmanned space fighter; the Baidi (白帝, "White Emperor"), a hypersonic fighter; and the Chengying (承影), a manned mech.
+The [Nantianmen Project](/articles/nantianmen-project/) (南天门计划, "South Gate of Heaven Project") began around 2017 as a science-fiction intellectual property of the Aviation Industry Corporation of China, the state aerospace giant. In its fictional universe, Earth faces extraterrestrial threats, and humanity responds with a fleet named entirely from mythology: the [Luan Bird](/creatures/luan-bird/) (鸾鸟) — a colossal airborne carrier of well over 100,000 tons; the [Xuannü](/creatures/jiutian-xuannu/) (玄女), an unmanned space fighter; the Baidi (白帝, "White Emperor"), a hypersonic fighter; and the Chengying (承影), a manned mech.
 
 The Shanhaijing connection is explicit and delightful: the Luan Bird of the *Classic of the Mountains: West* is a five-colored pheasant-like omen whose appearance heralds peace under heaven ("when the Luan Bird appears, the world is at ease"). The mythical omen of peace, reimagined with hangar decks.
 

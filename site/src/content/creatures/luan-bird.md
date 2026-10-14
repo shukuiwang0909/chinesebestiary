@@ -68,7 +68,7 @@ Later centuries domesticated the omen into an ornament. Because ritual chariots 
 
 ## Modern Echoes
 
-Of all the creatures in this bestiary, the Luan Bird has taken the strangest flight. In AVIC's "Nantianmen Project" — a science-fiction universe first shown publicly in 2017 — the Luan Bird reappears as a colossal airborne carrier, a 120,000-ton sky-fortress mother ship carrying scores of unmanned space fighters. What was once an omen of peace ("when the Luan Bird appears, the world is at ease") became, in twenty-first-century aerospace fiction, a vessel of deterrence. Whether read as worldbuilding, wishful technology roadmap, or state-sanctioned mythmaking, the omen-bird of the Classic of Mountains and Seas has acquired engines.
+Of all the creatures in this bestiary, the Luan Bird has taken the strangest flight. In AVIC's "[Nantianmen Project](/articles/nantianmen-project/)" — a science-fiction universe first shown publicly in 2017 — the Luan Bird reappears as a colossal airborne carrier, a 120,000-ton sky-fortress mother ship carrying scores of unmanned space fighters. What was once an omen of peace ("when the Luan Bird appears, the world is at ease") became, in twenty-first-century aerospace fiction, a vessel of deterrence. Whether read as worldbuilding, wishful technology roadmap, or state-sanctioned mythmaking, the omen-bird of the Classic of Mountains and Seas has acquired engines.
 
 The Luan Bird is one officeholder in a much larger celestial bureaucracy — see [Why China Names Its Spacecraft After Mythology](/articles/why-china-names-spacecraft-after-mythology/).
 
