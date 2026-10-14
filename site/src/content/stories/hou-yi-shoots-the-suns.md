@@ -4,7 +4,7 @@ title: "Yi and the World-Clearing — How One Archer Shot Nine Suns and Saved th
 source_work: "Huainanzi (淮南子) · Classic of Mountains and Seas (山海经) · Questions to Heaven (天问)"
 era: "Pre-Qin to Han dynasty (c. 4th–2nd century BCE)"
 summary: "Di Jun had ten sons. Xi He drove them across the sky one at a time, bathing each at dawn in the Sweet Abyss. Then all ten appeared at once. The earth burned. Di Jun commissioned the archer Yi — gave him a red bow and white arrows — and sent him down to relieve the ten thousand hardships. Yi shot nine suns. He severed the great serpent at Dongting. He killed the Nine Spirits at Xiong River. He rid the world of six terrors. The price was his divinity."
-related_creatures: ["hou-yi", "di-jun", "xi-he", "ba-she"]
+related_creatures: ["hou-yi", "di-jun", "xi-he", "ba-she", "san-zu-wu"]
 seo:
   primary_keyword: "hou yi shoots the suns"
   secondary_keywords: ["hou yi ten suns mythology", "yi archer chinese myth", "后羿射日", "di jun hou yi story", "ba she dongting hou yi", "chinese ten suns legend"]
