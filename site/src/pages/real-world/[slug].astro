@@ -18,6 +18,15 @@ const d = entry.data;
 
 const creature = (await getCollection('creatures')).find(c => c.data.id === d.id);
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": d.seo.meta_title,
+  "description": d.seo.meta_description,
+  "inLanguage": "en",
+  ...(getCreatureImage(d.id) && { "image": `https://chinesebestiary.com${getCreatureImage(d.id)}` }),
+};
+
 const VERDICT_LABEL: Record<string, string> = {
   likely: 'Likely',
   unlikely: 'Unlikely',
@@ -32,6 +41,7 @@ const VERDICT_COLOR: Record<string, string> = {
 };
 ---
 <Base title={d.seo.meta_title} description={d.seo.meta_description} image={getCreatureImage(d.id) ?? undefined} ogType="article">
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <div class="read-progress" id="read-progress" role="progressbar" aria-hidden="true"></div>
   <article>
     <nav class="rw-breadcrumb">
