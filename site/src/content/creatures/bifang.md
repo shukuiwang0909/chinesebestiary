@@ -57,7 +57,7 @@ seo:
   secondary_keywords: ["bifang chinese mythology", "bifang bird shanhaijing", "one legged crane chinese", "chinese fire omen bird", "bifang vs phoenix"]
   meta_title: "Bifang (毕方) — The One-Legged Fire-Omen Crane"
   meta_description: "The bifang is a one-legged crane of the Classic of Mountains and Seas whose cry speaks its own name — and whose sighting means a town will burn."
-  related_entries: []
+  related_entries: ["zhu-que", "fenghuang"]
 ---
 
 ## The Bird That Names Itself

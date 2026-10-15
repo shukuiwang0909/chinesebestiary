@@ -54,7 +54,7 @@ seo:
   secondary_keywords: ["tiangou chinese mythology", "tiangou vs tengu", "tiangou shan hai jing", "chinese heavenly dog", "tengu origin"]
   meta_title: "Tiangou (天狗) — China's Heavenly Dog That Wards Off Evil"
   meta_description: "The tiangou (天狗) of the Classic of Mountains and Seas is a white-headed wildcat that wards off evil — not Japan's long-nosed tengu. Texts, translation, lore."
-  related_entries: []
+  related_entries: ["chang-e", "lei-gong", "jiutian-xuannu"]
 ---
 
 ## The White-Headed Guardian of Mount Yin

@@ -1,7 +1,22 @@
 ---
 import Base from '../../layouts/Base.astro';
 
-const articles: { href: string; title: string; subtitle: string; description: string; date: string }[] = [];
+const articles = [
+  {
+    href: '/articles/nantianmen-project/',
+    title: 'The Nantianmen Project, Explained',
+    subtitle: 'China\'s sci-fi space fleet and its mythological names',
+    description: 'The Luanniao carrier, Xuannü and Baidi fighters, the Chengying mech — what AVIC\'s aerospace fiction universe is, what its names mean, and why Western media can\'t classify it.',
+    date: '2026-10-14',
+  },
+  {
+    href: '/articles/why-china-names-spacecraft-after-mythology/',
+    title: 'Why China Names Its Spacecraft After Mythology',
+    subtitle: 'A field guide to the celestial bureaucracy',
+    description: 'Tianwen, Chang\'e, Zhurong, Xihe, Kuafu, Beidou, Tiangong — every Chinese spacecraft name traced to its mythological source text, from the Shanhaijing to the Nantianmen Project.',
+    date: '2026-10-14',
+  },
+];
 ---
 
 <Base title="Articles — The Chinese Bestiary" description="Long-form guides from The Chinese Bestiary: Chinese mythology in the modern world, from spacecraft names to festival traditions, each traced to its source texts." image="/images/creatures/zhurong.jpg">

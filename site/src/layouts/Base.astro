@@ -29,6 +29,8 @@ const ogImage = new URL(image ?? '/images/og-default.jpg', Astro.site);
   <link rel="canonical" href={Astro.url.href} />
   <meta property="og:image" content={ogImage.href} />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={ogImage.href} />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

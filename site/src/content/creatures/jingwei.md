@@ -53,7 +53,7 @@ seo:
   secondary_keywords: ["jingwei bird", "jingwei chinese mythology", "jingwei fills the sea", "jingwei tianhai meaning", "yan emperor daughter bird"]
   meta_title: "Jingwei (精卫) — The Bird That Vowed to Fill the Sea"
   meta_description: "Jingwei, a princess drowned in the Eastern Sea, returns as a bird carrying wood and stone to fill it. Original texts, translation, symbolism, and D&D 5E stats."
-  related_entries: []
+  related_entries: ["hou-yi", "xi-he", "nu-ba"]
 ---
 
 ## A Princess Drowned in the Eastern Sea
