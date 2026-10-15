@@ -23,7 +23,7 @@ const related = d.related_creatures
 const ogImage = (related[0] ? getCreatureImage(related[0].data.id) : null) ?? undefined;
 ---
 
-<Base title={d.seo.meta_title} description={d.seo.meta_description} image={ogImage}>
+<Base title={d.seo.meta_title} description={d.seo.meta_description} image={ogImage} ogType="article">
   <div class="read-progress" id="read-progress" role="progressbar" aria-hidden="true"></div>
   <article>
     <a class="back-link" href="/stories/">All Stories</a>
@@ -33,7 +33,7 @@ const ogImage = (related[0] ? getCreatureImage(related[0].data.id) : null) ?? un
         <span class="source-badge">{d.source_work}</span>
         <span class="era-label">{d.era}</span>
       </div>
-      <h2>{d.title}</h2>
+      <h1>{d.title}</h1>
     </div>
 
     <section class="summary-box">

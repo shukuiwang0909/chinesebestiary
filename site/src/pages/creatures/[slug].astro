@@ -36,10 +36,10 @@ const jsonLd = {
   ...(imageSrc && { "image": `https://chinesebestiary.com${imageSrc}` }),
 };
 ---
-<Base title={d.seo.meta_title} description={d.seo.meta_description} image={imageSrc ?? undefined}>
+<Base title={d.seo.meta_title} description={d.seo.meta_description} image={imageSrc ?? undefined} ogType="article">
   <div class="read-progress" id="read-progress" role="progressbar" aria-hidden="true"></div>
   <article>
-    <h2>{d.name.en} <span class="zh">{d.name.zh_cn}</span></h2>
+    <h1>{d.name.en} <span class="zh">{d.name.zh_cn}</span></h1>
     <p class="creature-meta"><em>{d.name.pinyin} · Wade-Giles: {d.name.wade_giles}</em></p>
     <p class="creature-tags">
       <span class="tag" data-category={d.taxonomy.category}>{CATEGORY_LABELS[d.taxonomy.category]}</span>

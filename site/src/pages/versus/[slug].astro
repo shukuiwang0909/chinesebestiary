@@ -35,11 +35,11 @@ const A = fighterData(d.fighter_a);
 const B = fighterData(d.fighter_b);
 ---
 
-<Base title={d.seo.meta_title} description={d.seo.meta_description} wide={true} image={`/images/versus/${d.id}.jpg`}>
+<Base title={d.seo.meta_title} description={d.seo.meta_description} wide={true} image={`/images/versus/${d.id}.jpg`} ogType="article">
   <div class="read-progress" id="read-progress" role="progressbar" aria-hidden="true"></div>
   <article>
     <a class="back-link" href="/versus/">All Battles</a>
-    <h2>{d.title}</h2>
+    <h1>{d.title}</h1>
     <p class="arena"><strong>Arena:</strong> {d.arena}</p>
 
     <div class="fighters">

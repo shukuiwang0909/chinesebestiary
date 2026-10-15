@@ -1,22 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 
-const articles = [
-  {
-    href: '/articles/nantianmen-project/',
-    title: 'The Nantianmen Project, Explained',
-    subtitle: 'China\'s sci-fi space fleet and its mythological names',
-    description: 'The Luanniao carrier, Xuannü and Baidi fighters, the Chengying mech — what AVIC\'s aerospace fiction universe is, what its names mean, and why Western media can\'t classify it.',
-    date: '2026-10-14',
-  },
-  {
-    href: '/articles/why-china-names-spacecraft-after-mythology/',
-    title: 'Why China Names Its Spacecraft After Mythology',
-    subtitle: 'A field guide to the celestial bureaucracy',
-    description: 'Tianwen, Chang\'e, Zhurong, Xihe, Kuafu, Beidou, Tiangong — every Chinese spacecraft name traced to its mythological source text, from the Shanhaijing to the Nantianmen Project.',
-    date: '2026-10-14',
-  },
-];
+const articles: { href: string; title: string; subtitle: string; description: string; date: string }[] = [];
 ---
 
 <Base title="Articles — The Chinese Bestiary" description="Long-form guides from The Chinese Bestiary: Chinese mythology in the modern world, from spacecraft names to festival traditions, each traced to its source texts." image="/images/creatures/zhurong.jpg">
@@ -24,6 +9,7 @@ const articles = [
   <p>Long-form guides that follow Chinese mythology out of the bestiary and into the modern world — every claim traced back to a source text.</p>
 
   <ul class="article-list">
+    {articles.length === 0 && <p style="color: var(--mist); font-size: 0.9rem;">Articles coming soon.</p>}
     {articles.map(a => (
       <li class="article-card">
         <a class="article-title" href={a.href}>{a.title}</a>

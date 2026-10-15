@@ -4,11 +4,12 @@ interface Props {
   description: string;
   image?: string;
   wide?: boolean;
+  ogType?: string;
 }
 import SiteNav from '../components/SiteNav.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 
-const { title, description, image, wide = false } = Astro.props;
+const { title, description, image, wide = false, ogType = 'website' } = Astro.props;
 const ogImage = new URL(image ?? '/images/og-default.jpg', Astro.site);
 ---
 <!DOCTYPE html>
@@ -21,7 +22,7 @@ const ogImage = new URL(image ?? '/images/og-default.jpg', Astro.site);
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:url" content={Astro.url.href} />
-  <meta property="og:type" content="website" />
+  <meta property="og:type" content={ogType} />
   <meta property="og:site_name" content="The Chinese Bestiary" />
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" href="/favicon.png" type="image/png" />
@@ -71,7 +72,7 @@ const ogImage = new URL(image ?? '/images/og-default.jpg', Astro.site);
       padding-bottom: 1.2rem;
       margin-bottom: 2rem;
     }
-    header h1 {
+    header .site-title {
       margin: 0 0 0.5rem;
       font-family: 'Cinzel', Georgia, serif;
       font-size: 1.5rem;
@@ -81,12 +82,13 @@ const ogImage = new URL(image ?? '/images/og-default.jpg', Astro.site);
       align-items: center;
       gap: 0.5rem;
     }
-    header h1 a { color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 0.55rem; }
-    header h1 a:hover .site-title-en { color: var(--vermillion); }
+    header .site-title a { color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 0.55rem; }
+    header .site-title a:hover .site-title-en { color: var(--vermillion); }
     .site-icon { flex-shrink: 0; }
     .site-title-zh { font-family: "Noto Serif SC", "Songti SC", serif; font-size: 0.9rem; color: var(--mist); font-weight: 400; letter-spacing: 0.05em; }
     .zh { font-family: "Noto Serif SC", "Songti SC", serif; }
-    h2, h3 { font-family: 'Cinzel', Georgia, serif; }
+    h1, h2, h3 { font-family: 'Cinzel', Georgia, serif; }
+    h1 { font-size: 1.45rem; margin: 1.5rem 0 0.8rem; }
     h2 { font-size: 1.45rem; margin: 1.5rem 0 0.8rem; }
     h3 { font-size: 1.05rem; margin: 2rem 0 0.6rem; color: var(--ink); border-bottom: 1px solid #e0d9c8; padding-bottom: 0.3rem; }
     blockquote {
@@ -129,7 +131,7 @@ const ogImage = new URL(image ?? '/images/og-default.jpg', Astro.site);
 <body>
   <a href="#main-content" class="skip-link">Skip to content</a>
   <header>
-    <h1>
+    <div class="site-title">
       <a href="/">
         <svg class="site-icon" width="30" height="30" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <rect x="1" y="1" width="28" height="28" rx="3" fill="#c0392b"/>
@@ -138,7 +140,7 @@ const ogImage = new URL(image ?? '/images/og-default.jpg', Astro.site);
         <span class="site-title-en">The Chinese Bestiary</span>
         <span class="site-title-zh">· 中国图鉴</span>
       </a>
-    </h1>
+    </div>
     <SiteNav />
     <div id="search"></div>
   </header>

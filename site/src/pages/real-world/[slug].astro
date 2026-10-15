@@ -31,7 +31,7 @@ const VERDICT_COLOR: Record<string, string> = {
   unverified: 'var(--mist)',
 };
 ---
-<Base title={d.seo.meta_title} description={d.seo.meta_description} image={getCreatureImage(d.id) ?? undefined}>
+<Base title={d.seo.meta_title} description={d.seo.meta_description} image={getCreatureImage(d.id) ?? undefined} ogType="article">
   <div class="read-progress" id="read-progress" role="progressbar" aria-hidden="true"></div>
   <article>
     <nav class="rw-breadcrumb">
@@ -45,7 +45,7 @@ const VERDICT_COLOR: Record<string, string> = {
       )}
     </nav>
 
-    <h2>{d.seo.meta_title}</h2>
+    <h1>{d.seo.meta_title}</h1>
 
     <section class="rw-section rw-claim">
       <h3>The Claim</h3>
