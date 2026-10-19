@@ -48,7 +48,7 @@ seo:
   secondary_keywords: ["xiezhi chinese mythology", "xiezhi justice beast", "haetae korean mythology", "xiezhi unicorn china", "chinese justice unicorn"]
   meta_title: "Xiezhi (獬豸) — China's One-Horned Justice Beast That Always Finds the Guilty"
   meta_description: "The xiezhi is a divine one-horned beast that can detect injustice by instinct — goring the guilty party in any dispute. Symbol of China's censors, Korea's haetae. Source texts, symbolism, D&D 5E stat block."
-  related_entries: ["qilin", "bai-ze"]
+  related_entries: ["qilin", "bai-ze", "pixiu", "chi-you"]
 ---
 
 ## The Court That Could Not Lie To
