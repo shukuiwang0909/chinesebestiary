@@ -103,6 +103,8 @@ const pageJsonLd = {
         aria-label="Search creatures"
         autocomplete="off"
       />
+      <button id="reset-zoom" class="reset-btn" title="Reset zoom to fit all nodes">⊙ Reset</button>
+      <button id="mobile-list-toggle" class="mobile-toggle-btn" aria-expanded="false">☰ List view</button>
     </div>
     <div class="filter-row">
       <span class="filter-label">Element:</span>
@@ -143,6 +145,29 @@ const pageJsonLd = {
         </ul>
       </div>
     </noscript>
+  </div>
+
+  <div id="mobile-creature-list" class="mobile-creature-list" hidden>
+    {[
+      { key: 'divine_beast',     label: 'Divine Beasts 神兽' },
+      { key: 'auspicious_beast', label: 'Auspicious Beasts 瑞兽' },
+      { key: 'fierce_beast',     label: 'Fierce Beasts 凶兽' },
+      { key: 'deity',            label: 'Deities 神' },
+      { key: 'strange_being',    label: 'Strange Beings 异物' },
+      { key: 'hybrid',           label: 'Hybrid 混合' },
+    ].map(({ key, label }) => {
+      const group = graphNodes.filter(n => n.category === key).sort((a, b) => a.en.localeCompare(b.en));
+      return group.length > 0 ? (
+        <div class="ml-group">
+          <h3 class="ml-heading">{label}</h3>
+          <ul class="ml-list">
+            {group.map(n => (
+              <li><a href={`/creatures/${n.id}/`}>{n.en} <span class="zh">{n.zh}</span></a></li>
+            ))}
+          </ul>
+        </div>
+      ) : null;
+    })}
   </div>
 
   <div class="legend-wrap">
@@ -275,6 +300,9 @@ const pageJsonLd = {
       var initTy = (H - initScale * (minY + maxY)) / 2;
       svg.call(zoom.transform, d3.zoomIdentity.translate(initTx, initTy).scale(initScale));
 
+      // store for reset button
+      var initTransform = d3.zoomIdentity.translate(initTx, initTy).scale(initScale);
+
       // draw links
       linkSel = g.append('g').attr('class', 'links')
         .selectAll('line')
@@ -344,8 +372,11 @@ const pageJsonLd = {
       svg.on('click', function () { hideTooltip(); });
 
       document.getElementById('graph-loading').style.display = 'none';
+      addClusterLabels();
       setupFilters();
       setupSearch();
+      setupResetButton(initTransform);
+      setupMobileToggle();
     }
 
     function onNodeEnter(event, d) {
@@ -486,6 +517,63 @@ const pageJsonLd = {
       });
     }
 
+    function addClusterLabels() {
+      var CLUSTERS = [
+        { label: 'FOUR SYMBOLS', ids: ['qinglong', 'bai-hu', 'zhu-que', 'xuanwu'] },
+        { label: 'FOUR PERILS', ids: ['hundun', 'qiongqi', 'taotie', 'taowu'] },
+        { label: 'SOLAR COURT', ids: ['hou-yi', 'chang-e', 'xi-he', 'san-zu-wu', 'di-jun'] },
+        { label: 'PRIMORDIAL', ids: ['nuwa', 'gonggong', 'zhurong', 'kua-fu', 'xing-tian'] },
+      ];
+      var byId = {};
+      nodes.forEach(function (n) { byId[n.id] = n; });
+
+      var clData = CLUSTERS.map(function (cl) {
+        var members = cl.ids.map(function (id) { return byId[id]; }).filter(Boolean);
+        if (members.length < 2) return null;
+        var cx = members.reduce(function (s, n) { return s + n.x; }, 0) / members.length;
+        var cy = members.reduce(function (s, n) { return s + n.y; }, 0) / members.length;
+        return { label: cl.label, x: cx, y: cy };
+      }).filter(Boolean);
+
+      g.append('g').attr('class', 'cluster-labels')
+        .selectAll('text')
+        .data(clData)
+        .join('text')
+        .attr('x', function (d) { return d.x; })
+        .attr('y', function (d) { return d.y; })
+        .attr('text-anchor', 'middle')
+        .attr('font-size', '8px')
+        .attr('font-family', "'Cinzel', Georgia, serif")
+        .attr('fill', 'rgba(212,168,83,0.38)')
+        .attr('letter-spacing', '0.1em')
+        .attr('pointer-events', 'none')
+        .text(function (d) { return d.label; });
+    }
+
+    function setupResetButton(initTransform) {
+      var btn = document.getElementById('reset-zoom');
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        svg.transition().duration(600).call(zoom.transform, initTransform);
+        document.getElementById('creature-search').value = '';
+        applyFilters();
+      });
+    }
+
+    function setupMobileToggle() {
+      var btn = document.getElementById('mobile-list-toggle');
+      var list = document.getElementById('mobile-creature-list');
+      var panel = document.getElementById('constellation-container');
+      if (!btn || !list || !panel) return;
+      btn.addEventListener('click', function () {
+        var showingList = !list.hidden;
+        list.hidden = showingList;
+        panel.style.display = showingList ? '' : 'none';
+        btn.textContent = showingList ? '☰ List view' : '⊙ Map view';
+        btn.setAttribute('aria-expanded', String(!showingList));
+      });
+    }
+
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', loadD3);
     } else {
@@ -522,9 +610,10 @@ const pageJsonLd = {
     gap: 0.6rem;
   }
 
-  .search-wrap { display: flex; }
+  .search-wrap { display: flex; gap: 0.4rem; flex-wrap: wrap; align-items: center; }
   .search-input {
-    width: 100%;
+    flex: 1;
+    min-width: 140px;
     max-width: 300px;
     padding: 0.4rem 0.7rem;
     border: 1px solid #d0c9b8;
@@ -536,6 +625,60 @@ const pageJsonLd = {
     outline: none;
   }
   .search-input:focus { border-color: var(--gold); box-shadow: 0 0 0 2px rgba(184,147,61,0.15); }
+
+  .reset-btn {
+    padding: 0.35rem 0.7rem;
+    border: 1px solid #d0c9b8;
+    border-radius: 4px;
+    background: #fff;
+    color: var(--mist);
+    font-size: 0.78rem;
+    font-family: Georgia, serif;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: border-color 0.12s, color 0.12s;
+  }
+  .reset-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+  .mobile-toggle-btn {
+    padding: 0.35rem 0.7rem;
+    border: 1px solid var(--gold);
+    border-radius: 4px;
+    background: var(--ink);
+    color: var(--gold-light);
+    font-size: 0.78rem;
+    font-family: Georgia, serif;
+    cursor: pointer;
+    white-space: nowrap;
+    display: none;
+  }
+  @media (max-width: 520px) { .mobile-toggle-btn { display: inline-flex; } }
+
+  .mobile-creature-list {
+    background: var(--paper);
+    border: 1px solid #e0d9c8;
+    border-radius: 6px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    columns: 2;
+    column-gap: 1.5rem;
+  }
+  .ml-group { break-inside: avoid; margin-bottom: 1rem; }
+  .ml-heading {
+    font-family: 'Cinzel', Georgia, serif;
+    font-size: 0.78rem;
+    color: var(--mist);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0 0 0.4rem;
+    border-bottom: 1px solid #e0d9c8;
+    padding-bottom: 0.25rem;
+  }
+  .ml-list { list-style: none; padding: 0; margin: 0; font-size: 0.82rem; }
+  .ml-list li { margin-bottom: 0.25rem; }
+  .ml-list a { color: var(--ink); text-decoration: none; }
+  .ml-list a:hover { color: var(--vermillion); }
+  .ml-list .zh { font-size: 0.75rem; color: var(--mist); }
 
   .filter-row {
     display: flex;
