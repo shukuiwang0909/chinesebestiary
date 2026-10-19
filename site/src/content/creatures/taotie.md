@@ -45,7 +45,7 @@ dnd5e:
   stat_block: "AC 16 (natural), HP 168 (16d12+64), Speed 40 ft. STR 20, DEX 12, CON 18, INT 6, WIS 13, CHA 8. Magic Resistance, All-Around Vision (its armpit eyes prevent it from being surprised or flanked). Multiattack: two claws +9 (2d8+5 slashing) and one bite +9 (2d12+5 piercing). Devour (Recharge 5-6): the taotie makes one bite attack with advantage; on a hit, the target takes an extra 22 (4d10) piercing damage and must succeed on a DC 16 Strength save or be swallowed."
 seo:
   primary_keyword: "taotie origin"
-  secondary_keywords: ["taotie meaning", "taotie mask shang dynasty", "four perils chinese mythology", "paoxiao"]
+  secondary_keywords: ["taotie meaning", "taotie mask shang dynasty", "four perils chinese mythology", "paoxiao", "sanxingdui bronze mask", "sanxingdui taotie", "sanxingdui shang dynasty bronze"]
   meta_title: "Taotie (饕餮) — The Gluttonous Beast Behind the Bronze Mask"
   meta_description: "Taotie (饕餮): a man-eating beast of Mount Gouwu in the Classic of Mountains and Seas that became the infamous mask on Shang bronzes."
   related_entries: ["hundun", "qiongqi", "taowu", "nine-tailed-fox"]
@@ -66,6 +66,10 @@ The taotie's face was famous before the chronicle was ever written. From the Sha
 ## The Monster Hollywood Met
 
 For most Western viewers, one film defines the beast: Zhang Yimou's *The Great Wall* (2016), in which swarm-minded taotie pour out of the mountains every sixty years to devour everything in their path. The creature design keeps the antique anatomy — eyes clustered on the shoulders, a body low and ravenous — and scales it into a blockbuster horde.
+
+## Sanxingdui: A Different Bronze Tradition
+
+After Sanxingdui's discovery in 1986, many popular accounts described its bronze masks as "taotie." The comparison is understandable but imprecise. The taotie mask convention — a bilateral split face without a lower jaw, rendered in shallow surface relief — is specific to the Shang and early Zhou Central Plains tradition. The Sanxingdui bronze faces are three-dimensional, full-jawed, and naturalistic in a way the taotie mask is not. The most famous Sanxingdui artifact, the protruding-eye mask (纵目铜面具), has cylindrical eyes extending 16 cm forward — a feature with no parallel in any taotie-tradition vessel. Both traditions used frontally depicted faces on sacred objects, but they did so in ways that reflect distinct mythological vocabularies. The Sanxingdui face tradition is now linked by most scholars to the Shu kingdom's own cosmology, including the legendary figure [Cancong](/creatures/cancong/), whose "vertical eyes" were described in texts a millennium after the masks were made. For the full comparison, see the [Sanxingdui article](/articles/sanxingdui-chinese-mythology/).
 
 ---
 
