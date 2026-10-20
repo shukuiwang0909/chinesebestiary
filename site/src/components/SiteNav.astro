@@ -39,12 +39,13 @@ const isActive = (href: string) =>
   .nav-toggle, .nav-toggle-label { display: none; }
   .nav-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; }
   .nav-list > li { position: relative; }
+  .has-children { padding-bottom: 0.4rem; }
   .nav-list a { text-decoration: none; color: #555; font-size: 0.92rem; font-family: 'Cinzel', Georgia, serif; letter-spacing: 0.03em; transition: color 0.15s; }
   .nav-list a:hover { color: var(--vermillion); }
   .nav-list a.active { color: var(--vermillion); border-bottom: 2px solid var(--gold); padding-bottom: 2px; }
   .subnav {
     display: none; position: absolute; top: 100%; left: 0; z-index: 10;
-    list-style: none; margin: 0.3rem 0 0; padding: 0.4rem 0.8rem;
+    list-style: none; margin: 0; padding: 0.4rem 0.8rem;
     background: #fff; border: 1px solid #e0d9c8; min-width: 12rem;
     box-shadow: 2px 4px 12px rgba(26,26,46,0.1);
     border-radius: 3px;
