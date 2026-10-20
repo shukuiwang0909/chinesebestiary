@@ -28,7 +28,7 @@ const sorted = creatures.sort((a, b) => a.data.id.localeCompare(b.data.id));
     <div class="hero-watermark" aria-hidden="true">山海经</div>
     <div class="hero-inner">
       <p class="hero-eyebrow"><span class="zh">c. 4th century BCE</span></p>
-      <h2>The mythical beasts of the <em>Shanhaijing</em></h2>
+      <h1>The mythical beasts of the <em>Shanhaijing</em></h1>
       <p class="hero-desc">China's oldest geography describes over 200 beings — beasts that forecast empires, mountains that breathe, and rivers that burn. Every creature catalogued with original texts, fresh translations, and tabletop stat blocks.</p>
       <div class="hero-stats">
         <span><strong>{sorted.length}</strong> creatures</span>
@@ -40,7 +40,7 @@ const sorted = creatures.sort((a, b) => a.data.id.localeCompare(b.data.id));
     </div>
   </section>
 
-  <h3>Creatures <span class="zh">神兽</span></h3>
+  <h2>Creatures <span class="zh">神兽</span></h2>
   <div class="grid">
     {sorted.map(c => <CreatureCard creature={c} />)}
   </div>
