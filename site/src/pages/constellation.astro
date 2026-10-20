@@ -18,31 +18,40 @@ const nodeList = creatures.map(c => ({
   category: String((c.data as any).taxonomy?.category ?? 'divine_beast'),
 }));
 
-const edgeSet = new Set<string>();
-const linkList: { source: string; target: string }[] = [];
+const edgeMap = new Map<string, { source: string; target: string; type: string; labels: string[] }>();
+const EDGE_PRIORITY: Record<string, number> = { versus: 3, story: 2, related: 1 };
 
-function addEdge(a: string, b: string) {
+function addEdge(a: string, b: string, type: string, label?: string) {
   if (!creatureIds.has(a) || !creatureIds.has(b) || a === b) return;
   const key = [a, b].sort().join('|');
-  if (!edgeSet.has(key)) {
-    edgeSet.add(key);
-    linkList.push({ source: a, target: b });
+  if (!edgeMap.has(key)) {
+    edgeMap.set(key, { source: a, target: b, type, labels: label ? [label] : [] });
+  } else {
+    const e = edgeMap.get(key)!;
+    if ((EDGE_PRIORITY[type] ?? 0) > (EDGE_PRIORITY[e.type] ?? 0)) e.type = type;
+    if (label && !e.labels.includes(label)) e.labels.push(label);
   }
 }
 
 for (const c of creatures) {
   const rel: string[] = (c.data as any).seo?.related_entries ?? [];
-  for (const r of rel) addEdge(c.data.id, r);
+  for (const r of rel) addEdge(c.data.id, r, 'related');
 }
 for (const s of stories) {
   const rc: string[] = (s.data as any).related_creatures ?? [];
+  const storyTitle: string = (s.data as any).title ?? '';
   for (let i = 0; i < rc.length; i++)
     for (let j = i + 1; j < rc.length; j++)
-      addEdge(rc[i], rc[j]);
+      addEdge(rc[i], rc[j], 'story', storyTitle);
 }
 for (const v of versuses) {
-  addEdge(String((v.data as any).fighter_a), String((v.data as any).fighter_b));
+  const fa = String((v.data as any).fighter_a);
+  const fb = String((v.data as any).fighter_b);
+  const vsTitle: string = (v.data as any).title ?? '';
+  addEdge(fa, fb, 'versus', vsTitle);
 }
+
+const linkList = Array.from(edgeMap.values());
 
 const deg: Record<string, number> = {};
 for (const n of nodeList) deg[n.id] = 0;
@@ -204,6 +213,14 @@ const pageJsonLd = {
         <span class="legend-circle" style="width:18px;height:18px;margin-right:4px"></span><span>More connections</span>
       </div>
     </div>
+    <div class="legend-group">
+      <span class="legend-title">Connection type</span>
+      <div class="legend-items">
+        <span class="legend-line" style="background:rgba(180,155,80,0.8)"></span><span>Related entry</span>
+        <span class="legend-line" style="background:#5090e0"></span><span>Same story</span>
+        <span class="legend-line" style="background:#e05050"></span><span>Battle</span>
+      </div>
+    </div>
   </div>
 
   <div class="hint-text">
@@ -230,6 +247,16 @@ const pageJsonLd = {
     }
     function nodeColor(d) { return ELEMENT_COLOR[d.element] || '#95a5a6'; }
     function nodeStroke(d) { return CATEGORY_STROKE[d.category] || '#888'; }
+    function linkStroke(d) {
+      return d.type === 'versus' ? 'rgba(200,60,60,0.40)'
+           : d.type === 'story'  ? 'rgba(80,130,200,0.38)'
+           :                        'rgba(180,155,80,0.22)';
+    }
+    function linkStrokeHover(d) {
+      return d.type === 'versus' ? '#e05050'
+           : d.type === 'story'  ? '#5090e0'
+           :                        '#d4a853';
+    }
 
     var activeFilters = { element: '', category: '' };
     var svg, g, linkSel, nodeSel, zoom, W, H, nodes, links, tooltip;
@@ -308,7 +335,7 @@ const pageJsonLd = {
         .selectAll('line')
         .data(links)
         .join('line')
-        .attr('stroke', 'rgba(180,155,80,0.22)')
+        .attr('stroke', linkStroke)
         .attr('stroke-width', 1)
         .attr('x1', function (d) { return d.source.x; })
         .attr('y1', function (d) { return d.source.y; })
@@ -389,7 +416,7 @@ const pageJsonLd = {
         .attr('stroke', function (l) {
           var sid = l.source.id || l.source;
           var tid = l.target.id || l.target;
-          return (sid === d.id || tid === d.id) ? '#d4a853' : 'rgba(100,85,40,0.15)';
+          return (sid === d.id || tid === d.id) ? linkStrokeHover(l) : 'rgba(60,50,30,0.15)';
         })
         .attr('stroke-width', function (l) {
           var sid = l.source.id || l.source;
@@ -431,11 +458,43 @@ const pageJsonLd = {
         strange_being: 'Strange Being', hybrid: 'Hybrid'
       }[d.category] || d.category;
       var elLabel = d.element.charAt(0).toUpperCase() + d.element.slice(1);
+
+      // Build relationship breakdown
+      var nodeId = d.id;
+      var byId = {};
+      nodes.forEach(function (n) { byId[n.id] = n; });
+
+      function otherName(l) {
+        var sid = l.source.id || l.source, tid = l.target.id || l.target;
+        var otherId = sid === nodeId ? tid : sid;
+        return byId[otherId] ? byId[otherId].en : otherId;
+      }
+
+      var vsLinks    = links.filter(function (l) { var s = l.source.id||l.source, t = l.target.id||l.target; return (s===nodeId||t===nodeId) && l.type==='versus'; });
+      var stLinks    = links.filter(function (l) { var s = l.source.id||l.source, t = l.target.id||l.target; return (s===nodeId||t===nodeId) && l.type==='story'; });
+      var relLinks   = links.filter(function (l) { var s = l.source.id||l.source, t = l.target.id||l.target; return (s===nodeId||t===nodeId) && l.type==='related'; });
+
+      var relHtml = '';
+      vsLinks.forEach(function (l) {
+        var lbl = l.labels && l.labels[0] ? l.labels[0].replace(/ — .*/, '').substring(0, 32) : '';
+        relHtml += '<div style="color:#e07070;font-size:0.73rem;margin-top:2px">⚔ vs ' + otherName(l) + (lbl ? ' <span style="opacity:0.65">— ' + lbl + '</span>' : '') + '</div>';
+      });
+      if (stLinks.length > 0) {
+        var stLabel = stLinks[0].labels && stLinks[0].labels[0] ? stLinks[0].labels[0].substring(0, 28) + (stLinks[0].labels[0].length > 28 ? '…' : '') : '';
+        var stNames = stLinks.slice(0, 3).map(otherName).join(', ') + (stLinks.length > 3 ? ' +' + (stLinks.length-3) : '');
+        relHtml += '<div style="color:#7aace0;font-size:0.73rem;margin-top:2px">↔ ' + stNames + (stLabel ? ' <span style="opacity:0.65">— ' + stLabel + '</span>' : '') + '</div>';
+      }
+      if (relLinks.length > 0) {
+        var relNames = relLinks.slice(0, 4).map(otherName).join(', ') + (relLinks.length > 4 ? ' +' + (relLinks.length-4) : '');
+        relHtml += '<div style="color:#c8b870;font-size:0.73rem;opacity:0.75;margin-top:2px">～ ' + relNames + '</div>';
+      }
+
       tooltip.innerHTML =
         '<strong style="font-family:\'Cinzel\',serif;font-size:0.9rem">' + d.en + '</strong>' +
         ' <span style="font-family:serif;opacity:0.75;font-size:0.85rem">' + d.zh + '</span>' +
         '<br><small style="opacity:0.65">' + catLabel + ' · ' + elLabel +
-        ' · ' + connCount + ' link' + (connCount !== 1 ? 's' : '') + '</small>';
+        ' · ' + connCount + ' link' + (connCount !== 1 ? 's' : '') + '</small>' +
+        relHtml;
       tooltip.style.left = (event.clientX + 14) + 'px';
       tooltip.style.top = (event.clientY - 36) + 'px';
       tooltip.style.opacity = '1';
@@ -458,7 +517,15 @@ const pageJsonLd = {
         });
 
       linkSel.transition().duration(150)
-        .attr('stroke', 'rgba(180,155,80,0.22)')
+        .attr('stroke', function (l) {
+          if (!ef && !cf) return linkStroke(l);
+          var s = l.source.element !== undefined ? l.source : nodes.find(function (n) { return n.id === (l.source.id || l.source); });
+          var t = l.target.element !== undefined ? l.target : nodes.find(function (n) { return n.id === (l.target.id || l.target); });
+          if (!s || !t) return linkStroke(l);
+          var sv = (!ef || s.element === ef) && (!cf || s.category === cf);
+          var tv = (!ef || t.element === ef) && (!cf || t.category === cf);
+          return (sv && tv) ? linkStroke(l) : 'rgba(80,70,40,0.10)';
+        })
         .attr('stroke-width', function (l) {
           if (!ef && !cf) return 1;
           var s = l.source.element !== undefined ? l.source : nodes.find(function (n) { return n.id === (l.source.id || l.source); });
@@ -780,6 +847,14 @@ const pageJsonLd = {
     background: #888;
     vertical-align: middle;
   }
+  .legend-line {
+    display: inline-block;
+    width: 18px;
+    height: 2px;
+    border-radius: 1px;
+    vertical-align: middle;
+    margin-right: 3px;
+  }
 
   .hint-text {
     font-size: 0.75rem;
@@ -801,7 +876,7 @@ const pageJsonLd = {
     z-index: 200;
     opacity: 0;
     transition: opacity 0.12s;
-    max-width: 220px;
+    max-width: 280px;
     line-height: 1.5;
   }
 
