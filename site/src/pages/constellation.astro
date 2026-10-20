@@ -89,7 +89,7 @@ const pageJsonLd = {
 
   <h1>Constellation Map <span class="zh">星图</span></h1>
   <p class="intro">
-    Fifty-three creatures, {linkList.length} connections — mapped from their relationships in the
+    {graphNodes.length} creatures, {linkList.length} connections — mapped from their relationships in the
     <em>Shanhaijing</em>, myths, and battles. Hover to trace connections. Click to enter a creature's story.
   </p>
 
@@ -236,10 +236,10 @@ const pageJsonLd = {
 
     function loadD3() {
       var s = document.createElement('script');
-      s.src = 'https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js';
+      s.src = '/js/d3.min.js';
       s.onload = initGraph;
       s.onerror = function () {
-        document.getElementById('graph-loading').textContent = 'Could not load D3. Check your connection.';
+        document.getElementById('graph-loading').textContent = 'Could not load map library.';
       };
       document.head.appendChild(s);
     }
